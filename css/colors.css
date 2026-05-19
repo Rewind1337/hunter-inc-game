@@ -1,0 +1,226 @@
+:root {
+    --red-dark: #780000;
+    --red-dark-alpha: #78000080;
+    --red-norm: #c1121f;
+    --red-norm-alpha: #c1121f80;
+    --red-light: #fd737c;
+    --red-light-alpha: #fd737c80;
+    --red-hover: #db2834;
+
+    --blue-dark: #003049;
+    --blue-dark-alpha: #00304980;
+    --blue-norm: #669bbc;
+    --blue-norm-alpha: #669bbc80;
+    --blue-light: #b2dbf4;
+    --blue-light-alpha: #b2dbf480;
+    --blue-hover: #88bddd;
+
+    --white-dark: #e1c997;
+    --white-dark-alpha: #e1c99780;
+    --white-norm: #fdf0d5;
+    --white-norm-alpha: #fdf0d580;
+    --white-light: #fbf5eb;
+    --white-light-alpha: #fbf5eb80;
+    --white-hover: #fff9eb;
+
+    --black-dark: #1c1c1f;
+    --black-dark-alpha: #1c1c1f80;
+    --black-norm: #2b2d42;
+    --black-norm-alpha: #2b2d4280;
+    --black-light: #4f5060;
+    --black-light-alpha: #4f506080;
+    --black-hover: #40425a;
+}
+
+/* Basic Button Styles */
+
+.button {
+    cursor: pointer;
+    background-color: var(--white-norm-alpha);
+}
+
+.button.disabled {
+    background-color: var(--black-dark-alpha);
+}
+
+/* White Button Styles */
+
+.button-white * {
+    color: black;
+}
+
+
+.button-white {
+    background-color: var(--white-dark);
+    border: 2px solid transparent;
+    border-color: var(--white-light-alpha) var(--white-dark-alpha) var(--white-dark-alpha) var(--white-light-alpha);
+}
+
+.button-white:hover {
+    background-color: var(--white-norm);
+    border-color: var(--white-light) var(--white-dark) var(--white-dark) var(--white-light);
+}
+
+.button-white:hover:active {
+    background-color: var(--white-light);
+    border-color: white;
+}
+
+/* Black Button Styles */
+
+.button-black {
+    background-color: var(--black-dark);
+    border: 2px solid transparent;
+    border-color: var(--black-light-alpha) var(--black-dark-alpha) var(--black-dark-alpha) var(--black-light-alpha);
+}
+
+.button-black:hover {
+    background-color: var(--black-norm);
+    border-color: var(--black-light) var(--black-dark) var(--black-dark) var(--black-light);
+}
+
+.button-black:hover:active {
+    background-color: var(--black-light);
+    border-color: white;
+}
+
+/* Blue Button Styles */
+
+.button-blue {
+    background-color: var(--blue-norm);
+    border: 2px solid transparent;
+    border-color: var(--blue-light-alpha) var(--blue-dark-alpha) var(--blue-dark-alpha) var(--blue-light-alpha);
+}
+
+.button-blue:hover {
+    background-color: var(--blue-hover);
+    border-color: var(--blue-light) var(--blue-dark) var(--blue-dark) var(--blue-light);
+}
+
+.button-blue:hover:active {
+    background-color: var(--blue-light);
+    border-color: white;
+}
+
+/* Red Button Styles */
+
+.button-red {
+    background-color: var(--red-norm);
+    border: 2px solid transparent;
+    border-color: var(--red-light-alpha) var(--red-dark-alpha) var(--red-dark-alpha) var(--red-light-alpha);
+}
+
+.button-red:hover {
+    background-color: var(--red-hover);
+    border-color: var(--red-light) var(--red-dark) var(--red-dark) var(--red-light);
+}
+
+.button-red:hover:active {
+    background-color: var(--red-light);
+    border-color: white;
+}
+
+/* Basic Grid Styles */
+
+.grid-element {
+    background-color: transparent;
+    border: 3px outset transparent;
+    border-color: var(--black-light);
+}
+
+/* White Grid Element Styles */
+
+.grid-element.grid-white {
+    background-color: var(--white-norm-alpha);
+    border: 3px outset transparent;
+    border-color: var(--white-norm);
+}
+
+/* Black Grid Element Styles */
+
+.grid-element.grid-black {
+    background-color: var(--black-norm-alpha);
+    border: 3px outset transparent;
+    border-color: var(--black-dark);
+}
+
+/* Blue Grid Element Styles */
+
+.grid-element.grid-blue {
+    background-color: var(--blue-norm-alpha);
+    border: 3px outset transparent;
+    border-color: var(--blue-light);
+}
+
+/* Red Grid Element Styles */
+
+.grid-element.grid-red {
+    background-color: var(--red-norm-alpha);
+    border: 3px outset transparent;
+    border-color: var(--red-light);
+}
+
+/* Red Progressbar Element Styles */
+
+.progress.progress-red .progress-bar {
+    background: var(--red-hover);
+    border-color: var(--red-norm);
+}
+
+.progress.progress-red:hover .progress-bar {
+    background: var(--red-light);
+    border-color: var(--red-hover);
+}
+
+/* Blue Progressbar Element Styles */
+
+.progress.progress-blue .progress-bar {
+    background: var(--blue-hover);
+    border-color: var(--blue-norm);
+}
+
+.progress.progress-blue:hover .progress-bar {
+    background: var(--blue-light);
+    border-color: var(--blue-hover);
+}
+
+/* White Progressbar Element Styles */
+
+.progress.progress-white .progress-bar {
+    background: var(--white-hover);
+    border-color: var(--white-norm);
+}
+
+.progress.progress-white:hover .progress-bar {
+    background: var(--white-light);
+    border-color: var(--white-hover);
+}
+
+/* Black Progressbar Element Styles */
+
+.progress.progress-black .progress-bar {
+    background: var(--black-hover);
+    border-color: var(--black-norm);
+}
+
+.progress.progress-black:hover .progress-bar {
+    background: var(--black-light);
+    border-color: var(--black-norm);
+}
+
+
+/* Opaque overwrite */
+
+.grid-element.grid-white.opaque {
+    background-color: var(--white-dark);
+}
+
+.grid-element.grid-black.opaque {
+    background-color: var(--black-dark);
+}
+
+
+
+.content-stage-info>.grid-element:hover {
+    background-color: var(--white-dark);
+}

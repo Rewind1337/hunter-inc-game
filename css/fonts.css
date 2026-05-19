@@ -1,0 +1,28 @@
+.geo-font,
+#tooltip-header,
+#tooltip-bottom,
+.header,
+.job-name,
+.job-amount,
+.button,
+.button * {
+    font-family: "Geo", sans-serif;
+    font-weight: 400;
+    font-style: normal;
+}
+
+.geo-font-italic,
+.text {
+    font-family: "Geo", sans-serif;
+    font-weight: 400;
+    font-style: italic;
+}
+
+.roboto-font,
+div,
+p {
+    font-family: "Roboto", sans-serif;
+    font-optical-sizing: auto;
+    font-weight: 400;
+    font-style: normal;
+}
