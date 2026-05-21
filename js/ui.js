@@ -47,7 +47,7 @@ function updateResourceAmounts() {
     let resourceArray = Object.values(game.resource)
     for (let i = 0; i < resourceArray.length; i++) {
         let resource = resourceArray[i]
-        let resourceElement = document.getElementById("resource-" + resource.id)
+        let resourceElement = document.getElementById(resource.id)
         let resourceValueElement = resourceElement.querySelector(".resource-amount")
         if (resource.max == -1) {
             resourceValueElement.innerHTML = resource.current
@@ -60,79 +60,48 @@ function updateResourceAmounts() {
 }
 
 // forces the appropriate display
-// (resource.hidden needs to be false)
+// (resource.unlocked needs to be true)
 function updateResourceVisibility() {
     let resourceArray = Object.values(game.resource)
     for (let i = 0; i < resourceArray.length; i++) {
         let resource = resourceArray[i]
-        let resourceElement = document.getElementById("resource-" + resource.id)
-        resourceElement.style.display = (resource.hidden ? "none" : "flex")
+        let resourceElement = document.getElementById(resource.id)
+        resourceElement.style.display = (resource.unlocked ? "flex" : "none")
     }
 }
 
-// forces the resource with resourceID display to flex
-function makeResourceVisible(resourceID) {
-    game.resource[resourceID].hidden = false
-    let resourceElement = document.getElementById("resource-" + resourceID)
-    resourceElement.style.display = "flex"
-}
-
 // forces the appropriate display of all recovery buttons
-// (game.recoveryButtons[n].hidden needs to be false)
+// (game.recoveryButtons[n].unlocked needs to be true)
 function updateRecoveryButtonVisibility() {
     let buttonsArray = Object.values(game.recoveryButtons)
     for (let i = 0; i < buttonsArray.length; i++) {
         let button = buttonsArray[i]
-        let buttonElement = document.getElementById(button.id + "-button")
-        buttonElement.style.display = (button.hidden ? "none" : "flex")
+        let buttonElement = document.getElementById(button.id)
+        buttonElement.style.display = (button.unlocked ? "flex" : "none")
         let sectionID = buttonsArray[i].section
         let sectionElement = document.getElementById(sectionID)
-        sectionElement.style.display = (button.hidden ? "none" : "flex")
+        sectionElement.style.display = (button.unlocked ? "flex" : "none")
     }
 }
 
-// forces the recovery button with buttonID display to flex
-function makeRecoveryButtonVisible(buttonID) {
-    game.recoveryButtons[buttonID].hidden = false
-    let buttonElement = document.getElementById(buttonID + "-button")
-    buttonElement.style.display = "flex"
-    let sectionID = game.recoveryButtons[buttonID].section
-    let sectionElement = document.getElementById(sectionID)
-    sectionElement.style.display = "flex"
-}
-
 // forces the appropriate display of all job assignments
-// (game.jobs[n].hidden needs to be false)
+// (game.jobs[n].unlocked needs to be true)
 function updateJobVisibility() {
     let jobsArray = Object.values(game.jobs)
     for (let i = 0; i < jobsArray.length; i++) {
         let job = jobsArray[i]
-        let jobElement = document.getElementById("job-" + job.id)
-        jobElement.style.display = (job.hidden ? "none" : "flex")
+        let jobElement = document.getElementById(job.id)
+        jobElement.style.display = (job.unlocked ? "flex" : "none")
     }
 }
 
-// forces the job-assignment with jobID display to flex
-function makeJobVisible(jobID) {
-    game.jobs[jobID].hidden = false
-    let jobElement = document.getElementById("job-" + jobID)
-    jobElement.style.display = "flex"
-}
-
 // forces the appropriate display of all mech buttons
-// (game.mechButtons[n].hidden needs to be false)
+// (game.mechButtons[n].unlocked needs to be true)
 function updateMechButtonVisibility() {
     let buttonArray = Object.values(game.mechButtons)
     for (let i = 0; i < buttonArray.length; i++) {
         let button = buttonArray[i]
-        let buttonElement = document.getElementById(button.id + "-button")
-        buttonElement.style.display = (button.hidden ? "none" : "flex")
+        let buttonElement = document.getElementById(button.id)
+        buttonElement.style.display = (button.unlocked ? "flex" : "none")
     }
-}
-
-// forces the mech workshop button with buttonID display to flex
-function makeMechButtonVisible(buttonID) {
-    game.mechButtons[buttonID].hidden = false
-    let buttonElement = document.getElementById(buttonID + "-job")
-    buttonElement.style.display = "flex"
 }
