@@ -1,18 +1,18 @@
 const INITIAL_RECOVERY_STATE = {
     currentState: "recovery", // may come in handy
     resource: { // resource data
-        "energy": { id: "resource-energy", name: "Energy", current: 0, max: 0, unlocked: false },
-        "robots": { id: "resource-robots", name: "Robots", current: 0, max: 0, unlocked: false },
-        "drones": { id: "resource-drones", name: "Drones", current: 0, max: 0, unlocked: false },
-        "wood": { id: "resource-wood", name: "Wood", current: 0, max: 100, unlocked: true },
-        "scrap": { id: "resource-scrap", name: "Scrap", current: 0, max: 100, unlocked: true },
-        "squares": { id: "resource-squares", name: "Squares", current: 0, max: 50, unlocked: false },
-        "circles": { id: "resource-circles", name: "Circles", current: 0, max: 50, unlocked: false },
-        "triangles": { id: "resource-triangles", name: "Triangles", current: 0, max: 50, unlocked: false },
-        "cubes": { id: "resource-cubes", name: "Cubes", current: 0, max: 50, unlocked: false },
+        "energy": { id: "resource-energy", name: "Energy", current: 0, capacity: 100, capacityMultiplier: 1, unlocked: false },
+        "robots": { id: "resource-robots", name: "Robots", current: 0, capacity: 0, capacityMultiplier: 1, unlocked: false },
+        "drones": { id: "resource-drones", name: "Drones", current: 0, capacity: 0, capacityMultiplier: 1, unlocked: false },
+        "wood": { id: "resource-wood", name: "Wood", current: 0, capacity: 100, capacityMultiplier: 1, unlocked: true },
+        "scrap": { id: "resource-scrap", name: "Scrap", current: 0, capacity: 100, capacityMultiplier: 1, unlocked: true },
+        "squares": { id: "resource-squares", name: "Squares", current: 0, capacity: 50, capacityMultiplier: 1, unlocked: false },
+        "circles": { id: "resource-circles", name: "Circles", current: 0, capacity: 50, capacityMultiplier: 1, unlocked: false },
+        "triangles": { id: "resource-triangles", name: "Triangles", current: 0, capacity: 50, capacityMultiplier: 1, unlocked: false },
+        "cubes": { id: "resource-cubes", name: "Cubes", current: 0, capacity: 50, capacityMultiplier: 1, unlocked: false },
     },
     special: { // hidden data
-        "salvage-old-mech-left": 5
+        "salvage-old-mech-left": 250
     },
     jobs: { // job data
         "idle-robot": { id: "job-idle-robot", name: "Idle Robot", current: 0, max: 0, unlocked: false },
@@ -59,12 +59,24 @@ const INITIAL_RECOVERY_STATE = {
             id: "wood-burner-button", name: "Wood Burner", section: "recovery-section-buildings", unlocked: false,
             current: 0, max: -1,
         },
+        "energy-storage": {
+            id: "energy-storage-button", name: "Energy Storage", section: "recovery-section-buildings", unlocked: false,
+            current: 0, max: -1,
+        },
         "robot-housing": {
             id: "robot-housing-button", name: "Robot Housing", section: "recovery-section-buildings", unlocked: false,
             current: 0, max: -1,
         },
+        "resource-storage": {
+            id: "resource-storage-button", name: "Resource Storage", section: "recovery-section-buildings", unlocked: false,
+            current: 0, max: -1,
+        },
         "windmill": {
             id: "windmill-button", name: "Windmill", section: "recovery-section-buildings", unlocked: false,
+            current: 0, max: -1,
+        },
+        "shape-factory": {
+            id: "shape-factory-button", name: "Shape Factory", section: "recovery-section-buildings", unlocked: false,
             current: 0, max: -1,
         },
         "solar-panel": {

@@ -31,8 +31,8 @@ function updateResourceAmounts() {
         if (resource.max == -1) {
             resourceValueElement.innerHTML = niceFormat(resource.current)
         } else {
-            resourceValueElement.innerHTML = niceFormat(resource.current) + " / " + niceFormat(resource.max)
-            let fillPercentage = (resource.current / resource.max) * 100
+            resourceValueElement.innerHTML = niceFormat(resource.current) + " / " + niceFormat(resource.capacity * resource.capacityMultiplier)
+            let fillPercentage = (resource.current / resource.capacity * resource.capacityMultiplier) * 100
             resourceElement.style.background = 'linear-gradient(90deg,var(--black-norm) ' + fillPercentage + '%, #00000000 0%)'
         }
     }

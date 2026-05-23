@@ -9,16 +9,18 @@ const UNLOCKS = [
     { conditions: [{ recoveryButton: "salvage-scrap", amount: 1 }], targets: [{ resource: "squares" }, { resource: "circles" }, { resource: "triangles" }] },
 
     { conditions: COSTS_GAINS.recoveryButtons["wood-burner"].costs, targets: [{ recoveryButton: "wood-burner" }] },
+    { conditions: COSTS_GAINS.recoveryButtons["energy-storage"].costs, targets: [{ recoveryButton: "energy-storage" }] },
     { conditions: COSTS_GAINS.recoveryButtons["robot-housing"].costs, targets: [{ recoveryButton: "robot-housing" }] },
+    { conditions: COSTS_GAINS.recoveryButtons["resource-storage"].costs, targets: [{ recoveryButton: "resource-storage" }] },
     { conditions: COSTS_GAINS.recoveryButtons["windmill"].costs, targets: [{ recoveryButton: "windmill" }] },
+    { conditions: COSTS_GAINS.recoveryButtons["shape-factory"].costs, targets: [{ recoveryButton: "shape-factory" }] },
     { conditions: COSTS_GAINS.recoveryButtons["solar-panel"].costs, targets: [{ recoveryButton: "solar-panel" }] },
-    { conditions: COSTS_GAINS.recoveryButtons["mech-workshop"].costs, targets: [{ recoveryButton: "mech-workshop" }] },
+    { conditions: COSTS_GAINS.recoveryButtons["mech-workshop"].costs, targets: [{ recoveryButton: "mech-workshop" }, { tabButton: "mech-workshop" }, { job: "factory-bot" }, { mechButton: "mech-frame" }, { mechButton: "mech-armor" }, { mechButton: "mech-recovery" }, { mechButton: "mech-joints" }, { mechButton: "mech-vision" }, { mechButton: "mech-weapons" }] },
     { conditions: COSTS_GAINS.recoveryButtons["drone-dock"].costs, targets: [{ recoveryButton: "drone-dock" }] },
 
     { conditions: [{ resource: "squares", amount: 100 }, { resource: "circles", amount: 100 }, { resource: "triangles", amount: 100 }], targets: [{ resource: "cubes" }] },
 
     { conditions: [{ resource: "robots", amount: 1 }], targets: [{ job: "scrap-collector" }, { job: "woodcutter" }, { job: "idle-robot" }, { tabButton: "jobs" }] },
-    { conditions: [{ recoveryButton: "mech-workshop", amount: 1 }], targets: [{ tabButton: "mech-workshop" }, { job: "factory-bot" }, { mechButton: "mech-frame" }, { mechButton: "mech-armor" }, { mechButton: "mech-recovery" }, { mechButton: "mech-joints" }, { mechButton: "mech-vision" }, { mechButton: "mech-weapons" }] },
 ]
 
 // gets run once on page load at the moment

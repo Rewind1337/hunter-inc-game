@@ -17,6 +17,7 @@ body {
     align-self: center;
     overflow: hidden;
     margin-bottom: 4px;
+    white-space: nowrap;
 }
 
 .button img {

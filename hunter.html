@@ -1,0 +1,137 @@
+<!doctype html>
+
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+
+  <title>Idle</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet"
+    href="https://fonts.googleapis.com/css2?&family=Geo:ital@0;1&family=Roboto+Slab:wght@600&family=Roboto:wdth@95&display=swap">
+
+  <link rel="stylesheet" href="./libs/reset.css">
+  <link rel="stylesheet" href="./css/fonts.css">
+  <link rel="stylesheet" href="./css/colors.css">
+  <link rel="stylesheet" href="./css/layout.css">
+  <link rel="stylesheet" href="./css/grids.css">
+  <link rel="stylesheet" href="./css/styles.css">
+</head>
+
+<body>
+
+  <div id="tooltip" class="grid-element">
+    <div id="tooltip-header">name and stuff</div>
+    <hr />
+    <div id="tooltip-content">Lorem ipsum my ass</div>
+    <hr />
+    <div id="tooltip-bottom">costs and stuff</div>
+  </div>
+
+  <div id="main-grid">
+    <div id="main-top" class="flex-row justify-between grid-element grid-white">
+
+    </div>
+    <div id="main-left" class="flex-col no-gaps">
+
+    </div>
+    <div id="main-center" class="flex-col no-gaps h-100">
+      <div class="flex-row no-gaps w-100"> <!-- your top row with the stats and stuff -->
+        <div class="grid-element grid-blue flex-col w-75 align-center">
+          <div class="header">your stats</div>
+          <div>stats</div>
+          <div>stats</div>
+        </div>
+        <div class="grid-element grid-white flex-col w-100 align-center">
+          <div class="header">campaign info</div>
+          <div>info</div>
+          <div>info</div>
+        </div>
+        <div class="grid-element grid-red flex-col w-75 align-center">
+          <div class="header">enemy stats</div>
+          <div>stats</div>
+          <div>stats</div>
+        </div>
+      </div>
+      <div class="spacer flex-grow"></div>
+      <div class="flex-row flex-wrap no-gaps"> <!-- your bottom row with the buttons or more -->
+        <button id="button-1" class="button button-white w-25">
+          <div class="button-content">
+            <div class="button-start"></div>
+            <div class="button-text flex-grow">HIT THAT SHIT</div>
+            <div class="button-end"></div>
+          </div>
+        </button>
+        <button id="button-2" class="button button-red w-25">
+          <div class="button-content">
+            <div class="button-start"></div>
+            <div class="button-text flex-grow">HIT THAT SHIT</div>
+            <div class="button-end"></div>
+          </div>
+        </button>
+        <button id="button-3" class="button button-blue w-25">
+          <div class="button-content">
+            <div class="button-start"></div>
+            <div class="button-text flex-grow">HIT THAT SHIT</div>
+            <div class="button-end"></div>
+          </div>
+        </button>
+        <button id="button-4" class="button button-white w-25">
+          <div class="button-content">
+            <div class="button-start"></div>
+            <div class="button-text flex-grow">HIT THAT SHIT</div>
+            <div class="button-end"></div>
+          </div>
+        </button>
+        <button id="button-1" class="button button-red w-25">
+          <div class="button-content">
+            <div class="button-start"></div>
+            <div class="button-text flex-grow">HIT THAT SHIT</div>
+            <div class="button-end"></div>
+          </div>
+        </button>
+        <button id="button-2" class="button button-blue w-25">
+          <div class="button-content">
+            <div class="button-start"></div>
+            <div class="button-text flex-grow">HIT THAT SHIT</div>
+            <div class="button-end"></div>
+          </div>
+        </button>
+        <button id="button-3" class="button button-white w-25">
+          <div class="button-content">
+            <div class="button-start"></div>
+            <div class="button-text flex-grow">HIT THAT SHIT</div>
+            <div class="button-end"></div>
+          </div>
+        </button>
+        <button id="button-4" class="button button-red w-25">
+          <div class="button-content">
+            <div class="button-start"></div>
+            <div class="button-text flex-grow">HIT THAT SHIT</div>
+            <div class="button-end"></div>
+          </div>
+        </button>
+      </div>
+    </div>
+    <div id="main-right" class="flex-col no-gaps">
+
+    </div>
+    <div id="main-bottom" class="grid-element grid-white">
+
+    </div>
+  </div>
+
+  <script src="./libs/p5.min.js"></script>
+  <script src="./libs/utils.js"></script>
+  <script src="./js/constants.js"></script>
+  <script src="./js/cost-gain.js"></script>
+  <script src="./js/tooltip.js"></script>
+  <script src="./js/ui.js"></script>
+  <script src="./js/unlocks.js"></script>
+  <script src="./js/hunter.js"></script>
+
+</body>
+
+</html>

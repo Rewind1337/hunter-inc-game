@@ -83,15 +83,20 @@ function checkCosts(costs) {
 function addGainToResource(gain) {
     if (gain.resource) {
         let gameResource = game.resource[gain.resource]
-        if (gameResource.max < 0) { // no cap
+        if (gameResource.capacity < 0) { // no cap
             gameResource.current += gain.amount
         } else { // VOIDS excess
-            gameResource.current = Math.min(gameResource.max, gameResource.current + gain.amount)
+            gameResource.current = Math.min((gameResource.capacity * gameResource.capacityMultiplier), gameResource.current + gain.amount)
         }
     }
 
+    if (gain.resourceCapacity) {
+        let gameResource = game.resource[gain.resourceCapacity]
+        gameResource.capacity += gain.amount
+    }
+
     if (gain.special) { // we can just expand this once we need it, just one thing at the moment
-        game.special[gain.special].current += gain.amount
+        game.special[gain.special] += gain.amount
     }
 }
 
@@ -106,12 +111,12 @@ function addAllGainsToResources(gains) {
 // subtracts a single cost from the appropriate resource
 function subtractCostFromResource(cost) {
     if (cost.resource) {
-        assert(game.resource[cost.resource].current > cost.amount, "not enough resources to subtract " + cost.amount + " from " + game.resource[cost.resource].name)
+        assert(game.resource[cost.resource].current >= cost.amount, "not enough resources to subtract " + cost.amount + " from " + game.resource[cost.resource].name)
         game.resource[cost.resource].current -= cost.amount
     }
 
     if (cost.special) {
-        assert(game.special[cost.special] > cost.amount, "not enough (special) resources to subtract " + cost.amount + " from " + Object.keys(game.special)[0])
+        assert(game.special[cost.special] >= cost.amount, "not enough (special) resources to subtract " + cost.amount + " from " + Object.keys(game.special)[0])
         game.special[cost.special] -= cost.amount
     }
 }
