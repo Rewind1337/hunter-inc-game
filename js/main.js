@@ -38,19 +38,32 @@ function tick(dt) {
 // runs the startup function
 setupInitialState()
 
-// handles the "gather" buttons in the recovery tab
-function recoveryGatherButtonPressed(buttonID) {
+// handles the buttons in the recovery tab
+function recoveryButtonPressed(buttonID) {
     let button = game.recoveryButtons[buttonID]
     // check for costs
-    let canAfford = true
-    for (let i = 0; i < button.costs.length; i++) {
-        let cost = button.costs[i]
+    let canAfford = checkCosts(button.costs)
+    // duh
+    if (canAfford) {
+        // remove the resources
+        subtractAllCostsFromResources(button.costs)
+        // add the gains
+        addAllGainsToResources(button.gains)
+        // unlock conditions and logic
+        button.current++ // increment the button.current for logic and conditions and stuff
+        updateResourceAmounts() // update HTML
+        checkAllUnlockThings()
+    }
+}
+
+function checkCosts(costs) {
+    for (let i = 0; i < costs.length; i++) {
+        let cost = costs[i]
         if (cost.resource) {
             let resourceID = cost.resource
             let amount = cost.amount
             if (game.resource[resourceID].current < amount) {
-                canAfford = false
-                return; // stop the function
+                return false; // stop the function
             }
         }
 
@@ -58,30 +71,67 @@ function recoveryGatherButtonPressed(buttonID) {
             let specialID = cost.special
             let amount = cost.amount
             if (game.special[specialID] < amount) {
-                canAfford = false
-                return; // stop the function
+                return false; // stop the function
             }
         }
     }
-    // just in case, check anyway
-    if (canAfford) {
-        // remove the resources
-        for (let i = 0; i < button.costs.length; i++) {
-            let cost = button.costs[i]
-            if (cost.resource) { game.resource[cost.resource].current -= cost.amount }
-            if (cost.special) { game.special[cost.special] -= cost.amount }
-        }
-        // add the gains
-        for (let i = 0; i < button.gains.length; i++) {
-            let gain = button.gains[i]
-            let resourceID = gain.resource
-            let amount = gain.amount
-            game.resource[resourceID].current += amount
-            updateResourceAmounts() // update HTML
-        }
+    return true;
+}
+
+// resource functions, very specific about the way the json is shaped but its simple enough
+// adds a single gain to the appropriate resource
+function addGainToResource(gain) {
+    if (gain.resource) {
+        game.resource[gain.resource].current += gain.amount
+    }
+
+    if (gain.special) {
+        game.special[gain.special].current += gain.amount
     }
 }
 
-document.getElementById("salvage-old-mech-button").onclick = () => { recoveryGatherButtonPressed("salvage-old-mech") }
-document.getElementById("gather-wood-button").onclick = () => { recoveryGatherButtonPressed("gather-wood") }
-document.getElementById("collect-scrap-button").onclick = () => { recoveryGatherButtonPressed("collect-scrap") }
+// adds a whole array of gains to the appropriate resources
+function addAllGainsToResources(gains) {
+    for (let i = 0; i < gains.length; i++) {
+        let gain = gains[i]
+        addGainToResource(gain)
+    }
+}
+
+// subtracts a single cost from the appropriate resource
+function subtractCostFromResource(cost) {
+    if (cost.resource) {
+        game.resource[cost.resource].current -= cost.amount
+    }
+
+    if (cost.special) {
+        game.special[cost.special] -= cost.amount
+    }
+}
+
+// subtracts a whole array of costs from the appropriate resources
+function subtractAllCostsFromResources(costs) {
+    for (let i = 0; i < costs.length; i++) {
+        let cost = costs[i]
+        subtractCostFromResource(cost)
+    }
+}
+
+// link gather buttons
+document.getElementById("salvage-old-mech-button").onclick = () => { recoveryButtonPressed("salvage-old-mech") }
+document.getElementById("gather-wood-button").onclick = () => { recoveryButtonPressed("gather-wood") }
+document.getElementById("collect-scrap-button").onclick = () => { recoveryButtonPressed("collect-scrap") }
+
+// link action buttons
+document.getElementById("burn-wood-button").onclick = () => { recoveryButtonPressed("burn-wood") }
+document.getElementById("salvage-scrap-button").onclick = () => { recoveryButtonPressed("salvage-scrap") }
+document.getElementById("create-robot-button").onclick = () => { recoveryButtonPressed("create-robot") }
+document.getElementById("create-drone-button").onclick = () => { recoveryButtonPressed("create-drone") }
+
+// link building buttons
+document.getElementById("wood-burner-button").onclick = () => { recoveryButtonPressed("wood-burner") }
+document.getElementById("robot-housing-button").onclick = () => { recoveryButtonPressed("robot-housing") }
+document.getElementById("windmill-button").onclick = () => { recoveryButtonPressed("windmill") }
+document.getElementById("solar-panel-button").onclick = () => { recoveryButtonPressed("solar-panel") }
+document.getElementById("mech-workshop-button").onclick = () => { recoveryButtonPressed("mech-workshop") }
+document.getElementById("drone-dock-button").onclick = () => { recoveryButtonPressed("drone-dock") }
