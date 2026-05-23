@@ -1,19 +1,3 @@
-// binds the left sidebar button to the left sidebar function
-let LEFT_SIDEBAR_TOGGLE_BUTTON = document.getElementById("top-menu-left-button")
-let LEFT_SIDEBAR_ELEMENT = document.getElementById("main-left")
-LEFT_SIDEBAR_TOGGLE_BUTTON.onclick = () => {
-    LEFT_SIDEBAR_TOGGLE_BUTTON.classList.toggle("open")
-    LEFT_SIDEBAR_ELEMENT.classList.toggle("visible")
-}
-
-// binds the right sidebar button to the right sidebar function
-let RIGHT_SIDEBAR_TOGGLE_BUTTON = document.getElementById("top-menu-right-button")
-let RIGHT_SIDEBAR_ELEMENT = document.getElementById("main-right")
-RIGHT_SIDEBAR_TOGGLE_BUTTON.onclick = () => {
-    RIGHT_SIDEBAR_TOGGLE_BUTTON.classList.toggle("open")
-    RIGHT_SIDEBAR_ELEMENT.classList.toggle("visible")
-}
-
 // used for accessing the tab you just switched off, check switchCenterTab
 let ACTIVE_TAB = "recovery"
 
@@ -32,11 +16,6 @@ function switchCenterTab(tabID) {
     document.getElementById("main-section-" + tabID).style.display = "flex"
 }
 
-// binds the center tab buttons to the switchCenterTab function
-document.getElementById("center-recovery-button").onclick = () => { switchCenterTab("recovery") }
-document.getElementById("center-jobs-button").onclick = () => { switchCenterTab("jobs") }
-document.getElementById("center-mech-workshop-button").onclick = () => { switchCenterTab("mech-workshop") }
-
 // forces the center button with buttonID display to flex
 function makeTabButtonVisible(buttonID) {
     document.getElementById("center-" + buttonID + "-button").style.display = "flex"
@@ -50,9 +29,9 @@ function updateResourceAmounts() {
         let resourceElement = document.getElementById(resource.id)
         let resourceValueElement = resourceElement.querySelector(".resource-amount")
         if (resource.max == -1) {
-            resourceValueElement.innerHTML = resource.current
+            resourceValueElement.innerHTML = niceFormat(resource.current)
         } else {
-            resourceValueElement.innerHTML = resource.current + " / " + resource.max
+            resourceValueElement.innerHTML = niceFormat(resource.current) + " / " + niceFormat(resource.max)
             let fillPercentage = (resource.current / resource.max) * 100
             resourceElement.style.background = 'linear-gradient(90deg,var(--black-norm) ' + fillPercentage + '%, #00000000 0%)'
         }

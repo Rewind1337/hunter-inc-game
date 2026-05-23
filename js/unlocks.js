@@ -8,14 +8,14 @@ const UNLOCKS = [
     { conditions: [{ recoveryButton: "drone-dock", amount: 1 }], targets: [{ recoveryButton: "create-drone" }, { resource: "drones" }] },
     { conditions: [{ recoveryButton: "salvage-scrap", amount: 1 }], targets: [{ resource: "squares" }, { resource: "circles" }, { resource: "triangles" }] },
 
-    { conditions: [{ resource: "wood", amount: 25 / 2 }, { resource: "scrap", amount: 25 / 2 }], targets: [{ recoveryButton: "wood-burner" }] },
-    { conditions: [{ resource: "wood", amount: 50 / 2 }, { resource: "scrap", amount: 100 / 2 }], targets: [{ recoveryButton: "robot-housing" }] },
-    { conditions: [{ resource: "wood", amount: 200 / 2 }, { resource: "scrap", amount: 200 / 2 }], targets: [{ recoveryButton: "windmill" }] },
-    { conditions: [{ resource: "wood", amount: 250 / 2 }, { resource: "scrap", amount: 500 / 2 }], targets: [{ recoveryButton: "solar-panel" }] },
-    { conditions: [{ resource: "wood", amount: 1000 / 2 }, { resource: "scrap", amount: 1250 / 2 }], targets: [{ recoveryButton: "mech-workshop" }] },
-    { conditions: [{ resource: "wood", amount: 500 / 2 }, { resource: "scrap", amount: 2250 / 2 }], targets: [{ recoveryButton: "drone-dock" }] },
+    { conditions: COSTS_GAINS.recoveryButtons["wood-burner"].costs, targets: [{ recoveryButton: "wood-burner" }] },
+    { conditions: COSTS_GAINS.recoveryButtons["robot-housing"].costs, targets: [{ recoveryButton: "robot-housing" }] },
+    { conditions: COSTS_GAINS.recoveryButtons["windmill"].costs, targets: [{ recoveryButton: "windmill" }] },
+    { conditions: COSTS_GAINS.recoveryButtons["solar-panel"].costs, targets: [{ recoveryButton: "solar-panel" }] },
+    { conditions: COSTS_GAINS.recoveryButtons["mech-workshop"].costs, targets: [{ recoveryButton: "mech-workshop" }] },
+    { conditions: COSTS_GAINS.recoveryButtons["drone-dock"].costs, targets: [{ recoveryButton: "drone-dock" }] },
 
-    { conditions: [{ resource: "squares", amount: 100 / 2 }, { resource: "circles", amount: 100 / 2 }, { resource: "triangles", amount: 100 / 2 }], targets: [{ resource: "cubes" }] },
+    { conditions: [{ resource: "squares", amount: 100 }, { resource: "circles", amount: 100 }, { resource: "triangles", amount: 100 }], targets: [{ resource: "cubes" }] },
 
     { conditions: [{ resource: "robots", amount: 1 }], targets: [{ job: "scrap-collector" }, { job: "woodcutter" }, { job: "idle-robot" }, { tabButton: "jobs" }] },
     { conditions: [{ recoveryButton: "mech-workshop", amount: 1 }], targets: [{ tabButton: "mech-workshop" }, { job: "factory-bot" }, { mechButton: "mech-frame" }, { mechButton: "mech-armor" }, { mechButton: "mech-recovery" }, { mechButton: "mech-joints" }, { mechButton: "mech-vision" }, { mechButton: "mech-weapons" }] },
@@ -29,6 +29,16 @@ function initUnlocks() {
         if (game.unlocks[i].SKIP === undefined) {
             game.unlocks[i].SKIP = false
         }
+
+        // halves (or less, changeable) every RESOURCE cost (not buildings, not special, etc) on EVERY entry,
+        // so we can reuse the cost-gain.js data & just modify it here
+        for (let j = 0; j < game.unlocks[i].conditions.length; j++) {
+            let cost = game.unlocks[i].conditions[j]
+            if (cost.resource) {
+                cost.amount = cost.amount / 2
+            }
+        }
+
         // generates an id to use for some reason maybe?
         let finalID = "unlock"
         let unlockTargets = game.unlocks[i].targets

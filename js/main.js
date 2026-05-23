@@ -3,7 +3,11 @@ let game = {}
 
 // runs on page load
 function setupInitialState() {
+    linkFunctionsToHTML() // link all the functions
+
     game = deepCopy(INITIAL_RECOVERY_STATE) // copy default state from constants.js
+    initCostsAndGains() // fill the recovery state with default costs and gains from cost-gain.js
+
     game.unlocks = deepCopy(UNLOCKS) // copy default unlocks from unlocks.js
     initUnlocks() // make sure the fields are there
 
@@ -35,9 +39,6 @@ function tick(dt) {
 
 }
 
-// runs the startup function
-setupInitialState()
-
 // handles the buttons in the recovery tab
 function recoveryButtonPressed(buttonID) {
     let button = game.recoveryButtons[buttonID]
@@ -49,7 +50,6 @@ function recoveryButtonPressed(buttonID) {
         subtractAllCostsFromResources(button.costs)
         // add the gains
         addAllGainsToResources(button.gains)
-        // unlock conditions and logic
         button.current++ // increment the button.current for logic and conditions and stuff
         updateResourceAmounts() // update HTML
         checkAllUnlockThings()
@@ -82,10 +82,15 @@ function checkCosts(costs) {
 // adds a single gain to the appropriate resource
 function addGainToResource(gain) {
     if (gain.resource) {
-        game.resource[gain.resource].current += gain.amount
+        let gameResource = game.resource[gain.resource]
+        if (gameResource.max < 0) { // no cap
+            gameResource.current += gain.amount
+        } else { // VOIDS excess
+            gameResource.current = Math.min(gameResource.max, gameResource.current + gain.amount)
+        }
     }
 
-    if (gain.special) {
+    if (gain.special) { // we can just expand this once we need it, just one thing at the moment
         game.special[gain.special].current += gain.amount
     }
 }
@@ -101,10 +106,12 @@ function addAllGainsToResources(gains) {
 // subtracts a single cost from the appropriate resource
 function subtractCostFromResource(cost) {
     if (cost.resource) {
+        assert(game.resource[cost.resource].current > cost.amount, "not enough resources to subtract " + cost.amount + " from " + game.resource[cost.resource].name)
         game.resource[cost.resource].current -= cost.amount
     }
 
     if (cost.special) {
+        assert(game.special[cost.special] > cost.amount, "not enough (special) resources to subtract " + cost.amount + " from " + Object.keys(game.special)[0])
         game.special[cost.special] -= cost.amount
     }
 }
@@ -117,21 +124,43 @@ function subtractAllCostsFromResources(costs) {
     }
 }
 
-// link gather buttons
-document.getElementById("salvage-old-mech-button").onclick = () => { recoveryButtonPressed("salvage-old-mech") }
-document.getElementById("gather-wood-button").onclick = () => { recoveryButtonPressed("gather-wood") }
-document.getElementById("collect-scrap-button").onclick = () => { recoveryButtonPressed("collect-scrap") }
+function linkFunctionsToHTML() {
+    // binds the left sidebar button to the left sidebar function
+    document.getElementById("top-menu-left-button").onclick = () => {
+        document.getElementById("top-menu-left-button").classList.toggle("open")
+        document.getElementById("main-left").classList.toggle("visible")
+    }
 
-// link action buttons
-document.getElementById("burn-wood-button").onclick = () => { recoveryButtonPressed("burn-wood") }
-document.getElementById("salvage-scrap-button").onclick = () => { recoveryButtonPressed("salvage-scrap") }
-document.getElementById("create-robot-button").onclick = () => { recoveryButtonPressed("create-robot") }
-document.getElementById("create-drone-button").onclick = () => { recoveryButtonPressed("create-drone") }
+    // binds the right sidebar button to the right sidebar function
+    document.getElementById("top-menu-right-button").onclick = () => {
+        document.getElementById("top-menu-right-button").classList.toggle("open")
+        document.getElementById("main-right").classList.toggle("visible")
+    }
 
-// link building buttons
-document.getElementById("wood-burner-button").onclick = () => { recoveryButtonPressed("wood-burner") }
-document.getElementById("robot-housing-button").onclick = () => { recoveryButtonPressed("robot-housing") }
-document.getElementById("windmill-button").onclick = () => { recoveryButtonPressed("windmill") }
-document.getElementById("solar-panel-button").onclick = () => { recoveryButtonPressed("solar-panel") }
-document.getElementById("mech-workshop-button").onclick = () => { recoveryButtonPressed("mech-workshop") }
-document.getElementById("drone-dock-button").onclick = () => { recoveryButtonPressed("drone-dock") }
+    // binds the center tab buttons to the switchCenterTab function
+    document.getElementById("center-recovery-button").onclick = () => { switchCenterTab("recovery") }
+    document.getElementById("center-jobs-button").onclick = () => { switchCenterTab("jobs") }
+    document.getElementById("center-mech-workshop-button").onclick = () => { switchCenterTab("mech-workshop") }
+
+    // link gather buttons
+    document.getElementById("salvage-old-mech-button").onclick = () => { recoveryButtonPressed("salvage-old-mech") }
+    document.getElementById("gather-wood-button").onclick = () => { recoveryButtonPressed("gather-wood") }
+    document.getElementById("collect-scrap-button").onclick = () => { recoveryButtonPressed("collect-scrap") }
+
+    // link action buttons
+    document.getElementById("burn-wood-button").onclick = () => { recoveryButtonPressed("burn-wood") }
+    document.getElementById("salvage-scrap-button").onclick = () => { recoveryButtonPressed("salvage-scrap") }
+    document.getElementById("create-robot-button").onclick = () => { recoveryButtonPressed("create-robot") }
+    document.getElementById("create-drone-button").onclick = () => { recoveryButtonPressed("create-drone") }
+
+    // link building buttons
+    document.getElementById("wood-burner-button").onclick = () => { recoveryButtonPressed("wood-burner") }
+    document.getElementById("robot-housing-button").onclick = () => { recoveryButtonPressed("robot-housing") }
+    document.getElementById("windmill-button").onclick = () => { recoveryButtonPressed("windmill") }
+    document.getElementById("solar-panel-button").onclick = () => { recoveryButtonPressed("solar-panel") }
+    document.getElementById("mech-workshop-button").onclick = () => { recoveryButtonPressed("mech-workshop") }
+    document.getElementById("drone-dock-button").onclick = () => { recoveryButtonPressed("drone-dock") }
+}
+
+// when html is done loading
+document.addEventListener("DOMContentLoaded", function () { setupInitialState() });
