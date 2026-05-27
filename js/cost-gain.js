@@ -136,4 +136,9 @@ function initCostsAndGains() {
         button.costs = COSTS_GAINS.recoveryButtons[key].costs
         button.gains = COSTS_GAINS.recoveryButtons[key].gains
     }
+    for (let key in game.mechButtons) {
+        let button = game.mechButtons[key]
+        button.costs = COSTS_GAINS.mechButtons[key].costs
+        button.gains = COSTS_GAINS.mechButtons[key].gains
+    }
 }

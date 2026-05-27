@@ -21,6 +21,26 @@ function makeTabButtonVisible(buttonID) {
     document.getElementById("center-" + buttonID + "-button").style.display = "flex"
 }
 
+// runs through every recoveryButton and mechButton and checks if you can afford it
+function checkAllButtonCostsAffordable() {
+    let buttonsToCheck = [game.recoveryButtons, game.mechButtons]
+    for (let i = 0; i < buttonsToCheck.length; i++) {
+        for (let key in buttonsToCheck[i]) {
+            let button = buttonsToCheck[i][key]
+            let canAfford = checkCosts(button.costs)
+            if (canAfford) {
+                let nothingChangedCheck = document.getElementById(button.id).classList.contains("can-afford")
+                if (!nothingChangedCheck)
+                    document.getElementById(button.id).classList.add("can-afford")
+            } else {
+                let nothingChangedCheck = !document.getElementById(button.id).classList.contains("can-afford")
+                if (!nothingChangedCheck)
+                    document.getElementById(button.id).classList.remove("can-afford")
+            }
+        }
+    }
+}
+
 // updates all resources on the DOM
 function updateResourceAmounts() {
     let resourceArray = Object.values(game.resource)
@@ -60,6 +80,13 @@ function updateRecoveryButtonVisibility() {
         let sectionID = buttonsArray[i].section
         let sectionElement = document.getElementById(sectionID)
         sectionElement.style.display = (button.unlocked ? "flex" : "none")
+    }
+}
+
+// sets all the numbers in the HTMl to the current values, does not update values at all
+function updateAllJobNumbers() {
+    for (let jobID in game.jobs) {
+        document.getElementById(game.jobs[jobID].id).querySelector(".job-amount").innerHTML = game.jobs[jobID].current
     }
 }
 

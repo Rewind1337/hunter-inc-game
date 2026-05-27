@@ -266,6 +266,11 @@ hr {
     align-items: center;
 }
 
+.button.can-afford {
+    /* needs actual styling, will do */
+    outline: 4px solid greenyellow;
+}
+
 .button.active {
     z-index: 1;
     background-color: var(--white-norm);

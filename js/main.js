@@ -36,7 +36,36 @@ function gameLoop(currentTime = performance.now()) {
 
 // gets called by the gameLoop with deltaTime
 function tick(dt) {
+    checkAllButtonCostsAffordable()
+}
 
+// call this when we add a new robot (or later, drones??) to calculate the new idle robot count
+function updateIdleRobotCount() {
+    let totalRobots = game.resource["robots"].current
+    let workingRobots = 0
+    for (let jobID in game.jobs) {
+        if (jobID != "idle-robot")
+            workingRobots += game.jobs[jobID].current
+    }
+    let newIdleRobots = totalRobots - workingRobots
+    game.jobs["idle-robot"].current = newIdleRobots
+    updateAllJobNumbers()
+}
+
+// job assignment button function
+function jobAssignmentButtonPressed(jobID, value) {
+    if (value > 0) { // add value to jobID
+        if (game.jobs["idle-robot"].current >= value) {
+            game.jobs["idle-robot"].current -= value
+            game.jobs[jobID].current += value
+        }
+    } else if (value < 0) {
+        if (game.jobs[jobID].current >= Math.abs(value)) {
+            game.jobs[jobID].current -= Math.abs(value)
+            game.jobs["idle-robot"].current += Math.abs(value)
+        }
+    }
+    updateAllJobNumbers() // update HTML
 }
 
 // handles the buttons in the recovery tab
@@ -52,11 +81,14 @@ function recoveryButtonPressed(buttonID) {
         addAllGainsToResources(button.gains)
         button.current++ // increment the button.current for logic and conditions and stuff
         updateResourceAmounts() // update HTML
-        checkAllUnlockThings()
+        updateIdleRobotCount() // not the best place to call this, but it covers alot of cases for the moment
+        checkAllUnlockThings() // same
     }
 }
 
 function checkCosts(costs) {
+    if (costs === undefined) { return true }
+
     for (let i = 0; i < costs.length; i++) {
         let cost = costs[i]
         if (cost.resource) {
@@ -102,6 +134,8 @@ function addGainToResource(gain) {
 
 // adds a whole array of gains to the appropriate resources
 function addAllGainsToResources(gains) {
+    if (gains === undefined) { return }
+
     for (let i = 0; i < gains.length; i++) {
         let gain = gains[i]
         addGainToResource(gain)
@@ -123,6 +157,8 @@ function subtractCostFromResource(cost) {
 
 // subtracts a whole array of costs from the appropriate resources
 function subtractAllCostsFromResources(costs) {
+    if (costs === undefined) { return }
+
     for (let i = 0; i < costs.length; i++) {
         let cost = costs[i]
         subtractCostFromResource(cost)
@@ -165,6 +201,14 @@ function linkFunctionsToHTML() {
     document.getElementById("solar-panel-button").onclick = () => { recoveryButtonPressed("solar-panel") }
     document.getElementById("mech-workshop-button").onclick = () => { recoveryButtonPressed("mech-workshop") }
     document.getElementById("drone-dock-button").onclick = () => { recoveryButtonPressed("drone-dock") }
+
+    // link job assignment buttons
+    document.getElementById("job-woodcutter-minus").onclick = () => { jobAssignmentButtonPressed("woodcutter", -1) }
+    document.getElementById("job-woodcutter-plus").onclick = () => { jobAssignmentButtonPressed("woodcutter", 1) }
+    document.getElementById("job-scrap-collector-minus").onclick = () => { jobAssignmentButtonPressed("scrap-collector", -1) }
+    document.getElementById("job-scrap-collector-plus").onclick = () => { jobAssignmentButtonPressed("scrap-collector", 1) }
+    document.getElementById("job-factory-bot-minus").onclick = () => { jobAssignmentButtonPressed("factory-bot", -1) }
+    document.getElementById("job-factory-bot-plus").onclick = () => { jobAssignmentButtonPressed("factory-bot", 1) }
 }
 
 // when html is done loading
