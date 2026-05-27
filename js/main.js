@@ -115,8 +115,8 @@ function jobAssignmentButtonPressed(jobID, value) {
 }
 
 // handles the buttons in the recovery tab
-function recoveryButtonPressed(buttonID) {
-    let button = game.recoveryButtons[buttonID]
+function buttonPressed(buttonID, type) {
+    let button = game[type][buttonID]
     // check for costs
     let canAfford = checkCosts(button.costs)
     // duh
@@ -127,14 +127,33 @@ function recoveryButtonPressed(buttonID) {
         addAllGainsToResources(button.gains)
         button.current++ // increment the button.current for logic and conditions and stuff
         updateResourceAmounts() // update HTML
-        updateIndicatorsForRecoveryButton(buttonID) // what it says
+        updateIndicatorsForButton(buttonID, type) // what it says
         updateIdleRobotCount() // not the best place to call this, but it covers alot of cases for the moment
         checkAllUnlockThings() // same
     }
 }
 
-function updateIndicatorsForRecoveryButton(buttonID) {
-    let button = game.recoveryButtons[buttonID]
+// handles the buttons in the recovery tab
+function mechButtonPressed(buttonID) {
+    let button = game.mechButtons[buttonID]
+    // check for costs
+    let canAfford = checkCosts(button.costs)
+    // duh
+    if (canAfford) {
+        // remove the resources
+        subtractAllCostsFromResources(button.costs)
+        // add the gains
+        addAllGainsToResources(button.gains)
+        button.current++ // increment the button.current for logic and conditions and stuff
+        updateResourceAmounts() // update HTML
+        updateIndicatorsForButton(buttonID, "mechButtons") // what it says
+        updateIdleRobotCount() // not the best place to call this, but it covers alot of cases for the moment
+        checkAllUnlockThings() // same
+    }
+}
+
+function updateIndicatorsForButton(buttonID, type) {
+    let button = game[type][buttonID]
     let indicators = button.indicators
     for (let i = 0; i < indicators.length; i++) {
         let indicator = indicators[i]
@@ -144,7 +163,6 @@ function updateIndicatorsForRecoveryButton(buttonID) {
             case "bottom-left":
             case "bottom-right":
                 let indicatorElement = document.getElementById(button.id).querySelector(".button-" + indicator.location + "-indicator")
-                console.log(button.id, indicator, document.getElementById(button.id), indicatorElement)
                 if (indicator.resource) {
                     let value = game.resource[indicator.resource].current
                     indicatorElement.style.opacity = 1
@@ -153,7 +171,7 @@ function updateIndicatorsForRecoveryButton(buttonID) {
                     let value = game.special[indicator.special]
                     indicatorElement.style.opacity = 1
                     indicatorElement.innerHTML = value
-                } else if (indicator.current) {
+                } else if (indicator.current) { // NEEDS indicator.type
                     let value = game[indicator.type][indicator.current].current
                     indicatorElement.style.opacity = 1
                     indicatorElement.innerHTML = value
@@ -271,26 +289,35 @@ function linkFunctionsToHTML() {
     document.getElementById("center-mech-workshop-button").onclick = () => { switchCenterTab("mech-workshop") }
 
     // link gather buttons
-    document.getElementById("salvage-old-mech-button").onclick = () => { recoveryButtonPressed("salvage-old-mech") }
-    document.getElementById("gather-wood-button").onclick = () => { recoveryButtonPressed("gather-wood") }
-    document.getElementById("collect-scrap-button").onclick = () => { recoveryButtonPressed("collect-scrap") }
+    document.getElementById("salvage-old-mech-button").onclick = () => { buttonPressed("salvage-old-mech", "recoveryButtons") }
+    document.getElementById("gather-wood-button").onclick = () => { buttonPressed("gather-wood", "recoveryButtons") }
+    document.getElementById("collect-scrap-button").onclick = () => { buttonPressed("collect-scrap", "recoveryButtons") }
 
     // link action buttons
-    document.getElementById("burn-wood-button").onclick = () => { recoveryButtonPressed("burn-wood") }
-    document.getElementById("salvage-scrap-button").onclick = () => { recoveryButtonPressed("salvage-scrap") }
-    document.getElementById("create-robot-button").onclick = () => { recoveryButtonPressed("create-robot") }
-    document.getElementById("create-drone-button").onclick = () => { recoveryButtonPressed("create-drone") }
+    document.getElementById("burn-wood-button").onclick = () => { buttonPressed("burn-wood", "recoveryButtons") }
+    document.getElementById("salvage-scrap-button").onclick = () => { buttonPressed("salvage-scrap", "recoveryButtons") }
+    document.getElementById("create-robot-button").onclick = () => { buttonPressed("create-robot", "recoveryButtons") }
+    document.getElementById("compress-cube-button").onclick = () => { buttonPressed("compress-cube", "recoveryButtons") }
+    document.getElementById("create-drone-button").onclick = () => { buttonPressed("create-drone", "recoveryButtons") }
 
     // link building buttons
-    document.getElementById("wood-burner-button").onclick = () => { recoveryButtonPressed("wood-burner") }
-    document.getElementById("energy-storage-button").onclick = () => { recoveryButtonPressed("energy-storage") }
-    document.getElementById("robot-housing-button").onclick = () => { recoveryButtonPressed("robot-housing") }
-    document.getElementById("resource-storage-button").onclick = () => { recoveryButtonPressed("resource-storage") }
-    document.getElementById("windmill-button").onclick = () => { recoveryButtonPressed("windmill") }
-    document.getElementById("shape-factory-button").onclick = () => { recoveryButtonPressed("shape-factory") }
-    document.getElementById("solar-panel-button").onclick = () => { recoveryButtonPressed("solar-panel") }
-    document.getElementById("mech-workshop-button").onclick = () => { recoveryButtonPressed("mech-workshop") }
-    document.getElementById("drone-dock-button").onclick = () => { recoveryButtonPressed("drone-dock") }
+    document.getElementById("wood-burner-button").onclick = () => { buttonPressed("wood-burner", "recoveryButtons") }
+    document.getElementById("energy-storage-button").onclick = () => { buttonPressed("energy-storage", "recoveryButtons") }
+    document.getElementById("robot-housing-button").onclick = () => { buttonPressed("robot-housing", "recoveryButtons") }
+    document.getElementById("resource-storage-button").onclick = () => { buttonPressed("resource-storage", "recoveryButtons") }
+    document.getElementById("windmill-button").onclick = () => { buttonPressed("windmill", "recoveryButtons") }
+    document.getElementById("shape-factory-button").onclick = () => { buttonPressed("shape-factory", "recoveryButtons") }
+    document.getElementById("solar-panel-button").onclick = () => { buttonPressed("solar-panel", "recoveryButtons") }
+    document.getElementById("mech-workshop-button").onclick = () => { buttonPressed("mech-workshop", "recoveryButtons") }
+    document.getElementById("drone-dock-button").onclick = () => { buttonPressed("drone-dock", "recoveryButtons") }
+
+    // link mech buttons
+    document.getElementById("mech-frame-button").onclick = () => { buttonPressed("mech-frame", "mechButtons") }
+    document.getElementById("mech-armor-button").onclick = () => { buttonPressed("mech-armor", "mechButtons") }
+    document.getElementById("mech-recovery-button").onclick = () => { buttonPressed("mech-recovery", "mechButtons") }
+    document.getElementById("mech-joints-button").onclick = () => { buttonPressed("mech-joints", "mechButtons") }
+    document.getElementById("mech-vision-button").onclick = () => { buttonPressed("mech-vision", "mechButtons") }
+    document.getElementById("mech-weapons-button").onclick = () => { buttonPressed("mech-weapons", "mechButtons") }
 
     // link job assignment buttons
     document.getElementById("job-woodcutter-minus").onclick = () => { jobAssignmentButtonPressed("woodcutter", -1) }

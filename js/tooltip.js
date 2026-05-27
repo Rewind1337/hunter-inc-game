@@ -32,25 +32,158 @@ let TOOLTIP_BOTTOM_ELEMENT = document.getElementById("tooltip-bottom")
 // updates the tooltip text according to the ID provided (still needs to grab data and generate costs and stuff)
 function updateTooltipTextContent(tooltipData) {
     // only one of the available types
-    assert(tooltipData.type === "recovery-button" || tooltipData.type === "mech-button" || tooltipData.type === "resource" || tooltipData.type === "other-button", "data-tooltip-type not correct")
+    assert(tooltipData.type === "recovery-button"
+        || tooltipData.type === "mech-button"
+        || tooltipData.type === "resource"
+        || tooltipData.type === "job"
+        || tooltipData.type === "other-button", "data-tooltip-type not correct")
 
+    let tooltipReference = null
     switch (tooltipData.type) {
         case "recovery-button":
-            let tooltipReference = game.recoveryButtons[tooltipData.id]
-            TOOLTIP_HEADER_ELEMENT.innerHTML = "(id: " + tooltipData.id + ") " + tooltipReference.name
-
-            // TOOLTIP_CONTENT_ELEMENT.innerHTML = ""
-
-            // TOOLTIP_BOTTOM_ELEMENT.innerHTML = ""
+            tooltipReference = game.recoveryButtons[tooltipData.id]
             break;
-
+        case "mech-button":
+            tooltipReference = game.mechButtons[tooltipData.id]
+            break;
+        case "resource":
+            tooltipReference = game.resource[tooltipData.id]
+            break;
+        case "job":
+            tooltipReference = game.jobs[tooltipData.id]
+            break;
         default:
-            TOOLTIP_HEADER_ELEMENT.innerHTML = "ERROR Tooltip"
-            TOOLTIP_CONTENT_ELEMENT.innerHTML = "data-tooltip-type or data-tooltip-id not correct in HTML or missing in the database"
-            TOOLTIP_BOTTOM_ELEMENT.innerHTML = "you shouldn't see this"
             break;
     }
-    // other things
+
+    if (tooltipReference === null) {
+        TOOLTIP_HEADER_ELEMENT.innerHTML = "ERROR Tooltip"
+        TOOLTIP_CONTENT_ELEMENT.innerHTML = "data-tooltip-type or data-tooltip-id not correct in HTML or missing in the database"
+        TOOLTIP_BOTTOM_ELEMENT.innerHTML = "you shouldn't see this"
+        return;
+    }
+
+    // same header for everything
+    TOOLTIP_HEADER_ELEMENT.innerHTML = "(id: " + tooltipData.id + ") " + tooltipReference.name
+
+    // setup string
+    let finalContentString = ''
+    finalContentString += '<div class="flex-col no-gaps">'
+
+    if (tooltipData.type === "resource") { // resource specific tooltip
+        // TODO generate idle costs & gains to display RESOURCE SPECIFIC
+        TOOLTIP_CONTENT_ELEMENT.innerHTML = finalContentString
+
+        let finalBottomString = ''
+        finalBottomString += '<div class="flex-row justify-around align-center">'
+        finalBottomString += '<div>funky magic</div>'
+        finalBottomString += '<div>full in ??:??:??</div>'
+        finalBottomString += '</div>'
+
+        TOOLTIP_BOTTOM_ELEMENT.innerHTML = finalBottomString
+
+    } else if (tooltipData.type === "job") { // job specific tooltip
+        // TODO generate idle costs & gains to display JOB SPECIFIC
+        TOOLTIP_CONTENT_ELEMENT.innerHTML = finalContentString
+
+        let finalBottomString = ''
+        finalBottomString += '<div class="flex-row justify-around align-center">'
+        finalBottomString += '<div>funky magic</div>'
+        finalBottomString += '<div>full in ??:??:??</div>'
+        finalBottomString += '</div>'
+
+        TOOLTIP_BOTTOM_ELEMENT.innerHTML = finalBottomString
+
+    } else { // recovery and mech buttons work very similarly so this works
+        // generate one-time costs as html and append
+        if (tooltipReference.costs) {
+            if (tooltipReference.costs.length !== 0) {
+                finalContentString += '<div class="header">costs</div>'
+                finalContentString += '<div class="tooltip-costs flex-row flex-wrap align-center justify-center">'
+                for (let i = 0; i < tooltipReference.costs.length; i++) {
+                    let cost = tooltipReference.costs[i]
+                    if (cost.resource) {
+                        finalContentString += '<div>' + cost.resource + ': +' + cost.amount + '</div>'
+                    }
+                    if (cost.special) {
+                        finalContentString += '<div>' + cost.special + ': +' + cost.amount + '</div>'
+                    }
+                }
+                finalContentString += '</div>'
+            }
+        }
+
+        // generate idle costs as html and append
+        if (tooltipReference.costsPerSecond) {
+            if (tooltipReference.costsPerSecond.length !== 0) {
+                finalContentString += '<div class="header">upkeep</div>'
+                finalContentString += '<div class="tooltip-upkeep flex-row flex-wrap align-center justify-center">'
+                for (let i = 0; i < tooltipReference.costsPerSecond.length; i++) {
+                    let cost = tooltipReference.costsPerSecond[i]
+                    if (cost.resource) {
+                        finalContentString += '<div>' + cost.resource + ': -' + cost.amount + '/second</div>'
+                    }
+                    if (cost.special) {
+                        finalContentString += '<div>' + cost.special + ': -' + cost.amount + '/second</div>'
+                    }
+                }
+                finalContentString += '</div>'
+            }
+        }
+
+        // generate one-time gains as html and append
+        if (tooltipReference.gains) {
+            if (tooltipReference.gains.length !== 0) {
+                finalContentString += '<div class="header">gains</div>'
+                finalContentString += '<div class="tooltip-gains flex-row flex-wrap align-center justify-center">'
+                for (let i = 0; i < tooltipReference.gains.length; i++) {
+                    let gain = tooltipReference.gains[i]
+                    if (gain.resource) {
+                        finalContentString += '<div>' + gain.resource + ': +' + gain.amount + '</div>'
+                    }
+                    if (gain.resourceCapacity) {
+                        finalContentString += '<div>' + gain.resourceCapacity + ' capacity: +' + gain.amount + '</div>'
+                    }
+                    if (gain.special) {
+                        finalContentString += '<div>' + gain.special + ': +' + gain.amount + '</div>'
+                    }
+                }
+                finalContentString += '</div>'
+            }
+        }
+
+        // generate idle gains as html and append
+        if (tooltipReference.gainsPerSecond) {
+            if (tooltipReference.gainsPerSecond.length !== 0) {
+                finalContentString += '<div class="header">effect</div>'
+                finalContentString += '<div class="tooltip-effect flex-row flex-wrap align-center justify-center">'
+                for (let i = 0; i < tooltipReference.gainsPerSecond.length; i++) {
+                    let gain = tooltipReference.gainsPerSecond[i]
+                    if (gain.resource) {
+                        finalContentString += '<div>' + gain.resource + ': ' + gain.amount + '/second</div>'
+                    }
+                    if (gain.resourceCapacity) {
+                        finalContentString += '<div>' + gain.resourceCapacity + ' capacity: +' + gain.amount + '</div>'
+                    }
+                    if (gain.special) {
+                        finalContentString += '<div>' + gain.special + ': ' + gain.amount + '/second</div>'
+                    }
+                }
+                finalContentString += '</div>'
+            }
+        }
+        finalContentString += '</div>'
+
+        TOOLTIP_CONTENT_ELEMENT.innerHTML = finalContentString
+
+        let finalBottomString = ''
+        finalBottomString += '<div class="flex-row justify-around align-center">'
+        finalBottomString += '<div>funky magic</div>'
+        finalBottomString += '<div>affordable in ??:??:??</div>'
+        finalBottomString += '</div>'
+
+        TOOLTIP_BOTTOM_ELEMENT.innerHTML = finalBottomString
+    }
 }
 
 // simply shows the tooltip

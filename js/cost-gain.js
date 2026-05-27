@@ -65,6 +65,12 @@ const COSTS_GAINS = {
             gains: [{ resource: "robots", amount: 1 }],
             gainsPerSecond: [], // same thing but with jobs
         },
+        "compress-cube": {
+            costs: [{ resource: "squares", amount: 100 }, { resource: "circles", amount: 100 }, { resource: "triangles", amount: 100 }],
+            costsPerSecond: [], // these dont cost anything per second, cos we will calculate that from the resource itself
+            gains: [{ resource: "cubes", amount: 1 }],
+            gainsPerSecond: [], // same thing but with jobs
+        },
         "create-drone": {
             costs: [{ resource: "scrap", amount: 200 }],
             costsPerSecond: [], // these dont cost anything per second, cos we will calculate that from the resource itself
@@ -86,7 +92,7 @@ const COSTS_GAINS = {
             gainsPerSecond: [],
         },
         "robot-housing": {
-            costs: [{ resource: "wood", amount: 50 }, { resource: "scrap", amount: 100 }],
+            costs: [{ resource: "wood", amount: 50 }, { resource: "scrap", amount: 100 }, { resource: "squares", amount: 5 }],
             costsPerSecond: [],
             gains: [{ resourceCapacity: "robots", amount: 1 }],
             gainsPerSecond: [],
@@ -94,7 +100,7 @@ const COSTS_GAINS = {
         "resource-storage": {
             costs: [{ resource: "wood", amount: 80 }, { resource: "scrap", amount: 80 }],
             costsPerSecond: [],
-            gains: [{ resourceCapacity: "wood", amount: 200 }, { resourceCapacity: "scrap", amount: 200 }, { resourceCapacity: "squares", amount: 50 }, { resourceCapacity: "circles", amount: 50 }, { resourceCapacity: "triangles", amount: 50 }],
+            gains: [{ resourceCapacity: "wood", amount: 200 }, { resourceCapacity: "scrap", amount: 200 }, { resourceCapacity: "squares", amount: 15 }, { resourceCapacity: "circles", amount: 7.5 }, { resourceCapacity: "triangles", amount: 2.5 }, { resourceCapacity: "cubes", amount: 2.5 }],
             gainsPerSecond: [],
         },
         "windmill": {
@@ -104,25 +110,25 @@ const COSTS_GAINS = {
             gainsPerSecond: [{ resource: "energy", amount: 0.2 }],
         },
         "shape-factory": {
-            costs: [{ resource: "wood", amount: 150 }, { resource: "scrap", amount: 600 }],
+            costs: [{ resource: "wood", amount: 150 }, { resource: "scrap", amount: 600 }, { resource: "cubes", amount: 1 }],
             costsPerSecond: [],
-            gains: [{ resourceCapacity: "squares", amount: 50 }, { resourceCapacity: "circles", amount: 50 }, { resourceCapacity: "triangles", amount: 50 }],
+            gains: [{ resourceCapacity: "squares", amount: 60 }, { resourceCapacity: "circles", amount: 30 }, { resourceCapacity: "triangles", amount: 10 }, { resourceCapacity: "cubes", amount: 10 }],
             gainsPerSecond: [],
         },
         "solar-panel": {
-            costs: [{ resource: "wood", amount: 250 }, { resource: "scrap", amount: 500 }],
+            costs: [{ resource: "wood", amount: 250 }, { resource: "scrap", amount: 500 }, { resource: "circles", amount: 5 }],
             costsPerSecond: [],
             gains: [{ resourceCapacity: "energy", amount: 100 }],
             gainsPerSecond: [{ resource: "energy", amount: 0.5 }],
         },
         "mech-workshop": {
-            costs: [{ resource: "wood", amount: 1000 }, { resource: "scrap", amount: 1250 }],
+            costs: [{ resource: "wood", amount: 1000 }, { resource: "scrap", amount: 1250 }, { resource: "cubes", amount: 1 }],
             costsPerSecond: [],
             gains: [],
             gainsPerSecond: [],
         },
         "drone-dock": {
-            costs: [{ resource: "wood", amount: 500 }, { resource: "scrap", amount: 2250 }],
+            costs: [{ resource: "wood", amount: 500 }, { resource: "scrap", amount: 2250 }, { resource: "squares", amount: 20 }],
             costsPerSecond: [],
             gains: [{ resourceCapacity: "drones", amount: 2 }],
             gainsPerSecond: [],
@@ -130,28 +136,28 @@ const COSTS_GAINS = {
     },
     mechButtons: { // mech tab data
         "mech-frame": { // health
-            costs: [],
-            gains: [],
+            costs: [{ resource: "scrap", amount: 1000 }, { resource: "triangles", amount: 5 }, { resource: "cubes", amount: 5 }],
+            gains: [{ special: "mech-health", amount: 2 }],
         },
         "mech-armor": { // armor
-            costs: [],
-            gains: [],
+            costs: [{ resource: "scrap", amount: 1000 }, { resource: "squares", amount: 50 }, { resource: "cubes", amount: 5 }],
+            gains: [{ special: "mech-armor", amount: 1 }],
         },
         "mech-recovery": { // regen
-            costs: [],
-            gains: [],
+            costs: [{ resource: "scrap", amount: 1000 }, { resource: "circles", amount: 25 }, { resource: "cubes", amount: 5 }],
+            gains: [{ special: "mech-regen", amount: 0.2 }],
         },
-        "mech-joints": { // attackspeed and or speed
-            costs: [],
-            gains: [],
+        "mech-joints": { // speed
+            costs: [{ resource: "scrap", amount: 1000 }, { resource: "triangles", amount: 10 }, { resource: "cubes", amount: 5 }],
+            gains: [{ special: "mech-speed", amount: 0.1 }],
         },
-        "mech-vision": { // dodge and or crit
-            costs: [],
-            gains: [],
+        "mech-vision": { // crit
+            costs: [{ resource: "scrap", amount: 1000 }, { resource: "squares", amount: 50 }, { resource: "cubes", amount: 5 }],
+            gains: [{ special: "mech-crit", amount: 1 }],
         },
         "mech-weapons": { // damage
-            costs: [],
-            gains: [],
+            costs: [{ resource: "scrap", amount: 1000 }, { resource: "circles", amount: 10 }, { resource: "cubes", amount: 5 }],
+            gains: [{ special: "mech-damage", amount: 0.5 }],
         },
     },
 }

@@ -49,47 +49,56 @@
     <div id="main-left" class="flex-col no-gaps">
       <div class="header">Resources</div>
       <div id="resource-list" class="flex-col no-gaps">
-        <div id="resource-energy" class="resource grid-element flex-row justify-start align-center">
+        <div id="resource-energy" class="resource has-tooltip grid-element flex-row justify-start align-center"
+          data-tooltip-type="resource" data-tooltip-id="energy">
           <div class="resource-icon"><img src="./svg/battery_4.svg" /></div>
           <div class="resource-name">Energy</div>
           <div class="resource-amount">0</div>
         </div>
-        <div id="resource-robots" class="resource grid-element flex-row justify-start align-center">
+        <div id="resource-robots" class="resource has-tooltip grid-element flex-row justify-start align-center"
+          data-tooltip-type="resource" data-tooltip-id="robots">
           <div class="resource-icon"><img src="./svg/robot.svg" /></div>
           <div class="resource-name">Robots</div>
           <div class="resource-amount">0</div>
         </div>
-        <div id="resource-drones" class="resource grid-element flex-row justify-start align-center">
+        <div id="resource-drones" class="resource has-tooltip grid-element flex-row justify-start align-center"
+          data-tooltip-type="resource" data-tooltip-id="drones">
           <div class="resource-icon"><img src="./svg/drone.svg" /></div>
           <div class="resource-name">Drones</div>
           <div class="resource-amount">0</div>
         </div>
-        <div id="resource-wood" class="resource grid-element flex-row justify-start align-center">
+        <div id="resource-wood" class="resource has-tooltip grid-element flex-row justify-start align-center"
+          data-tooltip-type="resource" data-tooltip-id="wood">
           <div class="resource-icon"><img src="./svg/tree.svg" /></div>
           <div class="resource-name">Wood</div>
           <div class="resource-amount">0 / 250</div>
         </div>
-        <div id="resource-scrap" class="resource grid-element flex-row justify-start align-center">
+        <div id="resource-scrap" class="resource has-tooltip grid-element flex-row justify-start align-center"
+          data-tooltip-type="resource" data-tooltip-id="scrap">
           <div class="resource-icon"><img src="./svg/borg.svg" /></div>
           <div class="resource-name">Scrap</div>
           <div class="resource-amount">0 / 250</div>
         </div>
-        <div id="resource-squares" class="resource grid-element flex-row justify-start align-center">
+        <div id="resource-squares" class="resource has-tooltip grid-element flex-row justify-start align-center"
+          data-tooltip-type="resource" data-tooltip-id="squares">
           <div class="resource-icon"><img src="./svg/box.svg" /></div>
           <div class="resource-name">Squares</div>
           <div class="resource-amount">0 / 50</div>
         </div>
-        <div id="resource-circles" class="resource grid-element flex-row justify-start align-center">
+        <div id="resource-circles" class="resource has-tooltip grid-element flex-row justify-start align-center"
+          data-tooltip-type="resource" data-tooltip-id="circles">
           <div class="resource-icon"><img src="./svg/circle.svg" /></div>
           <div class="resource-name">Circles</div>
           <div class="resource-amount">0 / 50</div>
         </div>
-        <div id="resource-triangles" class="resource grid-element flex-row justify-start align-center">
+        <div id="resource-triangles" class="resource has-tooltip grid-element flex-row justify-start align-center"
+          data-tooltip-type="resource" data-tooltip-id="triangles">
           <div class="resource-icon"><img src="./svg/triangle.svg" /></div>
           <div class="resource-name">Triangles</div>
           <div class="resource-amount">0 / 50</div>
         </div>
-        <div id="resource-cubes" class="resource grid-element flex-row justify-start align-center">
+        <div id="resource-cubes" class="resource has-tooltip grid-element flex-row justify-start align-center"
+          data-tooltip-type="resource" data-tooltip-id="cubes">
           <div class="resource-icon"><img src="./svg/cube.svg" /></div>
           <div class="resource-name">Cubes</div>
           <div class="resource-amount">0 / 50</div>
@@ -224,6 +233,22 @@
               <div class="button-content">
                 <div class="button-start"><img src="./svg/robot.svg"></div>
                 <div class="button-text flex-grow">Create Robot</div>
+                <div class="button-end"></div>
+              </div>
+              <div class="button-bottom-indicators w-100 flex-row justify-between">
+                <div class="button-bottom-left-indicator">0</div>
+                <div class="button-bottom-right-indicator">0</div>
+              </div>
+            </button>
+            <button id="compress-cube-button" class="button button-white has-tooltip"
+              data-tooltip-type="recovery-button" data-tooltip-id="compress-cube">
+              <div class="button-top-indicators w-100 flex-row justify-between">
+                <div class="button-top-left-indicator">0</div>
+                <div class="button-top-right-indicator">0</div>
+              </div>
+              <div class="button-content">
+                <div class="button-start"><img src="./svg/cube.svg"></div>
+                <div class="button-text flex-grow">Compress Cube</div>
                 <div class="button-end"></div>
               </div>
               <div class="button-bottom-indicators w-100 flex-row justify-between">
@@ -404,13 +429,15 @@
         <div id="jobs-section-job-assignment" class="main-section grid-element flex-col no-gaps">
           <div class="header">Job Assignment</div>
           <div class="main-jobs-section w-50 flex-col">
-            <div id="job-idle-robot" class="job-assignment flex-row justify-between">
+            <div id="job-idle-robot" class="job-assignment has-tooltip flex-row justify-between" data-tooltip-type="job"
+              data-tooltip-id="idle-robot">
               <div class="job-amount grid-element align-center">0</div>
               <div class="job-name grid-element w-100 align-center">Idle Robot</div>
               <div class="job-spacer">&nbsp;</div>
               <div class="job-spacer">&nbsp;</div>
             </div>
-            <div id="job-woodcutter" class="job-assignment flex-row justify-between">
+            <div id="job-woodcutter" class="job-assignment has-tooltip flex-row justify-between" data-tooltip-type="job"
+              data-tooltip-id="woodcutter">
               <div class="job-amount grid-element align-center">0</div>
               <div class="job-name grid-element w-100 align-center">Woodcutter</div>
               <button id="job-woodcutter-minus" class="button button-red button-minus">
@@ -424,7 +451,8 @@
                 </div>
               </button>
             </div>
-            <div id="job-scrap-collector" class="job-assignment flex-row justify-between">
+            <div id="job-scrap-collector" class="job-assignment has-tooltip flex-row justify-between"
+              data-tooltip-type="job" data-tooltip-id="scrap-collector">
               <div class="job-amount grid-element align-center">0</div>
               <div class="job-name grid-element w-100 align-center">Scrap Collector</div>
               <button id="job-scrap-collector-minus" class="button button-red button-minus">
@@ -438,7 +466,8 @@
                 </div>
               </button>
             </div>
-            <div id="job-factory-bot" class="job-assignment flex-row justify-between">
+            <div id="job-factory-bot" class="job-assignment has-tooltip flex-row justify-between"
+              data-tooltip-type="job" data-tooltip-id="factory-bot">
               <div class="job-amount grid-element align-center">0</div>
               <div class="job-name grid-element w-100 align-center">Factory Bot</div>
               <button id="job-factory-bot-minus" class="button button-red button-minus">

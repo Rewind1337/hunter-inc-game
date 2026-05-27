@@ -81,7 +81,7 @@ function updateRecoveryButtonVisibility() {
         let sectionID = buttonsArray[i].section
         let sectionElement = document.getElementById(sectionID)
         sectionElement.style.display = (button.unlocked ? "flex" : "none")
-        updateIndicatorsForRecoveryButton(Object.keys(game.recoveryButtons)[i])
+        updateIndicatorsForButton(Object.keys(game.recoveryButtons)[i], "recoveryButtons")
     }
 }
 
@@ -111,5 +111,6 @@ function updateMechButtonVisibility() {
         let button = buttonArray[i]
         let buttonElement = document.getElementById(button.id)
         buttonElement.style.display = (button.unlocked ? "flex" : "none")
+        updateIndicatorsForButton(Object.keys(game.mechButtons)[i], "mechButtons")
     }
 }

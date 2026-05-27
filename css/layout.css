@@ -396,11 +396,33 @@ hr {
 }
 
 #tooltip-content {
-    font-size: 12px;
+    font-size: 18px;
+}
+
+/* these are the headers inside the tooltip */
+#tooltip-content .header {
+    font-size: 16px;
+}
+
+
+/* these are the sections inside the tooltip */
+#tooltip-content>.flex-col>*:not(.header) {
+    margin-bottom: 2px;
+}
+
+/* these are the resource costs & gains inside the tooltip */
+#tooltip-content .tooltip-costs div,
+#tooltip-content .tooltip-upkeep div,
+#tooltip-content .tooltip-gains div,
+#tooltip-content .tooltip-effect div {
+    border-radius: 8px;
+    padding: 0 6px;
+    background-color: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.3);
 }
 
 #tooltip-bottom {
-    font-size: 18px;
+    font-size: 14px;
 }
 
 

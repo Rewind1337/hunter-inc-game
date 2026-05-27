@@ -6,13 +6,19 @@ const INITIAL_RECOVERY_STATE = {
         "drones": { id: "resource-drones", name: "Drones", current: 0, capacity: 0, capacityMultiplier: 1, unlocked: false },
         "wood": { id: "resource-wood", name: "Wood", current: 0, capacity: 100, capacityMultiplier: 1, unlocked: true },
         "scrap": { id: "resource-scrap", name: "Scrap", current: 0, capacity: 100, capacityMultiplier: 1, unlocked: true },
-        "squares": { id: "resource-squares", name: "Squares", current: 0, capacity: 50, capacityMultiplier: 1, unlocked: false },
-        "circles": { id: "resource-circles", name: "Circles", current: 0, capacity: 50, capacityMultiplier: 1, unlocked: false },
-        "triangles": { id: "resource-triangles", name: "Triangles", current: 0, capacity: 50, capacityMultiplier: 1, unlocked: false },
-        "cubes": { id: "resource-cubes", name: "Cubes", current: 0, capacity: 50, capacityMultiplier: 1, unlocked: false },
+        "squares": { id: "resource-squares", name: "Squares", current: 0, capacity: 30, capacityMultiplier: 1, unlocked: false },
+        "circles": { id: "resource-circles", name: "Circles", current: 0, capacity: 15, capacityMultiplier: 1, unlocked: false },
+        "triangles": { id: "resource-triangles", name: "Triangles", current: 0, capacity: 5, capacityMultiplier: 1, unlocked: false },
+        "cubes": { id: "resource-cubes", name: "Cubes", current: 0, capacity: 5, capacityMultiplier: 1, unlocked: false },
     },
     special: { // hidden data
-        "salvage-old-mech-left": 250
+        "salvage-old-mech-left": 250,
+        "mech-health": 10,
+        "mech-armor": 10,
+        "mech-regen": 1,
+        "mech-speed": 4,
+        "mech-crit": 5,
+        "mech-damage": 2,
     },
     jobs: { // job data
         "idle-robot": { id: "job-idle-robot", name: "Idle Robot", current: 0, max: 0, unlocked: false },
@@ -54,6 +60,11 @@ const INITIAL_RECOVERY_STATE = {
             id: "create-robot-button", name: "Create Robot", section: "recovery-section-actions", unlocked: false,
             current: 0, max: -1,
             indicators: [{ location: "top-left", resource: "robots" }],
+        },
+        "compress-cube": {
+            id: "compress-cube-button", name: "Compress Cube", section: "recovery-section-actions", unlocked: false,
+            current: 0, max: -1,
+            indicators: [],
         },
         "create-drone": {
             id: "create-drone-button", name: "Create Drone", section: "recovery-section-actions", unlocked: false,
@@ -112,27 +123,32 @@ const INITIAL_RECOVERY_STATE = {
         "mech-frame": { // health
             id: "mech-frame-button", name: "Mech Frame", section: "mech-workshop-section-build-a-mech", unlocked: false,
             current: 0, max: -1,
-            indicators: [],
+            indicators: [{ location: "top-right", current: "mech-frame", type: "mechButtons" }],
         },
         "mech-armor": { // armor
             id: "mech-armor-button", name: "Mech Armor", section: "mech-workshop-section-build-a-mech", unlocked: false,
             current: 0, max: -1,
+            indicators: [{ location: "top-right", current: "mech-armor", type: "mechButtons" }],
         },
         "mech-recovery": { // regen
             id: "mech-recovery-button", name: "Mech Recovery", section: "mech-workshop-section-build-a-mech", unlocked: false,
             current: 0, max: -1,
+            indicators: [{ location: "top-right", current: "mech-recovery", type: "mechButtons" }],
         },
         "mech-joints": { // attackspeed and or speed
             id: "mech-joints-button", name: "Mech Joints", section: "mech-workshop-section-build-a-mech", unlocked: false,
             current: 0, max: -1,
+            indicators: [{ location: "top-right", current: "mech-joints", type: "mechButtons" }],
         },
         "mech-vision": { // dodge and or crit
             id: "mech-vision-button", name: "Mech Vision", section: "mech-workshop-section-build-a-mech", unlocked: false,
             current: 0, max: -1,
+            indicators: [{ location: "top-right", current: "mech-vision", type: "mechButtons" }],
         },
         "mech-weapons": { // damage
             id: "mech-weapons-button", name: "Mech Weapons", section: "mech-workshop-section-build-a-mech", unlocked: false,
             current: 0, max: -1,
+            indicators: [{ location: "top-right", current: "mech-weapons", type: "mechButtons" }],
         },
     },
 }
