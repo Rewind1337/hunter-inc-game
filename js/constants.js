@@ -26,76 +26,93 @@ const INITIAL_RECOVERY_STATE = {
         "salvage-old-mech": {
             id: "salvage-old-mech-button", name: "Salvage Old Mech", section: "recovery-section-gather", unlocked: true,
             current: 0, max: -1,
+            indicators: [{ location: "top-right", special: "salvage-old-mech-left" }],
         },
         "gather-wood": {
             id: "gather-wood-button", name: "Gather Wood", section: "recovery-section-gather", unlocked: true,
             current: 0, max: -1,
+            indicators: [],
         },
         "collect-scrap": {
             id: "collect-scrap-button", name: "Collect Scrap", section: "recovery-section-gather", unlocked: true,
             current: 0, max: -1,
+            indicators: [],
         },
 
         // action buttons
         "burn-wood": {
             id: "burn-wood-button", name: "Burn Wood", section: "recovery-section-actions", unlocked: false,
             current: 0, max: -1,
+            indicators: [],
         },
         "salvage-scrap": {
             id: "salvage-scrap-button", name: "Salvage Scrap", section: "recovery-section-actions", unlocked: false,
             current: 0, max: -1,
+            indicators: [],
         },
         "create-robot": {
             id: "create-robot-button", name: "Create Robot", section: "recovery-section-actions", unlocked: false,
             current: 0, max: -1,
+            indicators: [{ location: "top-left", resource: "robots" }],
         },
         "create-drone": {
             id: "create-drone-button", name: "Create Drone", section: "recovery-section-actions", unlocked: false,
             current: 0, max: -1,
+            indicators: [{ location: "top-left", resource: "drones" }],
         },
 
         // building buttons
         "wood-burner": {
             id: "wood-burner-button", name: "Wood Burner", section: "recovery-section-buildings", unlocked: false,
             current: 0, max: -1,
+            indicators: [{ location: "top-left", current: "wood-burner", type: "recoveryButtons" }],
         },
         "energy-storage": {
             id: "energy-storage-button", name: "Energy Storage", section: "recovery-section-buildings", unlocked: false,
             current: 0, max: -1,
+            indicators: [{ location: "top-left", current: "energy-storage", type: "recoveryButtons" }],
         },
         "robot-housing": {
             id: "robot-housing-button", name: "Robot Housing", section: "recovery-section-buildings", unlocked: false,
             current: 0, max: -1,
+            indicators: [{ location: "top-left", current: "robot-housing", type: "recoveryButtons" }],
         },
         "resource-storage": {
             id: "resource-storage-button", name: "Resource Storage", section: "recovery-section-buildings", unlocked: false,
             current: 0, max: -1,
+            indicators: [{ location: "top-left", current: "resource-storage", type: "recoveryButtons" }],
         },
         "windmill": {
             id: "windmill-button", name: "Windmill", section: "recovery-section-buildings", unlocked: false,
             current: 0, max: -1,
+            indicators: [{ location: "top-left", current: "windmill", type: "recoveryButtons" }],
         },
         "shape-factory": {
             id: "shape-factory-button", name: "Shape Factory", section: "recovery-section-buildings", unlocked: false,
             current: 0, max: -1,
+            indicators: [{ location: "top-left", current: "shape-factory", type: "recoveryButtons" }],
         },
         "solar-panel": {
             id: "solar-panel-button", name: "Solar Panel", section: "recovery-section-buildings", unlocked: false,
             current: 0, max: -1,
+            indicators: [{ location: "top-left", current: "solar-panel", type: "recoveryButtons" }],
         },
         "mech-workshop": {
             id: "mech-workshop-button", name: "Mech Workshop", section: "recovery-section-buildings", unlocked: false,
             current: 0, max: -1,
+            indicators: [{ location: "top-left", current: "mech-workshop", type: "recoveryButtons" }],
         },
         "drone-dock": {
             id: "drone-dock-button", name: "Drone Dock", section: "recovery-section-buildings", unlocked: false,
             current: 0, max: -1,
+            indicators: [{ location: "top-left", current: "drone-dock", type: "recoveryButtons" }],
         },
     },
     mechButtons: { // mech tab data
         "mech-frame": { // health
             id: "mech-frame-button", name: "Mech Frame", section: "mech-workshop-section-build-a-mech", unlocked: false,
             current: 0, max: -1,
+            indicators: [],
         },
         "mech-armor": { // armor
             id: "mech-armor-button", name: "Mech Armor", section: "mech-workshop-section-build-a-mech", unlocked: false,

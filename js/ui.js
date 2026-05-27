@@ -1,5 +1,6 @@
 // used for accessing the tab you just switched off, check switchCenterTab
 let ACTIVE_TAB = "recovery"
+const UI_UPDATE_INTERVAL = 0.5 // 500ms
 
 // switches the display of the center tabs
 function switchCenterTab(tabID) {
@@ -80,6 +81,7 @@ function updateRecoveryButtonVisibility() {
         let sectionID = buttonsArray[i].section
         let sectionElement = document.getElementById(sectionID)
         sectionElement.style.display = (button.unlocked ? "flex" : "none")
+        updateIndicatorsForRecoveryButton(Object.keys(game.recoveryButtons)[i])
     }
 }
 

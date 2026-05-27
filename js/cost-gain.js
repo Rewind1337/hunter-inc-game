@@ -1,4 +1,30 @@
 const COSTS_GAINS = {
+    jobs: { // job data
+        "idle-robot": {
+            costs: [],
+            costsPerSecond: [],
+            gains: [],
+            gainsPerSecond: [],
+        },
+        "woodcutter": {
+            costs: [],
+            costsPerSecond: [{ resource: "energy", amount: 0.1 }],
+            gains: [],
+            gainsPerSecond: [{ resource: "wood", amount: 1 }],
+        },
+        "scrap-collector": {
+            costs: [],
+            costsPerSecond: [{ resource: "energy", amount: 0.1 }],
+            gains: [],
+            gainsPerSecond: [{ resource: "scrap", amount: 1 }],
+        },
+        "factory-bot": {
+            costs: [],
+            costsPerSecond: [{ resource: "energy", amount: 0.1 }],
+            gains: [],
+            gainsPerSecond: [],
+        },
+    },
     recoveryButtons: { // recovery tab data
         // gather buttons
         "salvage-old-mech": {
@@ -22,7 +48,7 @@ const COSTS_GAINS = {
 
         // action buttons
         "burn-wood": {
-            costs: [{ resource: "wood", amount: 5 }],
+            costs: [{ resource: "wood", amount: 2.5 }],
             costsPerSecond: [],
             gains: [{ resource: "energy", amount: 1 }],
             gainsPerSecond: [],
@@ -49,7 +75,7 @@ const COSTS_GAINS = {
         // building buttons
         "wood-burner": {
             costs: [{ resource: "wood", amount: 25 }, { resource: "scrap", amount: 25 }],
-            costsPerSecond: [{ resource: "wood", amount: 2.5 }],
+            costsPerSecond: [{ resource: "wood", amount: 1 }],
             gains: [{ resourceCapacity: "energy", amount: 50 }],
             gainsPerSecond: [{ resource: "energy", amount: 0.5 }],
         },
@@ -130,15 +156,29 @@ const COSTS_GAINS = {
     },
 }
 
+// appends the stuff from this file onto your main game state object
 function initCostsAndGains() {
+    for (let key in game.jobs) {
+        let job = game.jobs[key]
+        job.costs = COSTS_GAINS.jobs[key].costs
+        job.costsPerSecond = COSTS_GAINS.jobs[key].costsPerSecond
+        job.gains = COSTS_GAINS.jobs[key].gains
+        job.gainsPerSecond = COSTS_GAINS.jobs[key].gainsPerSecond
+    }
+
     for (let key in game.recoveryButtons) {
         let button = game.recoveryButtons[key]
         button.costs = COSTS_GAINS.recoveryButtons[key].costs
+        button.costsPerSecond = COSTS_GAINS.recoveryButtons[key].costsPerSecond
         button.gains = COSTS_GAINS.recoveryButtons[key].gains
+        button.gainsPerSecond = COSTS_GAINS.recoveryButtons[key].gainsPerSecond
     }
+
     for (let key in game.mechButtons) {
         let button = game.mechButtons[key]
         button.costs = COSTS_GAINS.mechButtons[key].costs
+        button.costsPerSecond = COSTS_GAINS.mechButtons[key].costsPerSecond
         button.gains = COSTS_GAINS.mechButtons[key].gains
+        button.gainsPerSecond = COSTS_GAINS.mechButtons[key].gainsPerSecond
     }
 }

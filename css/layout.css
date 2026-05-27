@@ -178,6 +178,13 @@ hr {
     display: none;
 }
 
+#main-section-recovery .button:not(.can-afford),
+#main-section-mech-workshop .button:not(.can-afford) {
+    /* needs actual styling, will do */
+    filter: grayscale(100%) brightness(33%);
+}
+
+
 #recovery-section-actions,
 #recovery-section-buildings,
 #jobs-section-job-assignment,
@@ -264,11 +271,6 @@ hr {
     flex-direction: column;
     justify-content: center;
     align-items: center;
-}
-
-.button.can-afford {
-    /* needs actual styling, will do */
-    outline: 4px solid greenyellow;
 }
 
 .button.active {
