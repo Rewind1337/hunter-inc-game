@@ -341,6 +341,58 @@ hr {
     transform: translateY(13px);
 }
 
+.button-top-left-indicator,
+.button-top-right-indicator,
+.button-bottom-left-indicator,
+.button-bottom-right-indicator {
+    height: max-content;
+    border: 1px solid rgba(255, 255, 255, 0.5);
+    background: var(--background-color);
+    line-height: 2px;
+    font-size: 15px;
+    font-weight: 600;
+    padding: 8px 5px;
+    color: white;
+    text-shadow: 0 0 6px black;
+    z-index: 10;
+}
+
+.button-top-left-indicator {
+    transform: translate(-1px, 8px);
+    border-bottom-right-radius: 8px;
+}
+
+.button-top-right-indicator {
+    transform: translate(1px, 8px);
+    border-bottom-left-radius: 8px;
+}
+
+.button-bottom-left-indicator {
+    transform: translate(-1px, 1px);
+    border-top-right-radius: 8px;
+}
+
+.button-bottom-right-indicator {
+    transform: translate(1px, 1px);
+    border-top-left-radius: 8px;
+}
+
+.button-top-left-indicator:has(img),
+.button-top-right-indicator:has(img),
+.button-bottom-left-indicator:has(img),
+.button-bottom-right-indicator:has(img) {
+    padding: 1px 2px;
+    margin: 0;
+}
+
+.button-top-left-indicator img,
+.button-top-right-indicator img,
+.button-bottom-left-indicator img,
+.button-bottom-right-indicator img {
+    filter: brightness(0) invert(1);
+    width: 16px;
+}
+
 .progress-bar {
     width: 0;
     height: 100%;

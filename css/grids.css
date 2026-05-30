@@ -12,6 +12,12 @@
     grid-area: 1 / 1 / 2 / 4;
 }
 
+#main-top>div:first-child {
+    height: 32px;
+    margin: 0;
+    padding: 0;
+}
+
 #main-left {
     grid-area: 2 / 1 / 3 / 2;
 }

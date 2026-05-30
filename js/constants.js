@@ -76,7 +76,8 @@ const INITIAL_RECOVERY_STATE = {
         "wood-burner": {
             id: "wood-burner-button", name: "Wood Burner", section: "recovery-section-buildings", unlocked: false,
             current: 0, max: -1,
-            indicators: [{ location: "top-left", current: "wood-burner", type: "recoveryButtons" }],
+            indicators: [{ location: "top-left", current: "wood-burner", type: "recoveryButtons" }, { location: "top-right", settings: "wood-burner", type: "recoveryButtons" }],
+            settings: { current: 0, max: 0 },
         },
         "energy-storage": {
             id: "energy-storage-button", name: "Energy Storage", section: "recovery-section-buildings", unlocked: false,

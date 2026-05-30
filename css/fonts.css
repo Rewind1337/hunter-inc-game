@@ -20,7 +20,11 @@
 
 .roboto-font,
 div,
-p {
+p,
+.button-top-left-indicator,
+.button-top-right-indicator,
+.button-bottom-left-indicator,
+.button-bottom-right-indicator {
     font-family: "Roboto", sans-serif;
     font-optical-sizing: auto;
     font-weight: 400;

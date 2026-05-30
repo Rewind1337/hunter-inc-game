@@ -103,10 +103,10 @@ function updateTooltipTextContent(tooltipData) {
                 for (let i = 0; i < tooltipReference.costs.length; i++) {
                     let cost = tooltipReference.costs[i]
                     if (cost.resource) {
-                        finalContentString += '<div>' + cost.resource + ': +' + cost.amount + '</div>'
+                        finalContentString += '<div>' + cost.resource + ': -' + cost.amount + '</div>'
                     }
                     if (cost.special) {
-                        finalContentString += '<div>' + cost.special + ': +' + cost.amount + '</div>'
+                        finalContentString += '<div>' + cost.special + ': -' + cost.amount + '</div>'
                     }
                 }
                 finalContentString += '</div>'
@@ -160,13 +160,13 @@ function updateTooltipTextContent(tooltipData) {
                 for (let i = 0; i < tooltipReference.gainsPerSecond.length; i++) {
                     let gain = tooltipReference.gainsPerSecond[i]
                     if (gain.resource) {
-                        finalContentString += '<div>' + gain.resource + ': ' + gain.amount + '/second</div>'
+                        finalContentString += '<div>' + gain.resource + ': +' + gain.amount + '/second</div>'
                     }
                     if (gain.resourceCapacity) {
                         finalContentString += '<div>' + gain.resourceCapacity + ' capacity: +' + gain.amount + '</div>'
                     }
                     if (gain.special) {
-                        finalContentString += '<div>' + gain.special + ': ' + gain.amount + '/second</div>'
+                        finalContentString += '<div>' + gain.special + ': +' + gain.amount + '/second</div>'
                     }
                 }
                 finalContentString += '</div>'

@@ -5,7 +5,7 @@
 <head>
   <meta charset="utf-8">
 
-  <title>Idle</title>
+  <title>Hunter Inc • Mech Stage</title>
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -31,13 +31,22 @@
   </div>
 
   <div id="main-grid">
-    <div id="main-top" class="flex-row justify-between grid-element grid-white">
-
-    </div>
-    <div id="main-left" class="flex-col no-gaps">
-
-    </div>
-    <div id="main-center" class="flex-col no-gaps h-100">
+    <div id="main-top" class="flex-col no-gaps">
+      <div class="flex-row justify-between grid-element grid-white">
+        <button id="top-menu-left-button" class="button button-black">
+          <div class="button-content">
+            <div class="button-text flex-grow close-button"><img src="./svg/arrow_menu_left.svg"></div>
+            <div class="button-text flex-grow open-button"><img src="./svg/arrow_menu_right.svg"></div>
+          </div>
+        </button>
+        <div class="header flex-grow">Hunter Inc • Mech Stage</div>
+        <button id="top-menu-right-button" class="button button-black">
+          <div class="button-content">
+            <div class="button-text flex-grow close-button"><img src="./svg/arrow_menu_right.svg"></div>
+            <div class="button-text flex-grow open-button"><img src="./svg/arrow_menu_left.svg"></div>
+          </div>
+        </button>
+      </div>
       <div class="flex-row no-gaps w-100"> <!-- your top row with the stats and stuff -->
         <div class="grid-element grid-blue flex-col w-75 align-center">
           <div class="header">your stats</div>
@@ -55,6 +64,12 @@
           <div>stats</div>
         </div>
       </div>
+    </div>
+    <div id="main-left" class="flex-col no-gaps">
+
+    </div>
+    <div id="main-center" class="flex-col no-gaps h-100">
+      <!-- this is where canvas would go i guess -->
       <div class="spacer flex-grow"></div>
       <div class="flex-row flex-wrap no-gaps"> <!-- your bottom row with the buttons or more -->
         <button id="button-1" class="button button-white w-25">

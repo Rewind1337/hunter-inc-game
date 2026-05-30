@@ -7,7 +7,7 @@
 }
 
 body {
-    background: var(--background-color)
+    background: var(--background-color);
 }
 
 .header {
@@ -16,7 +16,6 @@ body {
     text-align: center;
     align-self: center;
     overflow: hidden;
-    margin-bottom: 4px;
     white-space: nowrap;
 }
 

@@ -175,6 +175,16 @@ function updateIndicatorsForButton(buttonID, type) {
                     let value = game[indicator.type][indicator.current].current
                     indicatorElement.style.opacity = 1
                     indicatorElement.innerHTML = value
+                } else if (indicator.settings) { // NEEDS indicator.type
+                    indicatorElement.style.opacity = 1
+                    indicatorElement.innerHTML = '<img src="./svg/settings.svg" alt="~">'
+                    indicatorElement.onclick = (e) => {
+                        e.stopPropagation();
+                        openButtonSettingsModal()
+                        console.log(indicator)
+                        console.log(buttonID, type)
+                        console.log(game[indicator.type][indicator.settings].settings)
+                    }
                 }
                 break;
             default:
@@ -182,6 +192,10 @@ function updateIndicatorsForButton(buttonID, type) {
                 break;
         }
     }
+}
+
+function openButtonSettingsModal() {
+
 }
 
 // resource function that returns true if the play can afford the costs provided
