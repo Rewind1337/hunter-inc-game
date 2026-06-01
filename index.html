@@ -121,10 +121,17 @@
             <div class="button-end"></div>
           </div>
         </button>
+        <button id="center-parts-factory-button" class="button w-50 button-yellow">
+          <div class="button-content">
+            <div class="button-start"><img src="./svg/mech_workshop.svg"></div>
+            <div class="button-text flex-grow">Factory</div>
+            <div class="button-end"></div>
+          </div>
+        </button>
         <button id="center-mech-workshop-button" class="button w-50 button-red">
           <div class="button-content">
             <div class="button-start"><img src="./svg/mech_workshop.svg"></div>
-            <div class="button-text flex-grow">Mech Workshop</div>
+            <div class="button-text flex-grow">Mech</div>
             <div class="button-end"></div>
           </div>
         </button>
@@ -233,22 +240,6 @@
               <div class="button-content">
                 <div class="button-start"><img src="./svg/robot.svg"></div>
                 <div class="button-text flex-grow">Create Robot</div>
-                <div class="button-end"></div>
-              </div>
-              <div class="button-bottom-indicators w-100 flex-row justify-between">
-                <div class="button-bottom-left-indicator">0</div>
-                <div class="button-bottom-right-indicator">0</div>
-              </div>
-            </button>
-            <button id="compress-cube-button" class="button button-white has-tooltip"
-              data-tooltip-type="recovery-button" data-tooltip-id="compress-cube">
-              <div class="button-top-indicators w-100 flex-row justify-between">
-                <div class="button-top-left-indicator">0</div>
-                <div class="button-top-right-indicator">0</div>
-              </div>
-              <div class="button-content">
-                <div class="button-start"><img src="./svg/cube.svg"></div>
-                <div class="button-text flex-grow">Compress Cube</div>
                 <div class="button-end"></div>
               </div>
               <div class="button-bottom-indicators w-100 flex-row justify-between">
@@ -421,6 +412,38 @@
                 <div class="button-bottom-right-indicator">0</div>
               </div>
             </button>
+            <button id="construction-bay-button" class="button button-white has-tooltip"
+              data-tooltip-type="recovery-button" data-tooltip-id="construction-bay">
+              <div class="button-top-indicators w-100 flex-row justify-between">
+                <div class="button-top-left-indicator">0</div>
+                <div class="button-top-right-indicator">0</div>
+              </div>
+              <div class="button-content">
+                <div class="button-start"><img src="./svg/drone_top.svg"></div>
+                <div class="button-text flex-grow">Construction Bay</div>
+                <div class="button-end"></div>
+              </div>
+              <div class="button-bottom-indicators w-100 flex-row justify-between">
+                <div class="button-bottom-left-indicator">0</div>
+                <div class="button-bottom-right-indicator">0</div>
+              </div>
+            </button>
+            <button id="parts-factory-button" class="button button-white has-tooltip"
+              data-tooltip-type="recovery-button" data-tooltip-id="parts-factory">
+              <div class="button-top-indicators w-100 flex-row justify-between">
+                <div class="button-top-left-indicator">0</div>
+                <div class="button-top-right-indicator">0</div>
+              </div>
+              <div class="button-content">
+                <div class="button-start"><img src="./svg/drone_top.svg"></div>
+                <div class="button-text flex-grow">Parts Factory</div>
+                <div class="button-end"></div>
+              </div>
+              <div class="button-bottom-indicators w-100 flex-row justify-between">
+                <div class="button-bottom-left-indicator">0</div>
+                <div class="button-bottom-right-indicator">0</div>
+              </div>
+            </button>
           </div>
         </div>
         <div class="spacer flex-grow"></div>
@@ -428,7 +451,7 @@
       <div id="main-section-jobs" class="main-center-tab flex-col no-gaps h-100">
         <div id="jobs-section-job-assignment" class="main-section grid-element flex-col no-gaps">
           <div class="header">Job Assignment</div>
-          <div class="main-jobs-section w-50 flex-col">
+          <div class="main-jobs-section w-100 flex-col">
             <div id="job-idle-robot" class="job-assignment has-tooltip flex-row justify-between" data-tooltip-type="job"
               data-tooltip-id="idle-robot">
               <div class="job-amount grid-element align-center">0</div>
@@ -485,6 +508,46 @@
         </div>
         <div class="spacer flex-grow"></div>
       </div>
+      <div id="main-section-parts-factory" class="main-center-tab flex-col no-gaps h-100">
+        <div id="parts-factory-section-parts" class="main-section grid-element flex-col no-gaps">
+          <div class="header">Parts Factory</div>
+          <div class="main-button-section flex-row flex-wrap">
+            <button id="small-battery-button" class="button button-yellow has-tooltip"
+              data-tooltip-type="factory-button" data-tooltip-id="small-battery">
+              <div class="button-top-indicators w-100 flex-row justify-between">
+                <div class="button-top-left-indicator">0</div>
+                <div class="button-top-right-indicator">0</div>
+              </div>
+              <div class="button-content">
+                <div class="button-start"><img src="./svg/battery_0.svg"></div>
+                <div class="button-text flex-grow">Small Battery</div>
+                <div class="button-end"></div>
+              </div>
+              <div class="button-bottom-indicators w-100 flex-row justify-between">
+                <div class="button-bottom-left-indicator">0</div>
+                <div class="button-bottom-right-indicator">0</div>
+              </div>
+            </button>
+            <button id="compressed-cube-button" class="button button-yellow has-tooltip"
+              data-tooltip-type="factory-button" data-tooltip-id="compressed-cube">
+              <div class="button-top-indicators w-100 flex-row justify-between">
+                <div class="button-top-left-indicator">0</div>
+                <div class="button-top-right-indicator">0</div>
+              </div>
+              <div class="button-content">
+                <div class="button-start"><img src="./svg/cube.svg"></div>
+                <div class="button-text flex-grow">Compressed Cube</div>
+                <div class="button-end"></div>
+              </div>
+              <div class="button-bottom-indicators w-100 flex-row justify-between">
+                <div class="button-bottom-left-indicator">0</div>
+                <div class="button-bottom-right-indicator">0</div>
+              </div>
+            </button>
+          </div>
+        </div>
+        <div class="spacer flex-grow"></div>
+      </div>
       <div id="main-section-mech-workshop" class="main-center-tab flex-col no-gaps h-100">
         <div id="mech-workshop-section-construction-progress" class="main-section grid-element flex-col no-gaps">
           <div class="progress-header grid-element grid-white">Construction Progress</div>
@@ -502,7 +565,7 @@
         </div>
         <div id="mech-workshop-section-build-a-mech" class="main-section grid-element flex-col no-gaps">
           <div class="header">Build-A-Mech</div>
-          <div class="main-mech-section flex-row flex-wrap">
+          <div class="main-button-section flex-row flex-wrap">
             <button id="mech-frame-button" class="button button-white has-tooltip" data-tooltip-type="mech-button"
               data-tooltip-id="mech-frame">
               <div class="button-top-indicators w-100 flex-row justify-between">
@@ -606,7 +669,26 @@
       <div class="spacer flex-grow"></div>
     </div>
     <div id="main-right" class="flex-col no-gaps">
-
+      <div class="header">Research</div>
+      <div id="research-list" class="flex-col no-gaps">
+        <div id="research-0" class="research grid-element flex-col">
+          <div class="flex-row justify-between align-center">
+            <div class="research-icon"><img src="./svg/wrench.svg" /></div>
+            <div class="research-name flex-grow">Research 1</div>
+            <button class="button button-white research-button">
+              <div class="button-content">
+                <div class="button-text flex-grow">Unlock</div>
+              </div>
+            </button>
+          </div>
+          <div class="flex-col no-gaps">
+            <div class="research-effect flex-row align-center justify-between">
+              <div class="research-effect-target">wood scrap gathering speed</div>
+              <div class="research-effect-increase">x2</div>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
     <div id="main-bottom" class="grid-element grid-white">
 

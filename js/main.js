@@ -11,16 +11,55 @@ function setupInitialState() {
     game.unlocks = deepCopy(UNLOCKS) // copy default unlocks from unlocks.js
     initUnlocks() // make sure the fields are there
 
+    game.costExponents = {
+        "energy": 1.5,
+        "robots": 1.0,
+        "drones": 1.0,
+        "wood": 1.2,
+        "scrap": 1.2,
+        "squares": 1.1,
+        "circles": 1.075,
+        "triangles": 1.025,
+        "cubes": 1.025
+    }
+
+    // ayy
+    runAlotOfCheatyCommandsToGiveUsABetterTimeDeveloping()
+
     // calls the ui functions for the gamestate
     // these can probably be reused somewhat safely to update the DOM when needed
     updateResourceAmounts()
     updateResourceVisibility()
     updateRecoveryButtonVisibility()
     updateJobVisibility()
+    updateFactoryButtonVisibility()
     updateMechButtonVisibility()
 
     // starts the gameLoop
     requestAnimationFrame(gameLoop);
+}
+
+function runAlotOfCheatyCommandsToGiveUsABetterTimeDeveloping() {
+    addAllGainsToResources([
+        { resourceCapacity: "energy", amount: 1e30 },
+        { resourceCapacity: "robots", amount: 1e3 },
+        { resourceCapacity: "drones", amount: 1e3 },
+        { resourceCapacity: "wood", amount: 1e30 },
+        { resourceCapacity: "scrap", amount: 1e30 },
+        { resourceCapacity: "squares", amount: 1e30 },
+        { resourceCapacity: "circles", amount: 1e30 },
+        { resourceCapacity: "triangles", amount: 1e30 },
+        { resourceCapacity: "cubes", amount: 1e30 },
+        { resource: "energy", amount: 1e29 },
+        { resource: "robots", amount: 1e2 },
+        { resource: "drones", amount: 1e2 },
+        { resource: "wood", amount: 1e29 },
+        { resource: "scrap", amount: 1e29 },
+        { resource: "squares", amount: 1e29 },
+        { resource: "circles", amount: 1e29 },
+        { resource: "triangles", amount: 1e29 },
+        { resource: "cubes", amount: 1e29 },
+    ])
 }
 
 // the gameLoop which calls requestAnimationFrame for good shit
@@ -119,36 +158,30 @@ function buttonPressed(buttonID, type) {
     let button = game[type][buttonID]
     // check for costs
     let canAfford = checkCosts(button.costs)
+    let canBuy = (button.max !== -1 ? (button.current < button.max) : true)
     // duh
-    if (canAfford) {
+    if (canAfford && canBuy) {
         // remove the resources
         subtractAllCostsFromResources(button.costs)
         // add the gains
         addAllGainsToResources(button.gains)
         button.current++ // increment the button.current for logic and conditions and stuff
+        incrementCostsForButton(buttonID, type)
+        let tooltipTypeStringReplace = type.replace("B", "-b").substring(0, type.length)
+        updateTooltipTextContent({ id: buttonID, type: tooltipTypeStringReplace })
         updateResourceAmounts() // update HTML
         updateIndicatorsForButton(buttonID, type) // what it says
-        updateIdleRobotCount() // not the best place to call this, but it covers alot of cases for the moment
         checkAllUnlockThings() // same
     }
 }
 
-// handles the buttons in the recovery tab
-function mechButtonPressed(buttonID) {
-    let button = game.mechButtons[buttonID]
-    // check for costs
-    let canAfford = checkCosts(button.costs)
-    // duh
-    if (canAfford) {
-        // remove the resources
-        subtractAllCostsFromResources(button.costs)
-        // add the gains
-        addAllGainsToResources(button.gains)
-        button.current++ // increment the button.current for logic and conditions and stuff
-        updateResourceAmounts() // update HTML
-        updateIndicatorsForButton(buttonID, "mechButtons") // what it says
-        updateIdleRobotCount() // not the best place to call this, but it covers alot of cases for the moment
-        checkAllUnlockThings() // same
+function incrementCostsForButton(buttonID, type) {
+    let button = game[type][buttonID]
+    if (button.costScaling === true) {
+        for (let key in button.costs) {
+            let cost = button.costs[key]
+            cost.amount = cost.amount * game.costExponents[cost.resource]
+        }
     }
 }
 
@@ -165,25 +198,24 @@ function updateIndicatorsForButton(buttonID, type) {
                 let indicatorElement = document.getElementById(button.id).querySelector(".button-" + indicator.location + "-indicator")
                 if (indicator.resource) {
                     let value = game.resource[indicator.resource].current
-                    indicatorElement.style.opacity = 1
+                    indicatorElement.style.opacity = (value > 0 ? 1 : 0)
                     indicatorElement.innerHTML = value
                 } else if (indicator.special) {
                     let value = game.special[indicator.special]
-                    indicatorElement.style.opacity = 1
+                    indicatorElement.style.opacity = (value > 0 ? 1 : 0)
                     indicatorElement.innerHTML = value
                 } else if (indicator.current) { // NEEDS indicator.type
                     let value = game[indicator.type][indicator.current].current
-                    indicatorElement.style.opacity = 1
+                    indicatorElement.style.opacity = (value > 0 ? 1 : 0)
                     indicatorElement.innerHTML = value
                 } else if (indicator.settings) { // NEEDS indicator.type
-                    indicatorElement.style.opacity = 1
-                    indicatorElement.innerHTML = '<img src="./svg/settings.svg" alt="~">'
-                    indicatorElement.onclick = (e) => {
-                        e.stopPropagation();
-                        openButtonSettingsModal()
-                        console.log(indicator)
-                        console.log(buttonID, type)
-                        console.log(game[indicator.type][indicator.settings].settings)
+                    if (button.current > 0) {
+                        indicatorElement.style.opacity = 1
+                        indicatorElement.innerHTML = '<img src="./svg/settings.svg" alt="~">'
+                        indicatorElement.onclick = (e) => {
+                            e.stopPropagation();
+                            openButtonSettingsModal(type, buttonID, indicator.type) // TODO
+                        }
                     }
                 }
                 break;
@@ -194,8 +226,8 @@ function updateIndicatorsForButton(buttonID, type) {
     }
 }
 
-function openButtonSettingsModal() {
-
+function openButtonSettingsModal(buttonType, buttonID, modalType) {
+    console.log(buttonType, buttonID, modalType)
 }
 
 // resource function that returns true if the play can afford the costs provided
@@ -243,6 +275,7 @@ function addGainToResource(gain, dt = 1) {
     }
 
     if (gain.special) { // we can just expand this once we need it, just one thing at the moment
+        if (game.special[gain.special] === undefined) { game.special[gain.special] = 0 } // instantiate to 0 if it doesnt exist
         game.special[gain.special] += dtGain
     }
 }
@@ -301,6 +334,7 @@ function linkFunctionsToHTML() {
     document.getElementById("center-recovery-button").onclick = () => { switchCenterTab("recovery") }
     document.getElementById("center-jobs-button").onclick = () => { switchCenterTab("jobs") }
     document.getElementById("center-mech-workshop-button").onclick = () => { switchCenterTab("mech-workshop") }
+    document.getElementById("center-parts-factory-button").onclick = () => { switchCenterTab("parts-factory") }
 
     // link gather buttons
     document.getElementById("salvage-old-mech-button").onclick = () => { buttonPressed("salvage-old-mech", "recoveryButtons") }
@@ -311,7 +345,6 @@ function linkFunctionsToHTML() {
     document.getElementById("burn-wood-button").onclick = () => { buttonPressed("burn-wood", "recoveryButtons") }
     document.getElementById("salvage-scrap-button").onclick = () => { buttonPressed("salvage-scrap", "recoveryButtons") }
     document.getElementById("create-robot-button").onclick = () => { buttonPressed("create-robot", "recoveryButtons") }
-    document.getElementById("compress-cube-button").onclick = () => { buttonPressed("compress-cube", "recoveryButtons") }
     document.getElementById("create-drone-button").onclick = () => { buttonPressed("create-drone", "recoveryButtons") }
 
     // link building buttons
@@ -324,6 +357,13 @@ function linkFunctionsToHTML() {
     document.getElementById("solar-panel-button").onclick = () => { buttonPressed("solar-panel", "recoveryButtons") }
     document.getElementById("mech-workshop-button").onclick = () => { buttonPressed("mech-workshop", "recoveryButtons") }
     document.getElementById("drone-dock-button").onclick = () => { buttonPressed("drone-dock", "recoveryButtons") }
+
+    document.getElementById("parts-factory-button").onclick = () => { buttonPressed("parts-factory", "recoveryButtons") }
+    document.getElementById("construction-bay-button").onclick = () => { buttonPressed("construction-bay", "recoveryButtons") }
+
+    // link factory buttons
+    document.getElementById("small-battery-button").onclick = () => { buttonPressed("small-battery", "factoryButtons") }
+    document.getElementById("compressed-cube-button").onclick = () => { buttonPressed("compressed-cube", "factoryButtons") }
 
     // link mech buttons
     document.getElementById("mech-frame-button").onclick = () => { buttonPressed("mech-frame", "mechButtons") }

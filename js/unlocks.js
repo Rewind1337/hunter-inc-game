@@ -2,25 +2,67 @@
 // if for whatever reason we need to add unlocks that are skipped from the start, we just add the skip thing here
 // damn hard to read from time to time, maybe some other way?
 const UNLOCKS = [
+    // wood and scrap start unlocked
+
+    // unlocks burn-wood as button and energy as resource
     { conditions: [{ resource: "wood", amount: 1 }], targets: [{ recoveryButton: "burn-wood" }, { resource: "energy" }] },
+
+    // unlocks salvage-scrap as button
     { conditions: [{ resource: "scrap", amount: 1 }], targets: [{ recoveryButton: "salvage-scrap" }] },
-    { conditions: [{ recoveryButton: "robot-housing", amount: 1 }], targets: [{ recoveryButton: "create-robot" }, { resource: "robots" }] },
-    { conditions: [{ recoveryButton: "drone-dock", amount: 1 }], targets: [{ recoveryButton: "create-drone" }, { resource: "drones" }] },
-    { conditions: [{ recoveryButton: "salvage-scrap", amount: 1 }], targets: [{ resource: "squares" }, { resource: "circles" }, { resource: "triangles" }] },
 
+    // unlocks resource after amount
+    { conditions: [{ resource: "squares", amount: 0.1 }], targets: [{ resource: "squares" }] },
+    { conditions: [{ resource: "circles", amount: 0.1 }], targets: [{ resource: "circles" }] },
+    { conditions: [{ resource: "triangles", amount: 0.1 }], targets: [{ resource: "triangles" }] },
+    { conditions: [{ resource: "cubes", amount: 1 }], targets: [{ resource: "cubes" }] },
+
+    // unlocks wood-burner as button
     { conditions: COSTS_GAINS.recoveryButtons["wood-burner"].costs, targets: [{ recoveryButton: "wood-burner" }] },
+
+    // unlocks energy-storage as button
     { conditions: COSTS_GAINS.recoveryButtons["energy-storage"].costs, targets: [{ recoveryButton: "energy-storage" }] },
+
+    // unlocks robot-housing as button
     { conditions: COSTS_GAINS.recoveryButtons["robot-housing"].costs, targets: [{ recoveryButton: "robot-housing" }] },
-    { conditions: COSTS_GAINS.recoveryButtons["resource-storage"].costs, targets: [{ recoveryButton: "resource-storage" }] },
-    { conditions: COSTS_GAINS.recoveryButtons["windmill"].costs, targets: [{ recoveryButton: "windmill" }] },
-    { conditions: COSTS_GAINS.recoveryButtons["shape-factory"].costs, targets: [{ recoveryButton: "shape-factory" }] },
-    { conditions: COSTS_GAINS.recoveryButtons["solar-panel"].costs, targets: [{ recoveryButton: "solar-panel" }] },
-    { conditions: COSTS_GAINS.recoveryButtons["mech-workshop"].costs, targets: [{ recoveryButton: "mech-workshop" }, { tabButton: "mech-workshop" }, { job: "factory-bot" }, { mechButton: "mech-frame" }, { mechButton: "mech-armor" }, { mechButton: "mech-recovery" }, { mechButton: "mech-joints" }, { mechButton: "mech-vision" }, { mechButton: "mech-weapons" }] },
-    { conditions: COSTS_GAINS.recoveryButtons["drone-dock"].costs, targets: [{ recoveryButton: "drone-dock" }] },
+    // unlocks create-robot as button and robots as resource
+    { conditions: [{ recoveryButton: "robot-housing", amount: 1 }], targets: [{ recoveryButton: "create-robot" }, { resource: "robots" }] },
+    // unlocks robots as resource (fallback)
+    { conditions: [{ resource: "robots", amount: 1 }], targets: [{ resource: "robots" }] },
 
-    { conditions: [{ resource: "squares", amount: 100 }, { resource: "circles", amount: 100 }, { resource: "triangles", amount: 100 }], targets: [{ resource: "cubes" }] },
-
+    // unlocks scrap-collector, woodcutter and idle-robot as job/s
     { conditions: [{ resource: "robots", amount: 1 }], targets: [{ job: "scrap-collector" }, { job: "woodcutter" }, { job: "idle-robot" }, { tabButton: "jobs" }] },
+
+    // unlocks resource-storage as button
+    { conditions: COSTS_GAINS.recoveryButtons["resource-storage"].costs, targets: [{ recoveryButton: "resource-storage" }] },
+
+    // unlocks windmill as button
+    { conditions: COSTS_GAINS.recoveryButtons["windmill"].costs, targets: [{ recoveryButton: "windmill" }] },
+
+    // unlocks shape-factory as button
+    { conditions: COSTS_GAINS.recoveryButtons["shape-factory"].costs, targets: [{ recoveryButton: "shape-factory" }] },
+
+    // unlocks solar-panel as button
+    { conditions: COSTS_GAINS.recoveryButtons["solar-panel"].costs, targets: [{ recoveryButton: "solar-panel" }] },
+
+    // unlocks mech-workshop as button
+    { conditions: COSTS_GAINS.recoveryButtons["mech-workshop"].costs, targets: [{ recoveryButton: "mech-workshop" }] },
+    // unlocks the mech-workshop tab as well as first 6 mech-buttons
+    { conditions: [{ recoveryButton: "mech-workshop", amount: 1 }], targets: [{ tabButton: "mech-workshop" }, { mechButton: "mech-frame" }, { mechButton: "mech-armor" }, { mechButton: "mech-recovery" }, { mechButton: "mech-joints" }, { mechButton: "mech-vision" }, { mechButton: "mech-weapons" }] },
+
+    // unlocks drone-dock as button
+    { conditions: COSTS_GAINS.recoveryButtons["drone-dock"].costs, targets: [{ recoveryButton: "drone-dock" }] },
+    // unlocks create-drone as button and drones as resource
+    { conditions: [{ recoveryButton: "drone-dock", amount: 1 }], targets: [{ recoveryButton: "create-drone" }, { resource: "drones" }] },
+    // unlocks drones as resource (fallback)
+    { conditions: [{ resource: "drones", amount: 1 }], targets: [{ resource: "drones" }] },
+
+    // unlocks construction-bay as button
+    { conditions: COSTS_GAINS.recoveryButtons["construction-bay"].costs, targets: [{ recoveryButton: "construction-bay" }] },
+
+    // unlocks parts-factory-bay as button
+    { conditions: COSTS_GAINS.recoveryButtons["parts-factory"].costs, targets: [{ recoveryButton: "parts-factory" }] },
+    // unlocks the parts-factory tab as well as first 2 factory-buttons
+    { conditions: [{ recoveryButton: "parts-factory", amount: 1 }], targets: [{ tabButton: "parts-factory" }, { factoryButton: "small-battery" }, { factoryButton: "compressed-cube" }] },
 ]
 
 // gets run once on page load at the moment
@@ -84,6 +126,11 @@ function checkAllUnlockThings() {
                         conditionsFailed = true
                         break; // stop checking conditions for this entry
                     }
+                } else if (con.factoryButton) {
+                    if (game.factoryButtons[con.factoryButton].current < con.amount) {
+                        conditionsFailed = true
+                        break; // stop checking conditions for this entry
+                    }
                 } // other conditions chained i guess
             }
 
@@ -95,6 +142,7 @@ function checkAllUnlockThings() {
                     else if (tar.recoveryButton) { unlockRecoveryButton(tar.recoveryButton) }
                     else if (tar.job) { unlockJob(tar.job) }
                     else if (tar.mechButton) { unlockMechButton(tar.mechButton) }
+                    else if (tar.factoryButton) { unlockFactoryButton(tar.factoryButton) }
                     else if (tar.tabButton) { makeTabButtonVisible(tar.tabButton) }
                 }
             }
@@ -134,5 +182,14 @@ function unlockMechButton(buttonID) {
     let buttonElement = document.getElementById(buttonID + "-button")
     buttonElement.style.display = "flex"
     let sectionElement = document.getElementById("mech-workshop-section-build-a-mech")
+    sectionElement.style.display = "flex"
+}
+
+// unlocks the button and forces the parts factory button with buttonID display to flex
+function unlockFactoryButton(buttonID) {
+    game.factoryButtons[buttonID].unlocked = true
+    let buttonElement = document.getElementById(buttonID + "-button")
+    buttonElement.style.display = "flex"
+    let sectionElement = document.getElementById("parts-factory-section-parts")
     sectionElement.style.display = "flex"
 }

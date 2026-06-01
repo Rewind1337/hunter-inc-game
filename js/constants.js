@@ -61,11 +61,6 @@ const INITIAL_RECOVERY_STATE = {
             current: 0, max: -1,
             indicators: [{ location: "top-left", resource: "robots" }],
         },
-        "compress-cube": {
-            id: "compress-cube-button", name: "Compress Cube", section: "recovery-section-actions", unlocked: false,
-            current: 0, max: -1,
-            indicators: [],
-        },
         "create-drone": {
             id: "create-drone-button", name: "Create Drone", section: "recovery-section-actions", unlocked: false,
             current: 0, max: -1,
@@ -76,7 +71,7 @@ const INITIAL_RECOVERY_STATE = {
         "wood-burner": {
             id: "wood-burner-button", name: "Wood Burner", section: "recovery-section-buildings", unlocked: false,
             current: 0, max: -1,
-            indicators: [{ location: "top-left", current: "wood-burner", type: "recoveryButtons" }, { location: "top-right", settings: "wood-burner", type: "recoveryButtons" }],
+            indicators: [{ location: "top-left", current: "wood-burner", type: "recoveryButtons" }, { location: "top-right", settings: "wood-burner", type: "assignment" }],
             settings: { current: 0, max: 0 },
         },
         "energy-storage": {
@@ -111,13 +106,36 @@ const INITIAL_RECOVERY_STATE = {
         },
         "mech-workshop": {
             id: "mech-workshop-button", name: "Mech Workshop", section: "recovery-section-buildings", unlocked: false,
-            current: 0, max: -1,
+            current: 0, max: 1,
             indicators: [{ location: "top-left", current: "mech-workshop", type: "recoveryButtons" }],
         },
         "drone-dock": {
             id: "drone-dock-button", name: "Drone Dock", section: "recovery-section-buildings", unlocked: false,
             current: 0, max: -1,
             indicators: [{ location: "top-left", current: "drone-dock", type: "recoveryButtons" }],
+        },
+        // not done fully figuring them out / implementing these
+        "construction-bay": { // reduces cost of some things
+            id: "construction-bay-button", name: "Construction Bay", section: "recovery-section-buildings", unlocked: false,
+            current: 0, max: -1,
+            indicators: [{ location: "top-left", current: "construction-bay", type: "recoveryButtons" }],
+        },
+        "parts-factory": {
+            id: "parts-factory-button", name: "Parts Factory", section: "recovery-section-buildings", unlocked: false,
+            current: 0, max: 1,
+            indicators: [{ location: "top-left", current: "parts-factory", type: "recoveryButtons" }],
+        },
+    },
+    factoryButtons: { // factory tab data
+        "small-battery": {
+            id: "small-battery-button", name: "Small Battery", section: "parts-factory-section-parts", unlocked: false,
+            current: 0, max: -1,
+            indicators: [{ location: "top-right", special: "small-battery" }],
+        },
+        "compressed-cube": {
+            id: "compressed-cube-button", name: "Compressed Cube", section: "parts-factory-section-parts", unlocked: false,
+            current: 0, max: -1,
+            indicators: [{ location: "top-right", special: "compressed-cube" }],
         },
     },
     mechButtons: { // mech tab data

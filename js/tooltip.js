@@ -1,6 +1,7 @@
 let TOOLTIP_VISIBLE = false // not really used, but may come in handy later
 let TOOLTIP_ELEMENT = document.getElementById("tooltip")
 let TOOLTIP_HEIGHT = 300
+let TOOLTIP_UPDATE_INTERVAL = null
 
 // binds the tooltip functions on to EVERY button with the class 'tooltip-button'
 // reads the 'data-tooltip' attribute for the contentID for linking later
@@ -11,16 +12,21 @@ function bindTooltip() {
             id: allTooltipSources[element].getAttribute("data-tooltip-id"),
             type: allTooltipSources[element].getAttribute("data-tooltip-type")
         }
+        console.log(tooltipData)
         allTooltipSources[element].onmouseenter = (mouseEvent) => {
             updateTooltipTextContent(tooltipData)
             updateTooltipPosition(mouseEvent)
             showTooltip()
+            TOOLTIP_UPDATE_INTERVAL = setInterval(() => {
+                updateTooltipTextContent(tooltipData)
+            }, 333)
         }
         allTooltipSources[element].onmousemove = (mouseEvent) => {
             updateTooltipPosition(mouseEvent)
         }
         allTooltipSources[element].onmouseleave = () => {
             hideTooltip()
+            clearInterval(TOOLTIP_UPDATE_INTERVAL)
         }
     }
 }
@@ -33,15 +39,19 @@ let TOOLTIP_BOTTOM_ELEMENT = document.getElementById("tooltip-bottom")
 function updateTooltipTextContent(tooltipData) {
     // only one of the available types
     assert(tooltipData.type === "recovery-button"
+        || tooltipData.type === "factory-button"
         || tooltipData.type === "mech-button"
         || tooltipData.type === "resource"
         || tooltipData.type === "job"
         || tooltipData.type === "other-button", "data-tooltip-type not correct")
 
     let tooltipReference = null
-    switch (tooltipData.type) {
+    switch (tooltipData.type) { // this is dumb but im not sure how to fix it yet, gets called from multiple places, etc
         case "recovery-button":
             tooltipReference = game.recoveryButtons[tooltipData.id]
+            break;
+        case "factory-button":
+            tooltipReference = game.factoryButtons[tooltipData.id]
             break;
         case "mech-button":
             tooltipReference = game.mechButtons[tooltipData.id]
@@ -64,7 +74,10 @@ function updateTooltipTextContent(tooltipData) {
     }
 
     // same header for everything
-    TOOLTIP_HEADER_ELEMENT.innerHTML = "(id: " + tooltipData.id + ") " + tooltipReference.name
+    TOOLTIP_HEADER_ELEMENT.innerHTML = '<div class="header">(id: ' + tooltipData.id + ') ' + tooltipReference.name + '</div>'
+    if (tooltipReference.max >= 1) {
+        TOOLTIP_HEADER_ELEMENT.innerHTML += '<div class="header header-small">Limited to ' + tooltipReference.max + '</div>'
+    }
 
     // setup string
     let finalContentString = ''
@@ -103,10 +116,10 @@ function updateTooltipTextContent(tooltipData) {
                 for (let i = 0; i < tooltipReference.costs.length; i++) {
                     let cost = tooltipReference.costs[i]
                     if (cost.resource) {
-                        finalContentString += '<div>' + cost.resource + ': -' + cost.amount + '</div>'
+                        finalContentString += '<div class="tooltip-pill"><div>' + replaceNameWithSVG(cost.resource) + '</div><div>' + cost.amount + '</div></div>'
                     }
                     if (cost.special) {
-                        finalContentString += '<div>' + cost.special + ': -' + cost.amount + '</div>'
+                        finalContentString += '<div class="tooltip-pill"><div>' + replaceNameWithSVG(cost.special) + '</div><div>' + cost.amount + '</div></div>'
                     }
                 }
                 finalContentString += '</div>'
@@ -121,10 +134,10 @@ function updateTooltipTextContent(tooltipData) {
                 for (let i = 0; i < tooltipReference.costsPerSecond.length; i++) {
                     let cost = tooltipReference.costsPerSecond[i]
                     if (cost.resource) {
-                        finalContentString += '<div>' + cost.resource + ': -' + cost.amount + '/second</div>'
+                        finalContentString += '<div class="tooltip-pill"><div>' + replaceNameWithSVG(cost.resource) + '</div><div>' + cost.amount + '/second</div></div>'
                     }
                     if (cost.special) {
-                        finalContentString += '<div>' + cost.special + ': -' + cost.amount + '/second</div>'
+                        finalContentString += '<div class="tooltip-pill"><div>' + replaceNameWithSVG(cost.special) + '</div><div>' + cost.amount + '/second</div></div>'
                     }
                 }
                 finalContentString += '</div>'
@@ -139,13 +152,13 @@ function updateTooltipTextContent(tooltipData) {
                 for (let i = 0; i < tooltipReference.gains.length; i++) {
                     let gain = tooltipReference.gains[i]
                     if (gain.resource) {
-                        finalContentString += '<div>' + gain.resource + ': +' + gain.amount + '</div>'
+                        finalContentString += '<div class="tooltip-pill"><div>' + replaceNameWithSVG(gain.resource) + '</div><div>' + gain.amount + '</div></div>'
                     }
                     if (gain.resourceCapacity) {
-                        finalContentString += '<div>' + gain.resourceCapacity + ' capacity: +' + gain.amount + '</div>'
+                        finalContentString += '<div class="tooltip-pill"><div>' + replaceNameWithSVG(gain.resourceCapacity) + ' Cap.</div><div>' + gain.amount + '</div></div>'
                     }
                     if (gain.special) {
-                        finalContentString += '<div>' + gain.special + ': +' + gain.amount + '</div>'
+                        finalContentString += '<div class="tooltip-pill"><div>' + replaceNameWithSVG(gain.special) + '</div><div>' + gain.amount + '</div></div>'
                     }
                 }
                 finalContentString += '</div>'
@@ -160,13 +173,13 @@ function updateTooltipTextContent(tooltipData) {
                 for (let i = 0; i < tooltipReference.gainsPerSecond.length; i++) {
                     let gain = tooltipReference.gainsPerSecond[i]
                     if (gain.resource) {
-                        finalContentString += '<div>' + gain.resource + ': +' + gain.amount + '/second</div>'
+                        finalContentString += '<div class="tooltip-pill"><div>' + replaceNameWithSVG(gain.resource) + '</div><div>' + gain.amount + '/second</div></div>'
                     }
                     if (gain.resourceCapacity) {
-                        finalContentString += '<div>' + gain.resourceCapacity + ' capacity: +' + gain.amount + '</div>'
+                        finalContentString += '<div class="tooltip-pill"><div>' + replaceNameWithSVG(gain.resourceCapacity) + ' Cap.</div><div>' + gain.amount + '</div></div>'
                     }
                     if (gain.special) {
-                        finalContentString += '<div>' + gain.special + ': +' + gain.amount + '/second</div>'
+                        finalContentString += '<div class="tooltip-pill"><div>' + replaceNameWithSVG(gain.special) + '</div><div>' + gain.amount + '/second</div></div>'
                     }
                 }
                 finalContentString += '</div>'
@@ -185,6 +198,28 @@ function updateTooltipTextContent(tooltipData) {
         TOOLTIP_BOTTOM_ELEMENT.innerHTML = finalBottomString
     }
 }
+
+const resourceNameToImg = {
+    "wood": "tree",
+    "scrap": "borg",
+    "energy": "battery_7",
+    "robots": "robot",
+    "drones": "drone",
+    "squares": "box",
+    "circles": "circle",
+    "triangles": "triangle",
+    "cubes": "cube",
+    "salvage-old-mech-left": "mech"
+}
+
+// a function that takes in a name and spits out an svg in an <img>
+function replaceNameWithSVG(name) {
+    if (resourceNameToImg[name] !== undefined) {
+        return '<img src="./svg/' + resourceNameToImg[name] + '.svg" alt="' + name + '">'
+    }
+    return name
+}
+
 
 // simply shows the tooltip
 function showTooltip() {

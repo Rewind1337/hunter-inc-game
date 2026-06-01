@@ -15,6 +15,14 @@
     --blue-light-alpha: #b2dbf480;
     --blue-hover: #88bddd;
 
+    --yellow-dark: hsl(50, 100%, 14%);
+    --yellow-dark-alpha: hsla(50, 100%, 14%, 0.502);
+    --yellow-norm: hsl(52, 39%, 57%);
+    --yellow-norm-alpha: hsla(52, 39%, 57%, 0.502);
+    --yellow-light: hsl(52, 75%, 83%);
+    --yellow-light-alpha: hsla(52, 75%, 83%, 0.502);
+    --yellow-hover: hsl(52, 56%, 70%);
+
     --white-dark: #e1c997;
     --white-dark-alpha: #e1c99780;
     --white-norm: #fdf0d5;
@@ -120,6 +128,24 @@
     border-color: white;
 }
 
+/* Yellow Button Styles */
+
+.button-yellow {
+    background-color: var(--yellow-norm);
+    border: 2px solid transparent;
+    border-color: var(--yellow-light-alpha) var(--yellow-dark-alpha) var(--yellow-dark-alpha) var(--yellow-light-alpha);
+}
+
+.button-yellow:hover {
+    background-color: var(--yellow-hover);
+    border-color: var(--yellow-light) var(--yellow-dark) var(--yellow-dark) var(--yellow-light);
+}
+
+.button-yellow:hover:active {
+    background-color: var(--yellow-light);
+    border-color: white;
+}
+
 /* Basic Grid Styles */
 
 .grid-element {
@@ -160,28 +186,12 @@
     border-color: var(--red-light);
 }
 
-/* Red Progressbar Element Styles */
+/* Yellow Grid Element Styles */
 
-.progress.progress-red .progress-bar {
-    background: var(--red-hover);
-    border-color: var(--red-norm);
-}
-
-.progress.progress-red:hover .progress-bar {
-    background: var(--red-light);
-    border-color: var(--red-hover);
-}
-
-/* Blue Progressbar Element Styles */
-
-.progress.progress-blue .progress-bar {
-    background: var(--blue-hover);
-    border-color: var(--blue-norm);
-}
-
-.progress.progress-blue:hover .progress-bar {
-    background: var(--blue-light);
-    border-color: var(--blue-hover);
+.grid-element.grid-yellow {
+    background-color: var(--yellow-norm-alpha);
+    border: 3px outset transparent;
+    border-color: var(--yellow-light);
 }
 
 /* White Progressbar Element Styles */
@@ -208,15 +218,51 @@
     border-color: var(--black-norm);
 }
 
+/* Blue Progressbar Element Styles */
+
+.progress.progress-blue .progress-bar {
+    background: var(--blue-hover);
+    border-color: var(--blue-norm);
+}
+
+.progress.progress-blue:hover .progress-bar {
+    background: var(--blue-light);
+    border-color: var(--blue-hover);
+}
+
+/* Red Progressbar Element Styles */
+
+.progress.progress-red .progress-bar {
+    background: var(--red-hover);
+    border-color: var(--red-norm);
+}
+
+.progress.progress-red:hover .progress-bar {
+    background: var(--red-light);
+    border-color: var(--red-hover);
+}
+
+/* Yellow Progressbar Element Styles */
+
+.progress.progress-yellow .progress-bar {
+    background: var(--yellow-hover);
+    border-color: var(--yellow-norm);
+}
+
+.progress.progress-yellow:hover .progress-bar {
+    background: var(--yellow-light);
+    border-color: var(--yellow-hover);
+}
+
 
 /* Opaque overwrite */
 
 .grid-element.grid-white.opaque {
-    background-color: var(--white-dark);
+    background-color: var(--white-norm);
 }
 
 .grid-element.grid-black.opaque {
-    background-color: var(--black-dark);
+    background-color: var(--black-norm);
 }
 
 

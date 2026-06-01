@@ -24,7 +24,7 @@ function makeTabButtonVisible(buttonID) {
 
 // runs through every recoveryButton and mechButton and checks if you can afford it
 function checkAllButtonCostsAffordable() {
-    let buttonsToCheck = [game.recoveryButtons, game.mechButtons]
+    let buttonsToCheck = [game.recoveryButtons, game.mechButtons, game.factoryButtons]
     for (let i = 0; i < buttonsToCheck.length; i++) {
         for (let key in buttonsToCheck[i]) {
             let button = buttonsToCheck[i][key]
@@ -57,6 +57,7 @@ function updateResourceAmounts() {
             resourceElement.style.background = 'linear-gradient(90deg,var(--black-norm) ' + fillPercentage + '%, #00000000 0%)'
         }
     }
+    updateIdleRobotCount() // not the best place to call this, but it covers alot of cases for the moment
 }
 
 // forces the appropriate display
@@ -100,6 +101,18 @@ function updateJobVisibility() {
         let job = jobsArray[i]
         let jobElement = document.getElementById(job.id)
         jobElement.style.display = (job.unlocked ? "flex" : "none")
+    }
+}
+
+// forces the appropriate display of all factory buttons
+// (game.factoryButtons[n].unlocked needs to be true)
+function updateFactoryButtonVisibility() {
+    let buttonArray = Object.values(game.factoryButtons)
+    for (let i = 0; i < buttonArray.length; i++) {
+        let button = buttonArray[i]
+        let buttonElement = document.getElementById(button.id)
+        buttonElement.style.display = (button.unlocked ? "flex" : "none")
+        updateIndicatorsForButton(Object.keys(game.factoryButtons)[i], "factoryButtons")
     }
 }
 
