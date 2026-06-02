@@ -40,6 +40,27 @@ function checkAllButtonCostsAffordable() {
             }
         }
     }
+
+    for (let key in game.jobs) {
+        let job = game.jobs[key]
+        if (key !== "idle-robot") {
+            let jobPlusButton = document.getElementById(job.id + "-plus")
+            let jobMinusButton = document.getElementById(job.id + "-minus")
+            let canAssignPlus = game.jobs["idle-robot"].current > 0
+            if (canAssignPlus) {
+                jobPlusButton.classList.add("can-afford")
+            } else {
+                jobPlusButton.classList.remove("can-afford")
+            }
+
+            let canAssignMinus = job.current > 0
+            if (canAssignMinus) {
+                jobMinusButton.classList.add("can-afford")
+            } else {
+                jobMinusButton.classList.remove("can-afford")
+            }
+        }
+    }
 }
 
 // updates all resources on the DOM
@@ -50,10 +71,13 @@ function updateResourceAmounts() {
         let resourceElement = document.getElementById(resource.id)
         let resourceValueElement = resourceElement.querySelector(".resource-amount")
         if (resource.max == -1) {
-            resourceValueElement.innerHTML = niceFormat(resource.current)
+            resourceValueElement.innerHTML = format(resource.current)
         } else {
-            resourceValueElement.innerHTML = niceFormat(resource.current) + " / " + niceFormat(resource.capacity * resource.capacityMultiplier)
-            let fillPercentage = (resource.current / resource.capacity * resource.capacityMultiplier) * 100
+            resourceValueElement.innerHTML = format(resource.current) + " / " + format(resource.capacity * resource.capacityMultiplier)
+            let fillPercentage = 100 // shows as full on infinity (>e308)
+            if (resource.current < Number.MIN_VALUE) {
+                fillPercentage = (resource.current / resource.capacity * resource.capacityMultiplier) * 100
+            }
             resourceElement.style.background = 'linear-gradient(90deg,var(--black-norm) ' + fillPercentage + '%, #00000000 0%)'
         }
     }
@@ -125,5 +149,42 @@ function updateMechButtonVisibility() {
         let buttonElement = document.getElementById(button.id)
         buttonElement.style.display = (button.unlocked ? "flex" : "none")
         updateIndicatorsForButton(Object.keys(game.mechButtons)[i], "mechButtons")
+    }
+}
+
+function getOrMakeIndicatorElement(buttonID, type, indicator) {
+    let button = game[type][buttonID]
+    let foundIndicator = document.getElementById(button.id).querySelector('.button-' + indicator.location + '-indicator')
+    if (foundIndicator === null || foundIndicator === undefined) { // does not exist
+        // top or bottom
+        let indicatorRow = indicator.location.substring(0, indicator.location.indexOf('-'))
+        // grab parent indicator row element from HTML
+        let foundParentRow = getOrMakeIndicatorParentRow(buttonID, type, indicatorRow)
+        let newIndicatorElement = document.createElement('div') // make new indicator
+        newIndicatorElement.className = 'button-' + indicator.location + '-indicator'
+        foundParentRow.append(newIndicatorElement)
+        return newIndicatorElement
+    } else {
+        return foundIndicator
+    }
+}
+
+function getOrMakeIndicatorParentRow(buttonID, type, indicatorRow) {
+    let button = game[type][buttonID]
+    // get anchor element (button-content)
+    let anchorElement = document.getElementById(button.id)
+    // grab parent indicator row element from HTML
+    let foundParentRow = document.getElementById(button.id).querySelector('.button-' + indicatorRow + '-indicators')
+    if (foundParentRow === null || foundParentRow === undefined) { // does not exist
+        let newIndicatorParentRow = document.createElement('div') // make new parent row
+        newIndicatorParentRow.className = 'button-' + indicatorRow + '-indicators w-100 flex-row justify-between'
+        if (indicatorRow === 'top') { // insert before button-content
+            anchorElement.append(newIndicatorParentRow)
+        } else if (indicatorRow === 'bottom') { // append after button-content
+            anchorElement.append(newIndicatorParentRow)
+        }
+        return newIndicatorParentRow
+    } else {
+        return foundParentRow
     }
 }

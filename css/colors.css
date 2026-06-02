@@ -1,45 +1,3 @@
-:root {
-    --red-dark: #780000;
-    --red-dark-alpha: #78000080;
-    --red-norm: #c1121f;
-    --red-norm-alpha: #c1121f80;
-    --red-light: #fd737c;
-    --red-light-alpha: #fd737c80;
-    --red-hover: #db2834;
-
-    --blue-dark: #003049;
-    --blue-dark-alpha: #00304980;
-    --blue-norm: #669bbc;
-    --blue-norm-alpha: #669bbc80;
-    --blue-light: #b2dbf4;
-    --blue-light-alpha: #b2dbf480;
-    --blue-hover: #88bddd;
-
-    --yellow-dark: hsl(50, 100%, 14%);
-    --yellow-dark-alpha: hsla(50, 100%, 14%, 0.502);
-    --yellow-norm: hsl(52, 39%, 57%);
-    --yellow-norm-alpha: hsla(52, 39%, 57%, 0.502);
-    --yellow-light: hsl(52, 75%, 83%);
-    --yellow-light-alpha: hsla(52, 75%, 83%, 0.502);
-    --yellow-hover: hsl(52, 56%, 70%);
-
-    --white-dark: #e1c997;
-    --white-dark-alpha: #e1c99780;
-    --white-norm: #fdf0d5;
-    --white-norm-alpha: #fdf0d580;
-    --white-light: #fbf5eb;
-    --white-light-alpha: #fbf5eb80;
-    --white-hover: #fff9eb;
-
-    --black-dark: #1c1c1f;
-    --black-dark-alpha: #1c1c1f80;
-    --black-norm: #2b2d42;
-    --black-norm-alpha: #2b2d4280;
-    --black-light: #4f5060;
-    --black-light-alpha: #4f506080;
-    --black-hover: #40425a;
-}
-
 /* Basic Button Styles */
 
 .button {
@@ -47,16 +5,43 @@
     background-color: var(--white-norm-alpha);
 }
 
+.main-section .button:not(.can-afford):hover,
+.main-section .button:not(.can-afford):hover:active {
+    cursor: default;
+    background-color: var(--white-dark);
+    border-color: var(--white-light-alpha) var(--white-dark-alpha) var(--white-dark-alpha) var(--white-light-alpha);
+}
+
+
+
 .button.disabled {
     background-color: var(--black-dark-alpha);
 }
 
-/* White Button Styles */
-
-.button-white * {
+.button:not(.button-black) * {
     color: black;
+    text-shadow: var(--textshadow-white);
 }
 
+.button-black .button-text {
+    color: white;
+    text-shadow: var(--textshadow-black);
+}
+
+.button.active {
+    z-index: 1;
+}
+
+.button.active .button-text {
+    filter: var(--dropshadow-white);
+}
+
+.button.active img {
+    filter: brightness(0);
+    filter: var(--dropshadow-white);
+}
+
+/* White Button Styles */
 
 .button-white {
     background-color: var(--white-dark);
@@ -143,6 +128,42 @@
 
 .button-yellow:hover:active {
     background-color: var(--yellow-light);
+    border-color: white;
+}
+
+/* Gather Button Styles */
+
+.button-gather {
+    background-color: var(--gather-norm);
+    border: 2px solid transparent;
+    border-color: var(--gather-light-alpha) var(--gather-dark-alpha) var(--gather-dark-alpha) var(--gather-light-alpha);
+}
+
+.button-gather:hover {
+    background-color: var(--gather-hover);
+    border-color: var(--gather-light) var(--gather-dark) var(--gather-dark) var(--gather-light);
+}
+
+.button-gather:hover:active {
+    background-color: var(--gather-light);
+    border-color: white;
+}
+
+/* Action Button Styles */
+
+.button-action {
+    background-color: var(--action-norm);
+    border: 2px solid transparent;
+    border-color: var(--action-light-alpha) var(--action-dark-alpha) var(--action-dark-alpha) var(--action-light-alpha);
+}
+
+.button-action:hover {
+    background-color: var(--action-hover);
+    border-color: var(--action-light) var(--action-dark) var(--action-dark) var(--action-light);
+}
+
+.button-action:hover:active {
+    background-color: var(--action-light);
     border-color: white;
 }
 

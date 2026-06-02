@@ -1,0 +1,73 @@
+:root {
+    /* COLORS */
+    /* may redo these with modern css, theres some better stuff we could be doing here */
+    --background-color: hsl(225, 40%, 10%);
+
+    --red-dark: hsl(0, 100%, 24%);
+    --red-dark-alpha: hsla(0, 100%, 24%, 0.502);
+    --red-norm: hsl(0, 83%, 41%);
+    --red-norm-alpha: hsla(0, 83%, 41%, 0.502);
+    --red-light: hsl(0, 97%, 72%);
+    --red-light-alpha: hsla(0, 97%, 72%, 0.502);
+    --red-hover: hsl(0, 71%, 51%);
+
+    --blue-dark: hsl(210, 100%, 14%);
+    --blue-dark-alpha: hsla(210, 100%, 14%, 0.502);
+    --blue-norm: hsl(210, 39%, 57%);
+    --blue-norm-alpha: hsla(210, 39%, 57%, 0.502);
+    --blue-light: hsl(210, 75%, 83%);
+    --blue-light-alpha: hsla(210, 75%, 83%, 0.502);
+    --blue-hover: hsl(210, 56%, 70%);
+
+    --yellow-dark: hsl(55, 100%, 14%);
+    --yellow-dark-alpha: hsla(55, 100%, 14%, 0.502);
+    --yellow-norm: hsl(55, 39%, 57%);
+    --yellow-norm-alpha: hsla(55, 39%, 57%, 0.502);
+    --yellow-light: hsl(55, 75%, 83%);
+    --yellow-light-alpha: hsla(55, 75%, 83%, 0.502);
+    --yellow-hover: hsl(55, 56%, 70%);
+
+    --white-dark: hsl(40, 55%, 74%);
+    --white-dark-alpha: hsla(40, 55%, 74%, 0.502);
+    --white-norm: hsl(40, 91%, 91%);
+    --white-norm-alpha: hsla(40, 91%, 91%, 0.502);
+    --white-light: hsl(40, 67%, 95%);
+    --white-light-alpha: hsla(40, 67%, 95%, 0.502);
+    --white-hover: hsl(40, 100%, 96%);
+
+    --gather-dark: hsl(90, 55%, 74%);
+    --gather-dark-alpha: hsla(90, 55%, 74%, 0.502);
+    --gather-norm: hsl(90, 91%, 91%);
+    --gather-norm-alpha: hsla(90, 91%, 91%, 0.502);
+    --gather-light: hsl(90, 67%, 95%);
+    --gather-light-alpha: hsla(90, 67%, 95%, 0.502);
+    --gather-hover: hsl(90, 100%, 96%);
+
+    --action-dark: hsl(220, 55%, 74%);
+    --action-dark-alpha: hsla(220, 55%, 74%, 0.502);
+    --action-norm: hsl(220, 91%, 91%);
+    --action-norm-alpha: hsla(220, 91%, 91%, 0.502);
+    --action-light: hsl(220, 67%, 95%);
+    --action-light-alpha: hsla(220, 67%, 95%, 0.502);
+    --action-hover: hsl(220, 100%, 96%);
+
+    --black-dark: hsl(235, 5%, 12%);
+    --black-dark-alpha: hsla(235, 5%, 12%, 0.502);
+    --black-norm: hsl(235, 21%, 21%);
+    --black-norm-alpha: hsla(235, 21%, 21%, 0.502);
+    --black-light: hsl(235, 10%, 34%);
+    --black-light-alpha: hsla(235, 10%, 34%, 0.502);
+    --black-hover: hsl(235, 17%, 30%);
+
+    --textshadow-black: 0 0 4px rgba(0, 0, 0, 0.66), 0 0 2px black;
+    --textshadow-white: 0 0 4px rgba(255, 255, 255, 0.66), 0 0 2px white;
+
+    --dropshadow-black: drop-shadow(0 0 4px rgba(0, 0, 0, 0.66)) drop-shadow(0 0 2px rgba(0, 0, 0, 0.66));
+    --dropshadow-white: drop-shadow(0 0 4px rgba(255, 255, 255, 0.66)) drop-shadow(0 0 2px rgba(255, 255, 255, 0.66));
+
+    /* LAYOUT */
+    --top-bar-height: 256px;
+    --left-sidebar-width: 256px;
+    --right-sidebar-width: 256px;
+    --bottom-bar-height: 256px;
+}

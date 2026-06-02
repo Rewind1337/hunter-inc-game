@@ -12,7 +12,6 @@ function bindTooltip() {
             id: allTooltipSources[element].getAttribute("data-tooltip-id"),
             type: allTooltipSources[element].getAttribute("data-tooltip-type")
         }
-        console.log(tooltipData)
         allTooltipSources[element].onmouseenter = (mouseEvent) => {
             updateTooltipTextContent(tooltipData)
             updateTooltipPosition(mouseEvent)
@@ -49,9 +48,11 @@ function updateTooltipTextContent(tooltipData) {
     switch (tooltipData.type) { // this is dumb but im not sure how to fix it yet, gets called from multiple places, etc
         case "recovery-button":
             tooltipReference = game.recoveryButtons[tooltipData.id]
+            TOOLTIP_ELEMENT.style.backgroundColor = 'rgba(0,0,0,0.95)'
             break;
         case "factory-button":
             tooltipReference = game.factoryButtons[tooltipData.id]
+            TOOLTIP_ELEMENT.style.backgroundColor = 'rgba(12, 12, 0, 0.95)'
             break;
         case "mech-button":
             tooltipReference = game.mechButtons[tooltipData.id]
@@ -74,7 +75,7 @@ function updateTooltipTextContent(tooltipData) {
     }
 
     // same header for everything
-    TOOLTIP_HEADER_ELEMENT.innerHTML = '<div class="header">(id: ' + tooltipData.id + ') ' + tooltipReference.name + '</div>'
+    TOOLTIP_HEADER_ELEMENT.innerHTML = '<div class="header">' + tooltipReference.name + '</div>'
     if (tooltipReference.max >= 1) {
         TOOLTIP_HEADER_ELEMENT.innerHTML += '<div class="header header-small">Limited to ' + tooltipReference.max + '</div>'
     }
@@ -108,81 +109,83 @@ function updateTooltipTextContent(tooltipData) {
         TOOLTIP_BOTTOM_ELEMENT.innerHTML = finalBottomString
 
     } else { // recovery and mech buttons work very similarly so this works
-        // generate one-time costs as html and append
-        if (tooltipReference.costs) {
-            if (tooltipReference.costs.length !== 0) {
-                finalContentString += '<div class="header">costs</div>'
-                finalContentString += '<div class="tooltip-costs flex-row flex-wrap align-center justify-center">'
-                for (let i = 0; i < tooltipReference.costs.length; i++) {
-                    let cost = tooltipReference.costs[i]
-                    if (cost.resource) {
-                        finalContentString += '<div class="tooltip-pill"><div>' + replaceNameWithSVG(cost.resource) + '</div><div>' + cost.amount + '</div></div>'
+        if (tooltipReference.current !== tooltipReference.max) {
+            // generate one-time costs as html and append
+            if (tooltipReference.costs) {
+                if (tooltipReference.costs.length !== 0) {
+                    finalContentString += '<div class="header">costs</div>'
+                    finalContentString += '<div class="tooltip-costs flex-row flex-wrap align-center justify-center">'
+                    for (let i = 0; i < tooltipReference.costs.length; i++) {
+                        let cost = tooltipReference.costs[i]
+                        if (cost.resource) {
+                            finalContentString += '<div class="tooltip-pill"><div>' + replaceNameWithSVG(cost.resource) + '</div><div>' + format(cost.amount, ".", 1) + '</div></div>'
+                        }
+                        if (cost.special) {
+                            finalContentString += '<div class="tooltip-pill"><div>' + replaceNameWithSVG(cost.special) + '</div><div>' + format(cost.amount, ".", 1) + '</div></div>'
+                        }
                     }
-                    if (cost.special) {
-                        finalContentString += '<div class="tooltip-pill"><div>' + replaceNameWithSVG(cost.special) + '</div><div>' + cost.amount + '</div></div>'
-                    }
+                    finalContentString += '</div>'
                 }
-                finalContentString += '</div>'
             }
-        }
 
-        // generate idle costs as html and append
-        if (tooltipReference.costsPerSecond) {
-            if (tooltipReference.costsPerSecond.length !== 0) {
-                finalContentString += '<div class="header">upkeep</div>'
-                finalContentString += '<div class="tooltip-upkeep flex-row flex-wrap align-center justify-center">'
-                for (let i = 0; i < tooltipReference.costsPerSecond.length; i++) {
-                    let cost = tooltipReference.costsPerSecond[i]
-                    if (cost.resource) {
-                        finalContentString += '<div class="tooltip-pill"><div>' + replaceNameWithSVG(cost.resource) + '</div><div>' + cost.amount + '/second</div></div>'
+            // generate idle costs as html and append
+            if (tooltipReference.costsPerSecond) {
+                if (tooltipReference.costsPerSecond.length !== 0) {
+                    finalContentString += '<div class="header">upkeep</div>'
+                    finalContentString += '<div class="tooltip-upkeep flex-row flex-wrap align-center justify-center">'
+                    for (let i = 0; i < tooltipReference.costsPerSecond.length; i++) {
+                        let cost = tooltipReference.costsPerSecond[i]
+                        if (cost.resource) {
+                            finalContentString += '<div class="tooltip-pill"><div>' + replaceNameWithSVG(cost.resource) + '</div><div>' + format(cost.amount, ".", 1) + ' / s</div></div>'
+                        }
+                        if (cost.special) {
+                            finalContentString += '<div class="tooltip-pill"><div>' + replaceNameWithSVG(cost.special) + '</div><div>' + format(cost.amount, ".", 1) + ' / s</div></div>'
+                        }
                     }
-                    if (cost.special) {
-                        finalContentString += '<div class="tooltip-pill"><div>' + replaceNameWithSVG(cost.special) + '</div><div>' + cost.amount + '/second</div></div>'
-                    }
+                    finalContentString += '</div>'
                 }
-                finalContentString += '</div>'
             }
-        }
 
-        // generate one-time gains as html and append
-        if (tooltipReference.gains) {
-            if (tooltipReference.gains.length !== 0) {
-                finalContentString += '<div class="header">gains</div>'
-                finalContentString += '<div class="tooltip-gains flex-row flex-wrap align-center justify-center">'
-                for (let i = 0; i < tooltipReference.gains.length; i++) {
-                    let gain = tooltipReference.gains[i]
-                    if (gain.resource) {
-                        finalContentString += '<div class="tooltip-pill"><div>' + replaceNameWithSVG(gain.resource) + '</div><div>' + gain.amount + '</div></div>'
+            // generate one-time gains as html and append
+            if (tooltipReference.gains) {
+                if (tooltipReference.gains.length !== 0) {
+                    finalContentString += '<div class="header">gains</div>'
+                    finalContentString += '<div class="tooltip-gains flex-row flex-wrap align-center justify-center">'
+                    for (let i = 0; i < tooltipReference.gains.length; i++) {
+                        let gain = tooltipReference.gains[i]
+                        if (gain.resource) {
+                            finalContentString += '<div class="tooltip-pill"><div>' + replaceNameWithSVG(gain.resource) + '</div><div>' + format(gain.amount, ".", 1) + '</div></div>'
+                        }
+                        if (gain.resourceCapacity) {
+                            finalContentString += '<div class="tooltip-pill"><div>' + replaceNameWithSVG(gain.resourceCapacity) + ' Cap.</div><div>' + format(gain.amount, ".", 1) + '</div></div>'
+                        }
+                        if (gain.special) {
+                            finalContentString += '<div class="tooltip-pill"><div>' + replaceNameWithSVG(gain.special) + '</div><div>' + format(gain.amount, ".", 1) + '</div></div>'
+                        }
                     }
-                    if (gain.resourceCapacity) {
-                        finalContentString += '<div class="tooltip-pill"><div>' + replaceNameWithSVG(gain.resourceCapacity) + ' Cap.</div><div>' + gain.amount + '</div></div>'
-                    }
-                    if (gain.special) {
-                        finalContentString += '<div class="tooltip-pill"><div>' + replaceNameWithSVG(gain.special) + '</div><div>' + gain.amount + '</div></div>'
-                    }
+                    finalContentString += '</div>'
                 }
-                finalContentString += '</div>'
             }
-        }
 
-        // generate idle gains as html and append
-        if (tooltipReference.gainsPerSecond) {
-            if (tooltipReference.gainsPerSecond.length !== 0) {
-                finalContentString += '<div class="header">effect</div>'
-                finalContentString += '<div class="tooltip-effect flex-row flex-wrap align-center justify-center">'
-                for (let i = 0; i < tooltipReference.gainsPerSecond.length; i++) {
-                    let gain = tooltipReference.gainsPerSecond[i]
-                    if (gain.resource) {
-                        finalContentString += '<div class="tooltip-pill"><div>' + replaceNameWithSVG(gain.resource) + '</div><div>' + gain.amount + '/second</div></div>'
+            // generate idle gains as html and append
+            if (tooltipReference.gainsPerSecond) {
+                if (tooltipReference.gainsPerSecond.length !== 0) {
+                    finalContentString += '<div class="header">effect</div>'
+                    finalContentString += '<div class="tooltip-effect flex-row flex-wrap align-center justify-center">'
+                    for (let i = 0; i < tooltipReference.gainsPerSecond.length; i++) {
+                        let gain = tooltipReference.gainsPerSecond[i]
+                        if (gain.resource) {
+                            finalContentString += '<div class="tooltip-pill"><div>' + replaceNameWithSVG(gain.resource) + '</div><div>' + format(gain.amount, ".", 1) + ' / s</div></div>'
+                        }
+                        if (gain.resourceCapacity) {
+                            finalContentString += '<div class="tooltip-pill"><div>' + replaceNameWithSVG(gain.resourceCapacity) + ' Cap.</div><div>' + format(gain.amount, ".", 1) + '</div></div>'
+                        }
+                        if (gain.special) {
+                            finalContentString += '<div class="tooltip-pill"><div>' + replaceNameWithSVG(gain.special) + '</div><div>' + format(gain.amount, ".", 1) + ' / s</div></div>'
+                        }
                     }
-                    if (gain.resourceCapacity) {
-                        finalContentString += '<div class="tooltip-pill"><div>' + replaceNameWithSVG(gain.resourceCapacity) + ' Cap.</div><div>' + gain.amount + '</div></div>'
-                    }
-                    if (gain.special) {
-                        finalContentString += '<div class="tooltip-pill"><div>' + replaceNameWithSVG(gain.special) + '</div><div>' + gain.amount + '/second</div></div>'
-                    }
+                    finalContentString += '</div>'
                 }
-                finalContentString += '</div>'
             }
         }
         finalContentString += '</div>'

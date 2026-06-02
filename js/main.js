@@ -24,7 +24,8 @@ function setupInitialState() {
     }
 
     // ayy
-    runAlotOfCheatyCommandsToGiveUsABetterTimeDeveloping()
+    if (true)
+        runAlotOfCheatyCommandsToGiveUsABetterTimeDeveloping()
 
     // calls the ui functions for the gamestate
     // these can probably be reused somewhat safely to update the DOM when needed
@@ -44,21 +45,21 @@ function runAlotOfCheatyCommandsToGiveUsABetterTimeDeveloping() {
         { resourceCapacity: "energy", amount: 1e30 },
         { resourceCapacity: "robots", amount: 1e3 },
         { resourceCapacity: "drones", amount: 1e3 },
-        { resourceCapacity: "wood", amount: 1e30 },
-        { resourceCapacity: "scrap", amount: 1e30 },
-        { resourceCapacity: "squares", amount: 1e30 },
+        { resourceCapacity: "wood", amount: 1e12 },
+        { resourceCapacity: "scrap", amount: 1e14 },
+        { resourceCapacity: "squares", amount: 1e15 },
         { resourceCapacity: "circles", amount: 1e30 },
         { resourceCapacity: "triangles", amount: 1e30 },
-        { resourceCapacity: "cubes", amount: 1e30 },
-        { resource: "energy", amount: 1e29 },
-        { resource: "robots", amount: 1e2 },
-        { resource: "drones", amount: 1e2 },
-        { resource: "wood", amount: 1e29 },
-        { resource: "scrap", amount: 1e29 },
-        { resource: "squares", amount: 1e29 },
-        { resource: "circles", amount: 1e29 },
-        { resource: "triangles", amount: 1e29 },
-        { resource: "cubes", amount: 1e29 },
+        { resourceCapacity: "cubes", amount: 1e309 },
+        { resource: "energy", amount: 1e308 },
+        { resource: "robots", amount: 1e308 },
+        { resource: "drones", amount: 1e308 },
+        { resource: "wood", amount: 1e308 },
+        { resource: "scrap", amount: 1e308 },
+        { resource: "squares", amount: 1e308 },
+        { resource: "circles", amount: 1e308 },
+        { resource: "triangles", amount: 1e308 },
+        { resource: "cubes", amount: 1e309 },
     ])
 }
 
@@ -150,6 +151,7 @@ function jobAssignmentButtonPressed(jobID, value) {
             game.jobs["idle-robot"].current += Math.abs(value)
         }
     }
+    checkAllButtonCostsAffordable()
     updateAllJobNumbers() // update HTML
 }
 
@@ -170,6 +172,7 @@ function buttonPressed(buttonID, type) {
         let tooltipTypeStringReplace = type.replace("B", "-b").substring(0, type.length)
         updateTooltipTextContent({ id: buttonID, type: tooltipTypeStringReplace })
         updateResourceAmounts() // update HTML
+        checkAllButtonCostsAffordable()
         updateIndicatorsForButton(buttonID, type) // what it says
         checkAllUnlockThings() // same
     }
@@ -195,7 +198,8 @@ function updateIndicatorsForButton(buttonID, type) {
             case "top-right":
             case "bottom-left":
             case "bottom-right":
-                let indicatorElement = document.getElementById(button.id).querySelector(".button-" + indicator.location + "-indicator")
+                // grab indicator element from HTML
+                let indicatorElement = getOrMakeIndicatorElement(buttonID, type, indicator)
                 if (indicator.resource) {
                     let value = game.resource[indicator.resource].current
                     indicatorElement.style.opacity = (value > 0 ? 1 : 0)
