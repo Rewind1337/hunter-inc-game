@@ -12,8 +12,6 @@
     border-color: var(--white-light-alpha) var(--white-dark-alpha) var(--white-dark-alpha) var(--white-light-alpha);
 }
 
-
-
 .button.disabled {
     background-color: var(--black-dark-alpha);
 }
@@ -290,4 +288,16 @@
 
 .content-stage-info>.grid-element:hover {
     background-color: var(--white-dark);
+}
+
+
+
+/* Transitions Testing */
+
+.button {
+    transition: background 0.2s ease, border-color 0.1s ease, color 0.2s ease, filter 0.2s ease;
+}
+
+.button * {
+    transition: background 0.2s ease, border-color 0.2s ease, color 0.2s ease, filter 0.2s ease;
 }

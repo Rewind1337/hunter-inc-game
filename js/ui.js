@@ -74,11 +74,9 @@ function updateResourceAmounts() {
             resourceValueElement.innerHTML = format(resource.current)
         } else {
             resourceValueElement.innerHTML = format(resource.current) + " / " + format(resource.capacity * resource.capacityMultiplier)
-            let fillPercentage = 100 // shows as full on infinity (>e308)
-            if (resource.current < Number.MIN_VALUE) {
-                fillPercentage = (resource.current / resource.capacity * resource.capacityMultiplier) * 100
-            }
-            resourceElement.style.background = 'linear-gradient(90deg,var(--black-norm) ' + fillPercentage + '%, #00000000 0%)'
+            let fillPercentage = (resource.current / resource.capacity * resource.capacityMultiplier) * 100
+            resourceElement.style.setProperty('--resourceFill', fillPercentage + '%');
+
         }
     }
     updateIdleRobotCount() // not the best place to call this, but it covers alot of cases for the moment

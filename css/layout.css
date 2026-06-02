@@ -177,7 +177,7 @@ hr {
 #main-section-parts-factory .button:not(.can-afford),
 #main-section-jobs .button:not(.can-afford) {
     /* needs actual styling, will do */
-    filter: grayscale(100%) brightness(33%);
+    background-color: gray;
 }
 
 #main-left {}
@@ -223,6 +223,12 @@ hr {
 
 .resource {
     display: none;
+
+    background: linear-gradient(90deg,
+            var(--black-norm) var(--resourceFill),
+            transparent 0%);
+
+    transition: --resourceFill 0.2s linear;
 }
 
 .resource * {}
@@ -333,14 +339,22 @@ hr {
 .button-bottom-right-indicator {
     height: max-content;
     border: 1px solid rgba(255, 255, 255, 0.5);
-    background: var(--background-color);
+    background: rgba(0, 0, 0, 0.75);
     line-height: 2px;
     font-size: 15px;
     font-weight: 600;
     padding: 8px 5px;
-    color: white !important;
+    color: white;
     text-shadow: var(--textshadow-black) !important;
     z-index: 10;
+}
+
+.button-top-left-indicator:hover,
+.button-top-right-indicator:hover,
+.button-bottom-left-indicator:hover,
+.button-bottom-right-indicator:hover {
+    border-color: white;
+    background: black;
 }
 
 .button-top-left-indicator {
@@ -418,103 +432,6 @@ hr {
 .job-amount {
     font-size: 24px;
     text-shadow: var(--textshadow-black);
-}
-
-
-
-#tooltip {
-    z-index: 1000;
-    display: none;
-
-    background-color: rgba(0, 0, 0, 0.95);
-    position: absolute;
-    text-align: center;
-    top: -9999px;
-    left: -9999px;
-    width: 384px;
-
-    transform: translate(-50%, 8px);
-}
-
-/* these are the headers inside the tooltip in general */
-
-#tooltip-header .header {
-    font-size: 24px;
-    text-shadow: var(--textshadow-black);
-}
-
-/* these are the headers inside the tooltip */
-#tooltip-header .header-small {
-    font-size: 16px;
-    text-shadow: 1px 1px 1px red;
-}
-
-#tooltip-content {
-    width: 95%;
-    margin-inline: auto;
-    margin-bottom: 4px;
-    font-size: 18px;
-    text-shadow: var(--textshadow-black);
-}
-
-/* these are the headers inside the tooltip-content */
-#tooltip-content .header {
-    font-size: 16px;
-}
-
-
-/* these are the sections inside the tooltip */
-#tooltip-content>.flex-col>*:not(.header) {
-    margin-bottom: 2px;
-}
-
-#tooltip-bottom {
-    text-shadow: var(--textshadow-black);
-    font-size: 14px;
-}
-
-.tooltip-pill {
-    border-radius: 8px;
-    background-color: rgba(0, 0, 0, 1);
-    border: 1px solid rgba(255, 255, 255, 0.3);
-
-    padding: 0 !important;
-    text-align: center;
-    align-items: center;
-    display: flex;
-    flex-direction: row;
-    width: calc(calc(100% / 2) - 2px);
-    filter: drop-shadow(0 0 1px white);
-}
-
-.tooltip-pill img {
-    height: 27px;
-    filter: var(--dropshadow-black);
-}
-
-.tooltip-pill>div {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    white-space: nowrap;
-    border: 0 !important;
-    padding: 0 4px;
-    width: 100%;
-    text-align: center;
-}
-
-.tooltip-pill>div:first-child {
-    border-top-right-radius: 0 !important;
-    border-bottom-right-radius: 0 !important;
-    border-right: 0 !important;
-    justify-content: start;
-}
-
-.tooltip-pill>div:last-child {
-    border-top-left-radius: 0 !important;
-    border-bottom-left-radius: 0 !important;
-    border-left: 0 !important;
-    justify-content: end;
 }
 
 

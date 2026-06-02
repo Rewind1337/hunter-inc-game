@@ -24,7 +24,7 @@ function setupInitialState() {
     }
 
     // ayy
-    if (true)
+    if (false)
         runAlotOfCheatyCommandsToGiveUsABetterTimeDeveloping()
 
     // calls the ui functions for the gamestate
@@ -99,6 +99,12 @@ function processRecoveryIdleGains(dt) {
         let button = game.recoveryButtons[key]
         if (button.gainsPerSecond.length !== 0 && button.current > 0) { // only process buttons that have a gain
             let buttonAmount = button.current
+            if (button.settings !== null && button.settings.active !== null) {
+                if (button.settings.active > 0)
+                    buttonAmount = button.settings.active
+                else
+                    return
+            }
             let canAfford = checkCosts(button.costsPerSecond, dt * buttonAmount)
             if (canAfford) {
                 subtractAllCostsFromResources(button.costsPerSecond, dt * buttonAmount)
@@ -203,22 +209,52 @@ function updateIndicatorsForButton(buttonID, type) {
                 if (indicator.resource) {
                     let value = game.resource[indicator.resource].current
                     indicatorElement.style.opacity = (value > 0 ? 1 : 0)
+                    indicatorElement.style.color = 'white'
+                    indicatorElement.style.cursor = 'default'
                     indicatorElement.innerHTML = value
                 } else if (indicator.special) {
                     let value = game.special[indicator.special]
                     indicatorElement.style.opacity = (value > 0 ? 1 : 0)
+                    indicatorElement.style.color = 'gold'
+                    indicatorElement.style.cursor = 'default'
+                    indicatorElement.innerHTML = value
+                } else if (indicator.assignment) {
+                    if (button.current > 0) { indicatorElement.style.opacity = 1 }
+                    let value = 0
+                    if (indicator.assignment === "on") {
+                        indicatorElement.style.color = 'green'
+                        value = button.settings.active
+                        indicatorElement.onclick = (e) => {
+                            e.stopPropagation();
+                            button.settings.active = Math.min(button.settings.active + 1, button.current)
+                            updateIndicatorsForButton(buttonID, type)
+                        }
+                    } else if (indicator.assignment === "off") {
+                        indicatorElement.style.color = 'red'
+                        value = button.current - button.settings.active
+                        indicatorElement.onclick = (e) => {
+                            e.stopPropagation();
+                            button.settings.active = Math.max(button.settings.active - 1, 0)
+                            updateIndicatorsForButton(buttonID, type)
+                        }
+                    }
+                    indicatorElement.style.cursor = 'pointer'
                     indicatorElement.innerHTML = value
                 } else if (indicator.current) { // NEEDS indicator.type
                     let value = game[indicator.type][indicator.current].current
                     indicatorElement.style.opacity = (value > 0 ? 1 : 0)
+                    indicatorElement.style.color = 'white'
+                    indicatorElement.style.cursor = 'default'
                     indicatorElement.innerHTML = value
                 } else if (indicator.settings) { // NEEDS indicator.type
                     if (button.current > 0) {
                         indicatorElement.style.opacity = 1
+                        indicatorElement.style.color = 'white'
+                        indicatorElement.style.cursor = 'pointer'
                         indicatorElement.innerHTML = '<img src="./svg/settings.svg" alt="~">'
                         indicatorElement.onclick = (e) => {
                             e.stopPropagation();
-                            openButtonSettingsModal(type, buttonID, indicator.type) // TODO
+                            openButtonConfigModal(type, buttonID, "button-config-modal", indicator.type) // just one thing on one building but technically reusable?
                         }
                     }
                 }
@@ -230,8 +266,10 @@ function updateIndicatorsForButton(buttonID, type) {
     }
 }
 
-function openButtonSettingsModal(buttonType, buttonID, modalType) {
+function openButtonConfigModal(buttonType, buttonID, modalID, modalType) {
     console.log(buttonType, buttonID, modalType)
+    updateModalTextContent(buttonType, buttonID, modalID, modalType)
+    showModal(modalID)
 }
 
 // resource function that returns true if the play can afford the costs provided

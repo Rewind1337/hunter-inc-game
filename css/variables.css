@@ -71,3 +71,9 @@
     --right-sidebar-width: 256px;
     --bottom-bar-height: 256px;
 }
+
+@property --resourceFill {
+    syntax: "<percentage>";
+    inherits: true;
+    initial-value: 0%;
+}

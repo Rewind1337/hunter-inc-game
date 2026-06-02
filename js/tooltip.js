@@ -247,9 +247,9 @@ function updateTooltipPosition(mouseEvent) {
     let tooltipY = mouseEvent.clientY
 
     if (tooltipY > yThreshold) {
-        TOOLTIP_ELEMENT.style.transform = "translate(-50%, calc(-100% - 8px))"
+        TOOLTIP_ELEMENT.style.transform = "translate(-50%, calc(-100% - 32px))"
     } else {
-        TOOLTIP_ELEMENT.style.transform = "translate(-50%, 8px)"
+        TOOLTIP_ELEMENT.style.transform = "translate(-50%, 32px)"
     }
 
     TOOLTIP_ELEMENT.style.left = tooltipX + "px"
