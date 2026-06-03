@@ -277,7 +277,7 @@ hr {
 .button-content {
     order: 1 !important;
     width: 100%;
-    padding: 0 8px;
+    padding: 2px 8px;
     gap: 8px;
     display: flex;
     flex-direction: row;
@@ -505,7 +505,7 @@ hr {
     /* Change Right Tab and make it a sidebar instead */
 
     #main-right {
-        z-index: 10;
+        z-index: 200;
         background-color: rgba(15, 20, 35, 1);
         border: 3px outset var(--black-light);
         transition: right 0.2s ease-in;
@@ -546,7 +546,7 @@ hr {
     /* Change Left Tab and make it a sidebar instead */
 
     #main-left {
-        z-index: 10;
+        z-index: 200;
         background-color: rgba(15, 20, 35, 1);
         border: 3px outset var(--black-light);
         transition: left 0.2s ease-in;

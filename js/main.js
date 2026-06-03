@@ -24,7 +24,7 @@ function setupInitialState() {
     }
 
     // ayy
-    if (false)
+    if (true)
         runAlotOfCheatyCommandsToGiveUsABetterTimeDeveloping()
 
     // calls the ui functions for the gamestate
@@ -38,29 +38,6 @@ function setupInitialState() {
 
     // starts the gameLoop
     requestAnimationFrame(gameLoop);
-}
-
-function runAlotOfCheatyCommandsToGiveUsABetterTimeDeveloping() {
-    addAllGainsToResources([
-        { resourceCapacity: "energy", amount: 1e30 },
-        { resourceCapacity: "robots", amount: 1e3 },
-        { resourceCapacity: "drones", amount: 1e3 },
-        { resourceCapacity: "wood", amount: 1e12 },
-        { resourceCapacity: "scrap", amount: 1e14 },
-        { resourceCapacity: "squares", amount: 1e15 },
-        { resourceCapacity: "circles", amount: 1e30 },
-        { resourceCapacity: "triangles", amount: 1e30 },
-        { resourceCapacity: "cubes", amount: 1e309 },
-        { resource: "energy", amount: 1e308 },
-        { resource: "robots", amount: 1e308 },
-        { resource: "drones", amount: 1e308 },
-        { resource: "wood", amount: 1e308 },
-        { resource: "scrap", amount: 1e308 },
-        { resource: "squares", amount: 1e308 },
-        { resource: "circles", amount: 1e308 },
-        { resource: "triangles", amount: 1e308 },
-        { resource: "cubes", amount: 1e309 },
-    ])
 }
 
 // the gameLoop which calls requestAnimationFrame for good shit
@@ -166,9 +143,10 @@ function buttonPressed(buttonID, type) {
     let button = game[type][buttonID]
     // check for costs
     let canAfford = checkCosts(button.costs)
+    let hasSpace = checkResourceCapacities(button.gains)
     let canBuy = (button.max !== -1 ? (button.current < button.max) : true)
     // duh
-    if (canAfford && canBuy) {
+    if (canAfford && hasSpace && canBuy) {
         // remove the resources
         subtractAllCostsFromResources(button.costs)
         // add the gains
@@ -272,7 +250,7 @@ function openButtonConfigModal(buttonType, buttonID, modalID, modalType) {
     showModal(modalID)
 }
 
-// resource function that returns true if the play can afford the costs provided
+// resource function that returns true if the player can afford the costs provided
 // dt used for idle processing, defaults to 1, essentially a mult
 function checkCosts(costs, dt = 1) {
     if (costs === undefined) { return true }
@@ -297,6 +275,35 @@ function checkCosts(costs, dt = 1) {
     return true;
 }
 
+// resource function that returns true if the gained resource has the capacity to hold the gains
+// dt used for idle processing, defaults to 1, essentially a mult
+function checkResourceCapacities(gains, dt = 1) {
+    // if (gains === undefined) { return true }
+
+    for (let i = 0; i < gains.length; i++) {
+        let gain = gains[i]
+        let dtAmount = gain.amount * dt
+
+        // we dont even check for gain.resourceCapacity because it defaults to true if everything else passes
+
+        // we also dont check for gain.special because they dont have a cap (at the moment, intended?)
+
+        if (gain.resource) {
+            let resourceID = gain.resource
+            if ((game.resource[resourceID].current === game.resource[resourceID].capacity)) {
+                return false;
+            }
+
+            /*
+            if ((game.resource[resourceID].current + dtAmount) > game.resource[resourceID].capacity) {
+                return false
+            }
+            */
+        }
+    }
+    return true;
+}
+
 // resource functions, very specific about the way the json is shaped but its simple enough
 // adds a single gain to the appropriate resource
 // dt used for idle processing, defaults to 1, essentially a mult
@@ -316,7 +323,7 @@ function addGainToResource(gain, dt = 1) {
         gameResource.capacity += dtGain
     }
 
-    if (gain.special) { // we can just expand this once we need it, just one thing at the moment
+    if (gain.special) { // the hidden things, no capacity, not always instantiated
         if (game.special[gain.special] === undefined) { game.special[gain.special] = 0 } // instantiate to 0 if it doesnt exist
         game.special[gain.special] += dtGain
     }
@@ -422,6 +429,29 @@ function linkFunctionsToHTML() {
     document.getElementById("job-scrap-collector-plus").onclick = () => { jobAssignmentButtonPressed("scrap-collector", 1) }
     document.getElementById("job-factory-bot-minus").onclick = () => { jobAssignmentButtonPressed("factory-bot", -1) }
     document.getElementById("job-factory-bot-plus").onclick = () => { jobAssignmentButtonPressed("factory-bot", 1) }
+}
+
+function runAlotOfCheatyCommandsToGiveUsABetterTimeDeveloping() {
+    addAllGainsToResources([
+        { resourceCapacity: "energy", amount: 1e30 },
+        { resourceCapacity: "robots", amount: 1e3 },
+        { resourceCapacity: "drones", amount: 1e3 },
+        { resourceCapacity: "wood", amount: 1e12 },
+        { resourceCapacity: "scrap", amount: 1e14 },
+        { resourceCapacity: "squares", amount: 1e15 },
+        { resourceCapacity: "circles", amount: 1e30 },
+        { resourceCapacity: "triangles", amount: 1e30 },
+        { resourceCapacity: "cubes", amount: 1e309 },
+        { resource: "energy", amount: 1e308 },
+        { resource: "robots", amount: 1e308 },
+        { resource: "drones", amount: 1e308 },
+        { resource: "wood", amount: 1e308 },
+        { resource: "scrap", amount: 1e308 },
+        { resource: "squares", amount: 1e308 },
+        { resource: "circles", amount: 1e308 },
+        { resource: "triangles", amount: 1e308 },
+        { resource: "cubes", amount: 1e309 },
+    ])
 }
 
 // when html is done loading

@@ -76,21 +76,21 @@ const COSTS_GAINS = {
 
         // building buttons
         "wood-burner": {
-            costs: [{ resource: "wood", amount: 25 }, { resource: "scrap", amount: 25 }],
+            costs: [{ resource: "wood", amount: 50 }, { resource: "scrap", amount: 50 }],
             costsPerSecond: [{ resource: "wood", amount: 1 }],
-            gains: [{ resourceCapacity: "energy", amount: 50 }],
+            gains: [],
             gainsPerSecond: [{ resource: "energy", amount: 0.5 }],
             costScaling: true,
         },
         "energy-storage": {
-            costs: [{ resource: "wood", amount: 10 }, { resource: "scrap", amount: 50 }],
+            costs: [{ resource: "wood", amount: 30 }, { resource: "scrap", amount: 90 }],
             costsPerSecond: [],
-            gains: [{ resourceCapacity: "energy", amount: 200 }],
+            gains: [{ resourceCapacity: "energy", amount: 50 }],
             gainsPerSecond: [],
             costScaling: true,
         },
         "robot-housing": {
-            costs: [{ resource: "wood", amount: 50 }, { resource: "scrap", amount: 100 }, { resource: "squares", amount: 5 }],
+            costs: [{ resource: "wood", amount: 30 }, { resource: "scrap", amount: 60 }, { resource: "squares", amount: 5 }],
             costsPerSecond: [],
             gains: [{ resourceCapacity: "robots", amount: 1 }],
             gainsPerSecond: [],
@@ -106,7 +106,7 @@ const COSTS_GAINS = {
         "windmill": {
             costs: [{ resource: "wood", amount: 200 }, { resource: "scrap", amount: 200 }],
             costsPerSecond: [],
-            gains: [{ resourceCapacity: "energy", amount: 50 }],
+            gains: [],
             gainsPerSecond: [{ resource: "energy", amount: 0.2 }],
             costScaling: true,
         },
@@ -120,7 +120,7 @@ const COSTS_GAINS = {
         "solar-panel": {
             costs: [{ resource: "wood", amount: 250 }, { resource: "scrap", amount: 500 }, { resource: "circles", amount: 5 }],
             costsPerSecond: [],
-            gains: [{ resourceCapacity: "energy", amount: 100 }],
+            gains: [],
             gainsPerSecond: [{ resource: "energy", amount: 0.5 }],
             costScaling: true,
         },

@@ -3,7 +3,7 @@
     height: 100%;
     display: grid;
     grid-template-columns: var(--left-sidebar-width) 1fr var(--right-sidebar-width);
-    grid-template-rows: 32px 1fr 32px;
+    grid-template-rows: var(--top-bar-height) 1fr var(--bottom-bar-height);
     grid-column-gap: 0px;
     grid-row-gap: 0px;
 }
@@ -46,4 +46,43 @@
 
 canvas {
     height: 700px;
+}
+
+#main-left,
+#main-right,
+#main-center {
+    overflow: auto;
+}
+
+#main-left>.header,
+#main-right>.header {
+    z-index: 100;
+    position: sticky;
+    top: 0;
+    width: 100%;
+    min-height: 38px;
+    outline: 1px solid var(--background-color);
+    background-color: var(--background-color);
+}
+
+.main-button-section,
+#resource-list,
+#research-list {
+    margin-top: 1px;
+}
+
+#main-center>.main-center-tab>.main-section>.header {
+    z-index: 99;
+    position: sticky;
+    top: 45px;
+    width: 100%;
+    min-height: 38px;
+    outline: 1px solid var(--background-color);
+    background-color: var(--background-color);
+}
+
+#main-center-navigation {
+    z-index: 100;
+    position: sticky;
+    top: 0;
 }

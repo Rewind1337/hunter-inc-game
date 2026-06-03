@@ -29,7 +29,8 @@ function checkAllButtonCostsAffordable() {
         for (let key in buttonsToCheck[i]) {
             let button = buttonsToCheck[i][key]
             let canAfford = checkCosts(button.costs)
-            if (canAfford) {
+            let hasSpace = checkResourceCapacities(button.gains)
+            if (canAfford && hasSpace) {
                 let nothingChangedCheck = document.getElementById(button.id).classList.contains("can-afford")
                 if (!nothingChangedCheck)
                     document.getElementById(button.id).classList.add("can-afford")

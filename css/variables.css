@@ -66,10 +66,10 @@
     --dropshadow-white: drop-shadow(0 0 4px rgba(255, 255, 255, 0.66)) drop-shadow(0 0 2px rgba(255, 255, 255, 0.66));
 
     /* LAYOUT */
-    --top-bar-height: 256px;
+    --top-bar-height: 32px;
     --left-sidebar-width: 256px;
     --right-sidebar-width: 256px;
-    --bottom-bar-height: 256px;
+    --bottom-bar-height: 32px;
 }
 
 @property --resourceFill {
