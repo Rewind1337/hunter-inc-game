@@ -4,16 +4,18 @@
 .header,
 .job-name,
 .job-amount,
+.resource-name,
+.resource-amount,
 .button,
 .button * {
-    font-family: "Geo", sans-serif;
+    font-family: "Share Tech", sans-serif;
     font-weight: 400;
     font-style: normal;
 }
 
 .geo-font-italic,
 .text {
-    font-family: "Geo", sans-serif;
+    font-family: "Share Tech", sans-serif;
     font-weight: 400;
     font-style: italic;
 }

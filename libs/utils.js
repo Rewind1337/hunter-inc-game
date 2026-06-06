@@ -34,17 +34,35 @@ function format(input, seperator = ".", digitsBelowAThousand = 0, decimalSpaces 
         return preComma.toString() + seperator + postComma.toString().substr(1, decimalSpaces) + suffixChoice[logResult];
     }
     if (suffixType === "e-notation") {
-        return preComma.toString() + seperator + postComma.toString().substr(1, decimalSpaces) + "e" + Math.floor(Math.log10(input));
+        return preComma.toString() + seperator + postComma.toString().substr(1, decimalSpaces) + "e<sup>" + Math.floor(Math.log10(input)) + "</sup>";
     }
     if (suffixType === "mixed") {
         if (input < 1e15) {
             let suffixChoice = suffixLetters
             return preComma.toString() + seperator + postComma.toString().substr(1, decimalSpaces) + suffixChoice[logResult];
         } else {
-            return preComma.toString() + seperator + postComma.toString().substr(1, decimalSpaces) + "e" + Math.floor(Math.log10(input));
+            return preComma.toString() + seperator + postComma.toString().substr(1, decimalSpaces) + "e<sup>" + Math.floor(Math.log10(input)) + "</sup>";
         }
 
     }
+}
+
+function fancyFormat(input, seperator = ".", digitsBelowAThousand = 0, decimalSpaces = 1, suffixType = "mixed") {
+    if (input < 1000 && input > 0) {
+        let justTheNumber = format(input, seperator, digitsBelowAThousand, decimalSpaces, suffixType)
+        return '<div class="number-value">' + justTheNumber + '</div>'
+    }
+
+    let formattedNumber = format(input, seperator, digitsBelowAThousand, decimalSpaces, suffixType)
+    let theNumberPart = formattedNumber.substring(0, formattedNumber.indexOf(seperator) + 2)
+    let theSuffixPart = formattedNumber.substring(formattedNumber.indexOf(seperator) + 2)
+    let fancyHTMLNumberString = '<div class="number-value">' + theNumberPart + '</div>'
+    fancyHTMLNumberString += '<div class="number-suffix">' + theSuffixPart + '</div>'
+    return fancyHTMLNumberString
+}
+
+function getScreenDimensions() {
+    return { width: window.innerWidth, height: window.innerHeight }
 }
 
 // very primitive assert that lets us check some stuff

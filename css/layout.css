@@ -3,13 +3,19 @@ html {
 }
 
 body {
+    background: var(--background-color);
     width: 100vw;
     margin-inline: auto;
     height: 100vh;
 }
 
 hr {
+    border-color: rgba(255, 255, 255, 0.33);
     width: 100%;
+}
+
+.button img {
+    aspect-ratio: 1/1 !important;
 }
 
 .margin-auto {
@@ -91,21 +97,6 @@ hr {
     padding-inline: 4px;
 }
 
-.text {
-    font-size: max(1.6vw, 16px);
-    line-height: 1;
-    align-self: center;
-}
-
-.header-row {
-    background-color: var(--black-norm-alpha);
-}
-
-.content-grid-element .header {
-    text-align: center;
-    flex-grow: 1;
-}
-
 .justify-start {
     justify-items: flex-start;
     justify-content: flex-start;
@@ -133,6 +124,10 @@ hr {
 
 #main-top {}
 
+#main-top .header {
+    margin-top: 2px;
+}
+
 #main-top .button-content {
     padding: 0;
 }
@@ -140,6 +135,7 @@ hr {
 #top-menu-left-button .button-content img,
 #top-menu-right-button .button-content img {
     width: 24px;
+    filter: brightness(0) invert(1) var(--dropshadow-black);
 }
 
 #top-menu-left-button .close-button,
@@ -177,7 +173,8 @@ hr {
 #main-section-parts-factory .button:not(.can-afford),
 #main-section-jobs .button:not(.can-afford) {
     /* needs actual styling, will do */
-    background-color: gray;
+    background-color: #808080;
+    border-color: #606060;
 }
 
 #main-left {}
@@ -191,6 +188,27 @@ hr {
 #main-right {}
 
 #main-bottom {}
+
+
+
+
+.header-row {
+    background-color: var(--black-norm-alpha);
+}
+
+.header {
+    font-size: 36px;
+    line-height: 1;
+    text-align: center;
+    align-self: center;
+    overflow: hidden;
+    white-space: nowrap;
+}
+
+.content-grid-element .header {
+    text-align: center;
+    flex-grow: 1;
+}
 
 
 
@@ -233,15 +251,29 @@ hr {
 
 .resource * {}
 
-.resource .resource-icon img {
-    width: 32px;
-    filter: var(--dropshadow-black);
-}
-
 .resource .resource-name {
     text-align: start;
     flex-grow: 1;
     text-shadow: var(--textshadow-black);
+}
+
+.resource .resource-amount {
+    display: flex;
+    justify-content: end;
+}
+
+.number-value {}
+
+.number-suffix {
+    font-size: 14px;
+    margin-left: 2px;
+    align-self: end;
+}
+
+.number-slash {
+    font-size: 12px;
+    margin-inline: 4px;
+    align-self: center;
 }
 
 .resource .resource-amount {
@@ -295,9 +327,50 @@ hr {
     text-shadow: var(--textshadow-white);
 }
 
+.button-gather img {
+    filter: brightness(0) invert(1) var(--dropshadow-black);
+}
+
+.button-action img {
+    filter: brightness(0) invert(1) var(--dropshadow-black);
+}
+
+.button-building img {
+    filter: brightness(0) invert(1) var(--dropshadow-black);
+}
+
+.button-mech img {
+    filter: brightness(0) invert(1) var(--dropshadow-black);
+}
+
+.button-part img {
+    filter: brightness(0) invert(1) var(--dropshadow-black);
+}
+
+.resource img {
+    width: 32px;
+    filter: brightness(0) invert(1) var(--dropshadow-black);
+}
+
+.research img {
+    filter: brightness(0) invert(1) var(--dropshadow-black);
+}
+
+#main-center-navigation img {
+    filter: brightness(0) invert(1) var(--dropshadow-black);
+}
+
+#main-center-navigation .active img {
+    filter: brightness(0) invert(1) var(--dropshadow-white);
+}
+
+.job-assignment .button-minus img,
+.job-assignment .button-plus img {
+    filter: brightness(0) invert(1) var(--dropshadow-black);
+}
+
 .button-content img {
     width: 32px;
-    filter: var(--dropshadow-white);
 }
 
 .button-top-indicators,
@@ -397,6 +470,8 @@ hr {
     width: 16px;
 }
 
+
+
 .progress-bar {
     width: 0;
     height: 100%;
@@ -421,11 +496,6 @@ hr {
 
 .job-amount {
     min-width: 72px;
-}
-
-.job-assignment .button-minus img,
-.job-assignment .button-plus img {
-    filter: brightness(0) invert(1) var(--dropshadow-black);
 }
 
 .job-name,
@@ -468,7 +538,7 @@ hr {
     }
 
     .main-jobs-section {
-        width: 33% !important;
+        width: 66.5% !important;
     }
 }
 

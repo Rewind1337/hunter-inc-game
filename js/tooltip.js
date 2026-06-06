@@ -56,12 +56,15 @@ function updateTooltipTextContent(tooltipData) {
             break;
         case "mech-button":
             tooltipReference = game.mechButtons[tooltipData.id]
+            TOOLTIP_ELEMENT.style.backgroundColor = 'rgba(12, 0, 0, 0.95)'
             break;
         case "resource":
             tooltipReference = game.resource[tooltipData.id]
+            TOOLTIP_ELEMENT.style.backgroundColor = 'rgba(0,0,0,0.95)'
             break;
         case "job":
             tooltipReference = game.jobs[tooltipData.id]
+            TOOLTIP_ELEMENT.style.backgroundColor = 'rgba(0, 0, 16, 0.95)'
             break;
         default:
             break;

@@ -26,16 +26,16 @@
     text-shadow: var(--textshadow-black);
 }
 
+.button-red .button-text {
+    color: white;
+    text-shadow: var(--textshadow-black);
+}
+
 .button.active {
     z-index: 1;
 }
 
 .button.active .button-text {
-    filter: var(--dropshadow-white);
-}
-
-.button.active img {
-    filter: brightness(0);
     filter: var(--dropshadow-white);
 }
 
@@ -300,4 +300,96 @@
 
 .button * {
     transition: background 0.2s ease, border-color 0.2s ease, color 0.2s ease, filter 0.2s ease;
+}
+
+
+
+#main-center-navigation .button-white.active {
+    background: var(--white-dark) linear-gradient(170deg,
+            /* Base gradient stops */
+            rgba(0, 0, 0, 0), rgba(255, 255, 255, 0.125), rgba(0, 0, 0, 0),
+            /* Repeat your base gradient stops */
+            rgba(0, 0, 0, 0), rgba(255, 255, 255, 0.125), rgba(0, 0, 0, 0),
+            /* Repeat your first gradient stop */
+            rgba(0, 0, 0, 0));
+
+    background-size: 200% 200%;
+    animation: scrollBackground 5s linear infinite;
+}
+
+
+#main-center-navigation .button-black.active {
+    background: var(--black-dark) linear-gradient(170deg,
+            /* Base gradient stops */
+            rgba(0, 0, 0, 0), rgba(255, 255, 255, 0.125), rgba(0, 0, 0, 0),
+            /* Repeat your base gradient stops */
+            rgba(0, 0, 0, 0), rgba(255, 255, 255, 0.125), rgba(0, 0, 0, 0),
+            /* Repeat your first gradient stop */
+            rgba(0, 0, 0, 0));
+
+    background-size: 200% 200%;
+    animation: scrollBackground 5s linear infinite;
+}
+
+
+
+#main-center-navigation .button-red.active {
+    background: var(--red-norm) linear-gradient(170deg,
+            /* Base gradient stops */
+            rgba(0, 0, 0, 0), rgba(255, 255, 255, 0.33), rgba(0, 0, 0, 0),
+            /* Repeat your base gradient stops */
+            rgba(0, 0, 0, 0), rgba(255, 255, 255, 0.33), rgba(0, 0, 0, 0),
+            /* Repeat your first gradient stop */
+            rgba(0, 0, 0, 0));
+
+    background-size: 200% 200%;
+    animation: scrollBackground 5s linear infinite;
+}
+
+
+
+#main-center-navigation .button-blue.active {
+    background: var(--blue-norm) linear-gradient(170deg,
+            /* Base gradient stops */
+            rgba(0, 0, 0, 0), rgba(255, 255, 255, 0.33), rgba(0, 0, 0, 0),
+            /* Repeat your base gradient stops */
+            rgba(0, 0, 0, 0), rgba(255, 255, 255, 0.33), rgba(0, 0, 0, 0),
+            /* Repeat your first gradient stop */
+            rgba(0, 0, 0, 0));
+
+    background-size: 200% 200%;
+    animation: scrollBackground 5s linear infinite;
+}
+
+
+
+#main-center-navigation .button-yellow.active {
+    background: var(--yellow-norm) linear-gradient(170deg,
+            /* Base gradient stops */
+            rgba(0, 0, 0, 0), rgba(255, 255, 255, 0.33), rgba(0, 0, 0, 0),
+            /* Repeat your base gradient stops */
+            rgba(0, 0, 0, 0), rgba(255, 255, 255, 0.33), rgba(0, 0, 0, 0),
+            /* Repeat your first gradient stop */
+            rgba(0, 0, 0, 0));
+
+    background-size: 200% 200%;
+    animation: scrollBackground 5s linear infinite;
+}
+
+#main-center-navigation .button.active:hover {
+    filter: brightness(110%) contrast(110%);
+}
+
+#main-center-navigation .button.active:hover:active {
+    filter: brightness(110%) contrast(120%);
+}
+
+@keyframes scrollBackground {
+    0% {
+        background-position: 100% 100%
+    }
+
+    100% {
+        background-position: 0% 0%
+    }
 }

@@ -72,9 +72,9 @@ function updateResourceAmounts() {
         let resourceElement = document.getElementById(resource.id)
         let resourceValueElement = resourceElement.querySelector(".resource-amount")
         if (resource.max == -1) {
-            resourceValueElement.innerHTML = format(resource.current)
+            resourceValueElement.innerHTML = fancyFormat(resource.current)
         } else {
-            resourceValueElement.innerHTML = format(resource.current) + " / " + format(resource.capacity * resource.capacityMultiplier)
+            resourceValueElement.innerHTML = fancyFormat(resource.current) + '<div class="number-slash">/</div>' + fancyFormat(resource.capacity * resource.capacityMultiplier)
             let fillPercentage = (resource.current / resource.capacity * resource.capacityMultiplier) * 100
             resourceElement.style.setProperty('--resourceFill', fillPercentage + '%');
 
