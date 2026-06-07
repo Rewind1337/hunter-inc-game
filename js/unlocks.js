@@ -62,7 +62,7 @@ const UNLOCKS = [
     // unlocks parts-factory-bay as button
     { conditions: COSTS_GAINS.recoveryButtons["parts-factory"].costs, targets: [{ recoveryButton: "parts-factory" }] },
     // unlocks the parts-factory tab as well as first 2 factory-buttons
-    { conditions: [{ recoveryButton: "parts-factory", amount: 1 }], targets: [{ tabButton: "parts-factory" }, { factoryButton: "small-battery" }, { factoryButton: "compressed-cube" }] },
+    { conditions: [{ recoveryButton: "parts-factory", amount: 1 }], targets: [{ tabButton: "parts-factory" }, { factoryButton: "part-small-battery" }, { factoryButton: "part-compressed-cube" }] },
 ]
 
 // gets run once on page load at the moment
@@ -162,9 +162,9 @@ function unlockRecoveryButton(buttonID) {
     game.recoveryButtons[buttonID].unlocked = true
     let buttonElement = document.getElementById(buttonID + "-button")
     buttonElement.style.display = "flex"
-    let sectionID = game.recoveryButtons[buttonID].section
-    let sectionElement = document.getElementById(sectionID)
-    sectionElement.style.display = "flex"
+
+    let buttonParent = setParentElementDisplay(buttonElement, "flex")
+    if (buttonParent) { setParentElementDisplay(buttonParent, "flex") }
 }
 
 // unlocks the job and forces the job-assignment with jobID display to flex
@@ -172,8 +172,9 @@ function unlockJob(jobID) {
     game.jobs[jobID].unlocked = true
     let jobElement = document.getElementById("job-" + jobID)
     jobElement.style.display = "flex"
-    let sectionElement = document.getElementById("jobs-section-job-assignment")
-    sectionElement.style.display = "flex"
+
+    let buttonParent = setParentElementDisplay(jobElement, "flex")
+    if (buttonParent) { setParentElementDisplay(buttonParent, "flex") }
 }
 
 // unlocks the button and forces the mech workshop button with buttonID display to flex
@@ -181,8 +182,9 @@ function unlockMechButton(buttonID) {
     game.mechButtons[buttonID].unlocked = true
     let buttonElement = document.getElementById(buttonID + "-button")
     buttonElement.style.display = "flex"
-    let sectionElement = document.getElementById("mech-workshop-section-build-a-mech")
-    sectionElement.style.display = "flex"
+
+    let buttonParent = setParentElementDisplay(buttonElement, "flex")
+    if (buttonParent) { setParentElementDisplay(buttonParent, "flex") }
 }
 
 // unlocks the button and forces the parts factory button with buttonID display to flex
@@ -190,6 +192,15 @@ function unlockFactoryButton(buttonID) {
     game.factoryButtons[buttonID].unlocked = true
     let buttonElement = document.getElementById(buttonID + "-button")
     buttonElement.style.display = "flex"
-    let sectionElement = document.getElementById("parts-factory-section-parts")
-    sectionElement.style.display = "flex"
+
+    let buttonParent = setParentElementDisplay(buttonElement, "flex")
+    if (buttonParent) { setParentElementDisplay(buttonParent, "flex") }
+}
+
+function setParentElementDisplay(rootElement, displayType) {
+    let parentElement = rootElement.parentElement
+    if (parentElement) {
+        parentElement.style.display = "flex"
+    }
+    return parentElement
 }

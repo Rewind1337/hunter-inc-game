@@ -39,6 +39,28 @@
     filter: var(--dropshadow-white);
 }
 
+/* Text Color Styles */
+
+.text-white {
+    color: white;
+}
+
+.text-black {
+    color: black;
+}
+
+.text-red {
+    color: var(--red-norm);
+}
+
+.text-blue {
+    color: var(--blue-norm);
+}
+
+.text-yellow {
+    color: var(--yellow-norm);
+}
+
 /* White Button Styles */
 
 .button-white {

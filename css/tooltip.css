@@ -12,6 +12,10 @@
     transform: translate(-50%, 8px);
 }
 
+#tooltip * {
+    color: white;
+}
+
 /* these are the headers inside the tooltip in general */
 
 #tooltip-header .header {

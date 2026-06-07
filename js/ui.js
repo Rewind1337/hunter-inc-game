@@ -77,10 +77,52 @@ function updateResourceAmounts() {
             resourceValueElement.innerHTML = fancyFormat(resource.current) + '<div class="number-slash">/</div>' + fancyFormat(resource.capacity * resource.capacityMultiplier)
             let fillPercentage = (resource.current / resource.capacity * resource.capacityMultiplier) * 100
             resourceElement.style.setProperty('--resourceFill', fillPercentage + '%');
-
+        }
+        let resourcePerSecElement = resourceElement.querySelector(".resource-persec")
+        let resourceName = resource.id.substring(resource.id.indexOf("-") + 1)
+        let resourceNetGain = calculateGainsForResource(resourceName)
+        if (resourceNetGain !== 0) {
+            let netPrefix = ""
+            if (resourceNetGain > 0) {
+                netPrefix = "+"
+                resourcePerSecElement.style.color = "hsl(120deg, 100%, 50%)"
+            }
+            if (resourceNetGain < 0) {
+                // netPrefix = "-" // not needed because the format already does a '-'
+                resourcePerSecElement.style.color = "hsl(0deg, 100%, 50%)"
+            }
+            resourcePerSecElement.innerHTML = netPrefix + fancyFormat(resourceNetGain) + "/s"
+            resourcePerSecElement.style.display = "flex"
         }
     }
     updateIdleRobotCount() // not the best place to call this, but it covers alot of cases for the moment
+}
+
+function updateSpecialResources() {
+    let specialListElement = document.getElementById("special-list")
+    specialListElement.innerHTML = ""
+    let specialArray = Object.values(game.special)
+    for (let i = 0; i < specialArray.length; i++) {
+        let specialName = Object.keys(game.special)[i]
+        let specialClass = "text-black"
+
+        if (specialName.includes("mech")) {
+            specialClass = "text-red"
+        } else if (specialName.includes("part")) {
+            specialClass = "text-yellow"
+        }
+
+        if (specialName === "salvage-old-mech-left") {
+            specialClass = "text-white"
+        }
+
+        let specialAmount = specialArray[i]
+        let specialString = '<div class="special-resource grid-element ' + specialClass + ' flex-row justify-between">'
+        specialString += '<div class="special-name">' + specialName + '</div>'
+        specialString += '<div class="special-amount">' + fancyFormat(specialAmount) + '</div>'
+        specialString += '</div>'
+        specialListElement.innerHTML += specialString
+    }
 }
 
 // forces the appropriate display
@@ -102,10 +144,12 @@ function updateRecoveryButtonVisibility() {
         let button = buttonsArray[i]
         let buttonElement = document.getElementById(button.id)
         buttonElement.style.display = (button.unlocked ? "flex" : "none")
-        let sectionID = buttonsArray[i].section
-        let sectionElement = document.getElementById(sectionID)
-        sectionElement.style.display = (button.unlocked ? "flex" : "none")
         updateIndicatorsForButton(Object.keys(game.recoveryButtons)[i], "recoveryButtons")
+
+        if (button.unlocked) {
+            let buttonParent = setParentElementDisplay(buttonElement, "flex")
+            if (buttonParent) { setParentElementDisplay(buttonParent, "flex") }
+        }
     }
 }
 
@@ -186,4 +230,8 @@ function getOrMakeIndicatorParentRow(buttonID, type, indicatorRow) {
     } else {
         return foundParentRow
     }
+}
+
+function hideResearch(id) {
+    document.getElementById("research-" + id).style.display = "none"
 }

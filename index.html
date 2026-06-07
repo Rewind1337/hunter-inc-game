@@ -63,55 +63,68 @@
           <div class="resource-icon"><img src="./svg/battery_4.svg" /></div>
           <div class="resource-name">Energy</div>
           <div class="resource-amount">0</div>
+          <div class="resource-persec">0</div>
         </div>
         <div id="resource-robots" class="resource has-tooltip grid-element flex-row justify-start align-center"
           data-tooltip-type="resource" data-tooltip-id="robots">
           <div class="resource-icon"><img src="./svg/robot.svg" /></div>
           <div class="resource-name">Robots</div>
           <div class="resource-amount">0</div>
+          <div class="resource-persec">0</div>
         </div>
         <div id="resource-drones" class="resource has-tooltip grid-element flex-row justify-start align-center"
           data-tooltip-type="resource" data-tooltip-id="drones">
           <div class="resource-icon"><img src="./svg/drone.svg" /></div>
           <div class="resource-name">Drones</div>
           <div class="resource-amount">0</div>
+          <div class="resource-persec">0</div>
         </div>
         <div id="resource-wood" class="resource has-tooltip grid-element flex-row justify-start align-center"
           data-tooltip-type="resource" data-tooltip-id="wood">
           <div class="resource-icon"><img src="./svg/tree.svg" /></div>
           <div class="resource-name">Wood</div>
           <div class="resource-amount">0 / 250</div>
+          <div class="resource-persec">0</div>
         </div>
         <div id="resource-scrap" class="resource has-tooltip grid-element flex-row justify-start align-center"
           data-tooltip-type="resource" data-tooltip-id="scrap">
           <div class="resource-icon"><img src="./svg/borg.svg" /></div>
           <div class="resource-name">Scrap</div>
           <div class="resource-amount">0 / 250</div>
+          <div class="resource-persec">0</div>
         </div>
         <div id="resource-squares" class="resource has-tooltip grid-element flex-row justify-start align-center"
           data-tooltip-type="resource" data-tooltip-id="squares">
           <div class="resource-icon"><img src="./svg/box.svg" /></div>
           <div class="resource-name">Squares</div>
           <div class="resource-amount">0 / 50</div>
+          <div class="resource-persec">0</div>
         </div>
         <div id="resource-circles" class="resource has-tooltip grid-element flex-row justify-start align-center"
           data-tooltip-type="resource" data-tooltip-id="circles">
           <div class="resource-icon"><img src="./svg/circle.svg" /></div>
           <div class="resource-name">Circles</div>
           <div class="resource-amount">0 / 50</div>
+          <div class="resource-persec">0</div>
         </div>
         <div id="resource-triangles" class="resource has-tooltip grid-element flex-row justify-start align-center"
           data-tooltip-type="resource" data-tooltip-id="triangles">
           <div class="resource-icon"><img src="./svg/triangle.svg" /></div>
           <div class="resource-name">Triangles</div>
           <div class="resource-amount">0 / 50</div>
+          <div class="resource-persec">0</div>
         </div>
         <div id="resource-cubes" class="resource has-tooltip grid-element flex-row justify-start align-center"
           data-tooltip-type="resource" data-tooltip-id="cubes">
           <div class="resource-icon"><img src="./svg/cube.svg" /></div>
           <div class="resource-name">Cubes</div>
           <div class="resource-amount">0 / 50</div>
+          <div class="resource-persec">0</div>
         </div>
+      </div>
+      <div class="header">Special</div>
+      <div id="special-list" class="flex-col no-gaps">
+
       </div>
     </div>
     <div id="main-center" class="flex-col no-gaps h-100">
@@ -371,16 +384,16 @@
         <div id="parts-factory-section-parts" class="main-section grid-element flex-col no-gaps">
           <div class="header">Parts Factory</div>
           <div class="main-button-section flex-row flex-wrap">
-            <button id="small-battery-button" class="button button-part button-yellow has-tooltip"
-              data-tooltip-type="factory-button" data-tooltip-id="small-battery">
+            <button id="part-small-battery-button" class="button button-part button-yellow has-tooltip"
+              data-tooltip-type="factory-button" data-tooltip-id="part-small-battery">
               <div class="button-content">
                 <div class="button-start"><img src="./svg/battery_0.svg"></div>
                 <div class="button-text flex-grow">Small Battery</div>
                 <div class="button-end"></div>
               </div>
             </button>
-            <button id="compressed-cube-button" class="button button-part button-yellow has-tooltip"
-              data-tooltip-type="factory-button" data-tooltip-id="compressed-cube">
+            <button id="part-compressed-cube-button" class="button button-part button-yellow has-tooltip"
+              data-tooltip-type="factory-button" data-tooltip-id="part-compressed-cube">
               <div class="button-content">
                 <div class="button-start"><img src="./svg/cube.svg"></div>
                 <div class="button-text flex-grow">Compressed Cube</div>
@@ -466,21 +479,16 @@
     <div id="main-right" class="flex-col no-gaps">
       <div class="header">Research</div>
       <div id="research-list" class="flex-col no-gaps">
-        <div id="research-0" class="research grid-element flex-col">
+        <div id="research-0" class="research has-tooltip grid-element flex-col" data-tooltip-type="research"
+          data-tooltip-id="0">
           <div class="flex-row justify-between align-center">
             <div class="research-icon"><img src="./svg/wrench.svg" /></div>
-            <div class="research-name flex-grow">Research 1</div>
+            <div class="research-name flex-grow">Gathering+</div>
             <button class="button button-research button-white">
               <div class="button-content">
                 <div class="button-text flex-grow">Unlock</div>
               </div>
             </button>
-          </div>
-          <div class="flex-col no-gaps">
-            <div class="research-effect flex-row align-center justify-between">
-              <div class="research-effect-target">wood scrap gathering speed</div>
-              <div class="research-effect-increase">x2</div>
-            </div>
           </div>
         </div>
       </div>
@@ -493,6 +501,7 @@
   <script src="./libs/utils.js"></script>
   <script src="./js/constants.js"></script>
   <script src="./js/cost-gain.js"></script>
+  <script src="./js/research.js"></script>
   <script src="./js/tooltip.js"></script>
   <script src="./js/modals.js"></script>
   <script src="./js/ui.js"></script>

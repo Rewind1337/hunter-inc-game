@@ -6,6 +6,8 @@
 .job-amount,
 .resource-name,
 .resource-amount,
+.special-name,
+.special-value,
 .button,
 .button * {
     font-family: "Share Tech", sans-serif;

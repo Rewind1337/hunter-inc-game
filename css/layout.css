@@ -197,6 +197,7 @@ hr {
 }
 
 .header {
+    color: white;
     font-size: 36px;
     line-height: 1;
     text-align: center;
@@ -249,7 +250,9 @@ hr {
     transition: --resourceFill 0.2s linear;
 }
 
-.resource * {}
+.resource * {
+    color: white;
+}
 
 .resource .resource-name {
     text-align: start;
@@ -260,30 +263,60 @@ hr {
 .resource .resource-amount {
     display: flex;
     justify-content: end;
+    text-align: end;
+    flex-basis: 128px;
+    text-shadow: var(--textshadow-black);
 }
 
-.number-value {}
+.resource .resource-persec {
+    white-space: nowrap;
+    font-size: 12px;
+    display: none;
+    justify-content: end;
+}
+
+
+
+.special * {
+    color: inherit;
+}
+
+.special .special-name {
+    text-align: start;
+    flex-grow: 1;
+    text-shadow: var(--textshadow-black);
+    color: inherit;
+}
+
+.special .special-amount {
+    display: flex;
+    justify-content: end;
+    text-align: end;
+    flex-basis: 128px;
+    text-shadow: var(--textshadow-black);
+    color: inherit;
+}
+
+
+
+.number-value {
+    color: inherit;
+    text-shadow: var(--textshadow-black);
+}
 
 .number-suffix {
     font-size: 14px;
     margin-left: 2px;
     align-self: end;
+    text-shadow: var(--textshadow-black);
 }
 
 .number-slash {
     font-size: 12px;
-    margin-inline: 4px;
+    margin-inline: 2px;
     align-self: center;
-}
-
-.resource .resource-amount {
-    text-align: end;
-    padding-right: 8px;
-    flex-basis: 128px;
-    flex-grow: 1;
     text-shadow: var(--textshadow-black);
 }
-
 
 
 .main-button-section .button {
@@ -484,6 +517,10 @@ hr {
 
 
 
+.job-assignment * {
+    color: white;
+}
+
 .job-assignment .button-content {
     padding: 0 !important;
     aspect-ratio: 1;
@@ -502,6 +539,12 @@ hr {
 .job-amount {
     font-size: 24px;
     text-shadow: var(--textshadow-black);
+}
+
+
+
+.research * {
+    color: white;
 }
 
 

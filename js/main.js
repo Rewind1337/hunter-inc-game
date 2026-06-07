@@ -1,6 +1,8 @@
 // holds it all for now
 let game = {}
 
+const doTheCheats = true
+
 // runs on page load
 function setupInitialState() {
     linkFunctionsToHTML() // link all the functions
@@ -24,7 +26,7 @@ function setupInitialState() {
     }
 
     // ayy
-    if (true)
+    if (doTheCheats)
         runAlotOfCheatyCommandsToGiveUsABetterTimeDeveloping()
 
     // calls the ui functions for the gamestate
@@ -76,11 +78,9 @@ function processRecoveryIdleGains(dt) {
         let button = game.recoveryButtons[key]
         if (button.gainsPerSecond.length !== 0 && button.current > 0) { // only process buttons that have a gain
             let buttonAmount = button.current
-            if (button.settings !== null && button.settings.active !== null) {
+            if (button.settings) {
                 if (button.settings.active > 0)
                     buttonAmount = button.settings.active
-                else
-                    return
             }
             let canAfford = checkCosts(button.costsPerSecond, dt * buttonAmount)
             if (canAfford) {
@@ -150,7 +150,9 @@ function buttonPressed(buttonID, type) {
         // remove the resources
         subtractAllCostsFromResources(button.costs)
         // add the gains
-        addAllGainsToResources(button.gains)
+        let multStackResolved = 1
+        for (let i = 0; i < button.gainMultipliers.length; i++) multStackResolved = multStackResolved * button.gainMultipliers[i]
+        addAllGainsToResources(button.gains, multStackResolved)
         button.current++ // increment the button.current for logic and conditions and stuff
         incrementCostsForButton(buttonID, type)
         let tooltipTypeStringReplace = type.replace("B", "-b").substring(0, type.length)
@@ -250,6 +252,64 @@ function openButtonConfigModal(buttonType, buttonID, modalID, modalType) {
     showModal(modalID)
 }
 
+function calculateGainsForResource(resourceID) {
+    let netGainForResource = 0
+    // go over game.recoveryButtons and see if resourceID is in costsPerSecond OR gainsPerSecond
+    for (let key1 in game.recoveryButtons) {
+        let button = game.recoveryButtons[key1]
+        let count = button.current
+        if (count > 0) {
+            if (button.settings) { // only count active buildings
+                count = button.settings.active
+            }
+            if (button.gainsPerSecond.length > 0) {
+                for (let key2 in button.gainsPerSecond) {
+                    let gain = button.gainsPerSecond[key2]
+                    let gainMultipliers = resolveMultStack(button.gainMultipliers)
+                    if (gain.resource === resourceID) { netGainForResource += (gain.amount * count * gainMultipliers) }
+                }
+            }
+            if (button.costsPerSecond.length > 0) {
+                for (let key2 in button.costsPerSecond) {
+                    let cost = button.costsPerSecond[key2]
+                    if (cost.resource === resourceID) { netGainForResource -= (cost.amount * count) }
+                }
+            }
+        }
+    }
+
+    // go over game.jobs and see if resourceID is in costsPerSecond OR gainsPerSecond
+    for (let key1 in game.jobs) {
+        let job = game.jobs[key1]
+        let count = job.current
+        if (count > 0) {
+            if (job.gainsPerSecond.length > 0) {
+                for (let key2 in job.gainsPerSecond) {
+                    let gain = job.gainsPerSecond[key2]
+                    let gainMultipliers = resolveMultStack(job.gainMultipliers)
+                    if (gain.resource === resourceID) { netGainForResource += (gain.amount * count * gainMultipliers) }
+                }
+            }
+            if (job.costsPerSecond.length > 0) {
+                for (let key2 in job.costsPerSecond) {
+                    let cost = job.costsPerSecond[key2]
+                    if (cost.resource === resourceID) { netGainForResource -= (cost.amount * count) }
+                }
+            }
+        }
+    }
+
+    return netGainForResource
+}
+
+function resolveMultStack(multStack) {
+    let value = 1
+    for (let i = 0; i < multStack.length; i++) {
+        value = value * multStack[i]
+    }
+    return value
+}
+
 // resource function that returns true if the player can afford the costs provided
 // dt used for idle processing, defaults to 1, essentially a mult
 function checkCosts(costs, dt = 1) {
@@ -278,8 +338,6 @@ function checkCosts(costs, dt = 1) {
 // resource function that returns true if the gained resource has the capacity to hold the gains
 // dt used for idle processing, defaults to 1, essentially a mult
 function checkResourceCapacities(gains, dt = 1) {
-    // if (gains === undefined) { return true }
-
     for (let i = 0; i < gains.length; i++) {
         let gain = gains[i]
         let dtAmount = gain.amount * dt
@@ -291,12 +349,12 @@ function checkResourceCapacities(gains, dt = 1) {
         if (gain.resource) {
             let resourceID = gain.resource
             if ((game.resource[resourceID].current === game.resource[resourceID].capacity)) {
-                return false;
+                return false; // only returns false once any resource is fully capped
             }
 
             /*
             if ((game.resource[resourceID].current + dtAmount) > game.resource[resourceID].capacity) {
-                return false
+                return false // returns false once any resource cant hold the gains you would get
             }
             */
         }
@@ -326,6 +384,15 @@ function addGainToResource(gain, dt = 1) {
     if (gain.special) { // the hidden things, no capacity, not always instantiated
         if (game.special[gain.special] === undefined) { game.special[gain.special] = 0 } // instantiate to 0 if it doesnt exist
         game.special[gain.special] += dtGain
+    }
+
+    if (gain.gainMultiplier) { // adding a mult to the multiplier stack for specific button
+        console.log(gain)
+        let targetButton = game[gain.buttonType][gain.buttonID]
+        let value = gain.gainMultiplier
+        targetButton.gainMultipliers.push(value)
+        console.log(targetButton)
+        console.log(value)
     }
 }
 
@@ -411,8 +478,8 @@ function linkFunctionsToHTML() {
     document.getElementById("construction-bay-button").onclick = () => { buttonPressed("construction-bay", "recoveryButtons") }
 
     // link factory buttons
-    document.getElementById("small-battery-button").onclick = () => { buttonPressed("small-battery", "factoryButtons") }
-    document.getElementById("compressed-cube-button").onclick = () => { buttonPressed("compressed-cube", "factoryButtons") }
+    document.getElementById("part-small-battery-button").onclick = () => { buttonPressed("part-small-battery", "factoryButtons") }
+    document.getElementById("part-compressed-cube-button").onclick = () => { buttonPressed("part-compressed-cube", "factoryButtons") }
 
     // link mech buttons
     document.getElementById("mech-frame-button").onclick = () => { buttonPressed("mech-frame", "mechButtons") }
@@ -429,6 +496,11 @@ function linkFunctionsToHTML() {
     document.getElementById("job-scrap-collector-plus").onclick = () => { jobAssignmentButtonPressed("scrap-collector", 1) }
     document.getElementById("job-factory-bot-minus").onclick = () => { jobAssignmentButtonPressed("factory-bot", -1) }
     document.getElementById("job-factory-bot-plus").onclick = () => { jobAssignmentButtonPressed("factory-bot", 1) }
+
+    // link research buttons
+    for (let i = 0; i < RESEARCHES.length; i++) {
+        document.getElementById("research-" + i).querySelector(".button-research").onclick = () => { unlockResearch(i) }
+    }
 }
 
 function runAlotOfCheatyCommandsToGiveUsABetterTimeDeveloping() {

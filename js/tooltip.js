@@ -42,6 +42,7 @@ function updateTooltipTextContent(tooltipData) {
         || tooltipData.type === "mech-button"
         || tooltipData.type === "resource"
         || tooltipData.type === "job"
+        || tooltipData.type === "research"
         || tooltipData.type === "other-button", "data-tooltip-type not correct")
 
     let tooltipReference = null
@@ -61,6 +62,10 @@ function updateTooltipTextContent(tooltipData) {
         case "resource":
             tooltipReference = game.resource[tooltipData.id]
             TOOLTIP_ELEMENT.style.backgroundColor = 'rgba(0,0,0,0.95)'
+            break;
+        case "research":
+            tooltipReference = RESEARCHES[tooltipData.id]
+            TOOLTIP_ELEMENT.style.backgroundColor = 'rgba(10, 0, 16, 0.95)'
             break;
         case "job":
             tooltipReference = game.jobs[tooltipData.id]
@@ -89,7 +94,7 @@ function updateTooltipTextContent(tooltipData) {
 
     if (tooltipData.type === "resource") { // resource specific tooltip
         // TODO generate idle costs & gains to display RESOURCE SPECIFIC
-        TOOLTIP_CONTENT_ELEMENT.innerHTML = finalContentString
+        TOOLTIP_CONTENT_ELEMENT.innerHTML = "TODO: something"
 
         let finalBottomString = ''
         finalBottomString += '<div class="flex-row justify-around align-center">'
@@ -101,7 +106,18 @@ function updateTooltipTextContent(tooltipData) {
 
     } else if (tooltipData.type === "job") { // job specific tooltip
         // TODO generate idle costs & gains to display JOB SPECIFIC
-        TOOLTIP_CONTENT_ELEMENT.innerHTML = finalContentString
+        TOOLTIP_CONTENT_ELEMENT.innerHTML = "TODO: something"
+
+        let finalBottomString = ''
+        finalBottomString += '<div class="flex-row justify-around align-center">'
+        finalBottomString += '<div>funky magic</div>'
+        finalBottomString += '<div>full in ??:??:??</div>'
+        finalBottomString += '</div>'
+
+        TOOLTIP_BOTTOM_ELEMENT.innerHTML = finalBottomString
+
+    } else if (tooltipData.type === "research") { // research specific tooltip
+        TOOLTIP_CONTENT_ELEMENT.innerHTML = tooltipReference.description
 
         let finalBottomString = ''
         finalBottomString += '<div class="flex-row justify-around align-center">'
@@ -121,10 +137,10 @@ function updateTooltipTextContent(tooltipData) {
                     for (let i = 0; i < tooltipReference.costs.length; i++) {
                         let cost = tooltipReference.costs[i]
                         if (cost.resource) {
-                            finalContentString += '<div class="tooltip-pill"><div>' + replaceNameWithSVG(cost.resource) + '</div><div>' + format(cost.amount, ".", 1) + '</div></div>'
+                            finalContentString += '<div class="tooltip-pill"><div>' + replaceNameWithSVG(cost.resource) + '</div><div>' + removeTrailingZeroesAndSeperator(format(cost.amount, ".", 1)) + '</div></div>'
                         }
                         if (cost.special) {
-                            finalContentString += '<div class="tooltip-pill"><div>' + replaceNameWithSVG(cost.special) + '</div><div>' + format(cost.amount, ".", 1) + '</div></div>'
+                            finalContentString += '<div class="tooltip-pill"><div>' + replaceNameWithSVG(cost.special) + '</div><div>' + removeTrailingZeroesAndSeperator(format(cost.amount, ".", 1)) + '</div></div>'
                         }
                     }
                     finalContentString += '</div>'
@@ -139,10 +155,10 @@ function updateTooltipTextContent(tooltipData) {
                     for (let i = 0; i < tooltipReference.costsPerSecond.length; i++) {
                         let cost = tooltipReference.costsPerSecond[i]
                         if (cost.resource) {
-                            finalContentString += '<div class="tooltip-pill"><div>' + replaceNameWithSVG(cost.resource) + '</div><div>' + format(cost.amount, ".", 1) + ' / s</div></div>'
+                            finalContentString += '<div class="tooltip-pill"><div>' + replaceNameWithSVG(cost.resource) + '</div><div>' + removeTrailingZeroesAndSeperator(format(cost.amount, ".", 1)) + ' / s</div></div>'
                         }
                         if (cost.special) {
-                            finalContentString += '<div class="tooltip-pill"><div>' + replaceNameWithSVG(cost.special) + '</div><div>' + format(cost.amount, ".", 1) + ' / s</div></div>'
+                            finalContentString += '<div class="tooltip-pill"><div>' + replaceNameWithSVG(cost.special) + '</div><div>' + removeTrailingZeroesAndSeperator(format(cost.amount, ".", 1)) + ' / s</div></div>'
                         }
                     }
                     finalContentString += '</div>'
@@ -156,14 +172,16 @@ function updateTooltipTextContent(tooltipData) {
                     finalContentString += '<div class="tooltip-gains flex-row flex-wrap align-center justify-center">'
                     for (let i = 0; i < tooltipReference.gains.length; i++) {
                         let gain = tooltipReference.gains[i]
+                        let gainMultipliers = resolveMultStack(tooltipReference.gainMultipliers)
+                        let formattedGains = format(gain.amount * gainMultipliers, ".", 1)
                         if (gain.resource) {
-                            finalContentString += '<div class="tooltip-pill"><div>' + replaceNameWithSVG(gain.resource) + '</div><div>' + format(gain.amount, ".", 1) + '</div></div>'
+                            finalContentString += '<div class="tooltip-pill"><div>' + replaceNameWithSVG(gain.resource) + '</div><div>' + removeTrailingZeroesAndSeperator(formattedGains) + '</div></div>'
                         }
                         if (gain.resourceCapacity) {
-                            finalContentString += '<div class="tooltip-pill"><div>' + replaceNameWithSVG(gain.resourceCapacity) + ' Cap.</div><div>' + format(gain.amount, ".", 1) + '</div></div>'
+                            finalContentString += '<div class="tooltip-pill"><div>' + replaceNameWithSVG(gain.resourceCapacity) + ' Cap.</div><div>' + removeTrailingZeroesAndSeperator(formattedGains) + '</div></div>'
                         }
                         if (gain.special) {
-                            finalContentString += '<div class="tooltip-pill"><div>' + replaceNameWithSVG(gain.special) + '</div><div>' + format(gain.amount, ".", 1) + '</div></div>'
+                            finalContentString += '<div class="tooltip-pill"><div>' + replaceNameWithSVG(gain.special) + '</div><div>' + removeTrailingZeroesAndSeperator(formattedGains) + '</div></div>'
                         }
                     }
                     finalContentString += '</div>'
@@ -178,13 +196,13 @@ function updateTooltipTextContent(tooltipData) {
                     for (let i = 0; i < tooltipReference.gainsPerSecond.length; i++) {
                         let gain = tooltipReference.gainsPerSecond[i]
                         if (gain.resource) {
-                            finalContentString += '<div class="tooltip-pill"><div>' + replaceNameWithSVG(gain.resource) + '</div><div>' + format(gain.amount, ".", 1) + ' / s</div></div>'
+                            finalContentString += '<div class="tooltip-pill"><div>' + replaceNameWithSVG(gain.resource) + '</div><div>' + removeTrailingZeroesAndSeperator(format(gain.amount, ".", 1)) + ' / s</div></div>'
                         }
                         if (gain.resourceCapacity) {
-                            finalContentString += '<div class="tooltip-pill"><div>' + replaceNameWithSVG(gain.resourceCapacity) + ' Cap.</div><div>' + format(gain.amount, ".", 1) + '</div></div>'
+                            finalContentString += '<div class="tooltip-pill"><div>' + replaceNameWithSVG(gain.resourceCapacity) + ' Cap.</div><div>' + removeTrailingZeroesAndSeperator(format(gain.amount, ".", 1)) + '</div></div>'
                         }
                         if (gain.special) {
-                            finalContentString += '<div class="tooltip-pill"><div>' + replaceNameWithSVG(gain.special) + '</div><div>' + format(gain.amount, ".", 1) + ' / s</div></div>'
+                            finalContentString += '<div class="tooltip-pill"><div>' + replaceNameWithSVG(gain.special) + '</div><div>' + removeTrailingZeroesAndSeperator(format(gain.amount, ".", 1)) + ' / s</div></div>'
                         }
                     }
                     finalContentString += '</div>'
