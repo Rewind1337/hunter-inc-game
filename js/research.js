@@ -11,7 +11,7 @@ let RESEARCHES = [
     },
     {
         id: 1, name: "Salvage+", description: "scrap salvaging mult x2",
-        costs: [{ resource: "scrap", amount: 350 }, { resource: "squares", amount: 10 }],
+        costs: [{ resource: "scrap", amount: 350 }, { resource: "plates", amount: 10 }],
         gains: [
             { gainMultiplier: 2, buttonType: "recoveryButtons", buttonID: "salvage-scrap" },
             { costMultiplier: 2, buttonType: "recoveryButtons", buttonID: "salvage-scrap" },
