@@ -11,11 +11,12 @@ let suffixLetters = ["", "K", "M", "B", "T",
 
 function format(input, seperator = ".", digitsBelowAThousand = 1, decimalSpaces = 1, suffixType = "mixed") {
     let logResult = Math.floor(Math.log10(input) / 3);
+    let log10Result = Math.floor(Math.log10(input));
+
     if (input === 0) { return "0" }
     if (input < 0) {
         let absoluteInput = Math.abs(input)
         let absoluteFormat = format(absoluteInput, seperator, digitsBelowAThousand, decimalSpaces, suffixType)
-        console.log(absoluteFormat)
         return "-" + absoluteFormat
     }
     if (input < 1000 && input > 0) {
@@ -29,21 +30,23 @@ function format(input, seperator = ".", digitsBelowAThousand = 1, decimalSpaces 
     }
 
     let offset = Math.floor(Math.log10(input)) % 3;
-    let preComma = Math.floor(input / Math.pow(1000, logResult));
-    let postComma = Math.floor(input / Math.pow(1000, logResult - 1)) - 1000 * (preComma - 1);
+    let preComma = (Math.floor(input / Math.pow(1000, logResult))).toString();
+    let ePreComma = (Math.floor(input / Math.pow(10, log10Result))).toString();
+    let postComma = (Math.floor(input / Math.pow(1000, logResult - 1)) - 1000 * (preComma - 1)).toString();
+
     if (suffixType === "letters") {
         let suffixChoice = suffixLetters
-        return preComma.toString() + seperator + postComma.toString().substr(1, decimalSpaces) + suffixChoice[logResult];
+        return preComma + seperator + postComma.substr(1, decimalSpaces) + suffixChoice[logResult];
     }
     if (suffixType === "e-notation") {
-        return preComma.toString() + seperator + postComma.toString().substr(1, decimalSpaces) + "e<sup>" + Math.floor(Math.log10(input)) + "</sup>";
+        return ePreComma + seperator + postComma.substr(1, decimalSpaces) + "e<sup>" + Math.floor(Math.log10(input)) + "</sup>";
     }
     if (suffixType === "mixed") {
         if (input < 1e15) {
             let suffixChoice = suffixLetters
-            return preComma.toString() + seperator + postComma.toString().substr(1, decimalSpaces) + suffixChoice[logResult];
+            return preComma + seperator + postComma.substr(1, decimalSpaces) + suffixChoice[logResult];
         } else {
-            return preComma.toString() + seperator + postComma.toString().substr(1, decimalSpaces) + "e<sup>" + Math.floor(Math.log10(input)) + "</sup>";
+            return ePreComma + seperator + postComma.substr(1, decimalSpaces) + "e<sup>" + Math.floor(Math.log10(input)) + "</sup>";
         }
 
     }
@@ -74,9 +77,9 @@ function removeTrailingZeroesAndSeperator(input, seperator = ".") {
     let lastCharacter = input.charAt(input.length - 1)
     let secondLastCharacter = input.charAt(input.length - 2)
     if (suffixLetters.includes(lastCharacter)) {
-        stringToBeTrimmed = input.substring(0, input.length - 2)
+        stringToBeTrimmed = input.substring(0, input.length - 1)
         hasRegularSuffix = true
-        suffixString = input.substring(input.length - 2)
+        suffixString = input.substring(input.length - 1)
     } else if (suffixLetters.includes(secondLastCharacter + lastCharacter)) {
         console.log("double letter") // not actually called at the moment because scientific takes over at e15 (1000 T)
     }

@@ -3,9 +3,7 @@ let MODAL_BACKDROP_ELEMENT = document.getElementById("modal-backdrop")
 MODAL_BACKDROP_ELEMENT.onclick = () => { hideModal('button-config-modal') }
 
 function updateModalTextContent(buttonType, buttonID, modalID, modalType) {
-    console.log(buttonType, buttonID, modalID, modalType)
     let button = game[buttonType][buttonID]
-    console.log(button)
 
     if (modalID === "button-config-modal") {
         let MODAL_ELEMENT = document.getElementById(modalID)
@@ -14,7 +12,6 @@ function updateModalTextContent(buttonType, buttonID, modalID, modalType) {
         let MODAL_BOTTOM_ELEMENT = MODAL_ELEMENT.querySelector(".modal-bottom")
         if (modalType === "assignment") {
             for (let key in button.settings) {
-                console.log(key, button.settings[key])
                 if (key === "active") { // assignment of active / inactive buildings for disabling / enabling
                     MODAL_HEADER_ELEMENT.innerHTML = button.name + " Settings"
 

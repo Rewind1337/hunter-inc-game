@@ -21,31 +21,21 @@ const INITIAL_RECOVERY_STATE = {
             id: "resource-scrap", name: "Scrap", description: "",
             current: 0, capacity: 100, capacityMultiplier: 1, unlocked: true
         },
-        "squares": {
-            id: "resource-squares", name: "Squares", description: "",
+        "plates": {
+            id: "resource-plates", name: "Plates", description: "",
             current: 0, capacity: 30, capacityMultiplier: 1, unlocked: false
         },
-        "circles": {
-            id: "resource-circles", name: "Circles", description: "",
+        "links": {
+            id: "resource-links", name: "Links", description: "",
             current: 0, capacity: 15, capacityMultiplier: 1, unlocked: false
         },
-        "triangles": {
-            id: "resource-triangles", name: "Triangles", description: "",
-            current: 0, capacity: 5, capacityMultiplier: 1, unlocked: false
-        },
-        "cubes": {
-            id: "resource-cubes", name: "Cubes", description: "",
+        "memory": {
+            id: "resource-memory", name: "Memory", description: "",
             current: 0, capacity: 5, capacityMultiplier: 1, unlocked: false
         },
     },
     special: { // hidden data
         "salvage-old-mech-left": 250,
-        "mech-health": 10,
-        "mech-armor": 10,
-        "mech-regen": 1,
-        "mech-speed": 4,
-        "mech-crit": 5,
-        "mech-damage": 2,
     },
     jobs: { // job data
         "idle-robot": {
@@ -208,6 +198,14 @@ const INITIAL_RECOVERY_STATE = {
             id: "mech-weapons-button", name: "Mech Weapons", description: "",
             current: 0, max: -1, unlocked: false,
             indicators: [{ location: "top-right", current: "mech-weapons", type: "mechButtons" }],
+        },
+        "mech-module-chainsaw": { // damage
+            id: "mech-module-chainsaw-button", name: "Chainsaw", description: "",
+            current: 0, max: 1, unlocked: false,
+        },
+        "mech-module-energy-barrier": { // damage
+            id: "mech-module-energy-barrier-button", name: "Energy Barrier", description: "",
+            current: 0, max: 1, unlocked: false,
         },
     },
 }

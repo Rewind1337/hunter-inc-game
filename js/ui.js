@@ -28,8 +28,10 @@ function checkAllButtonCostsAffordable() {
     for (let i = 0; i < buttonsToCheck.length; i++) {
         for (let key in buttonsToCheck[i]) {
             let button = buttonsToCheck[i][key]
-            let canAfford = checkCosts(button.costs)
-            let hasSpace = checkResourceCapacities(button.gains)
+            let costMultipliers = resolveMultStack(button.costMultipliers)
+            let gainMultipliers = resolveMultStack(button.gainMultipliers)
+            let canAfford = checkCosts(button.costs, costMultipliers)
+            let hasSpace = checkResourceCapacities(button.gains, gainMultipliers)
             if (canAfford && hasSpace) {
                 let nothingChangedCheck = document.getElementById(button.id).classList.contains("can-afford")
                 if (!nothingChangedCheck)
@@ -96,12 +98,14 @@ function updateResourceAmounts() {
         }
     }
     updateIdleRobotCount() // not the best place to call this, but it covers alot of cases for the moment
+    updateSpecialResources()
 }
 
 function updateSpecialResources() {
     let specialListElement = document.getElementById("special-list")
     specialListElement.innerHTML = ""
     let specialArray = Object.values(game.special)
+    let unsortedArrayOfStrings = []
     for (let i = 0; i < specialArray.length; i++) {
         let specialName = Object.keys(game.special)[i]
         let specialClass = "text-black"
@@ -110,6 +114,10 @@ function updateSpecialResources() {
             specialClass = "text-red"
         } else if (specialName.includes("part")) {
             specialClass = "text-yellow"
+        } else if (specialName.includes("module")) {
+            specialClass = "text-green"
+        } else if (specialName.includes("TO BE DETERMINED")) {
+            specialClass = "text-blue"
         }
 
         if (specialName === "salvage-old-mech-left") {
@@ -119,10 +127,23 @@ function updateSpecialResources() {
         let specialAmount = specialArray[i]
         let specialString = '<div class="special-resource grid-element ' + specialClass + ' flex-row justify-between">'
         specialString += '<div class="special-name">' + specialName + '</div>'
-        specialString += '<div class="special-amount">' + fancyFormat(specialAmount) + '</div>'
+        specialString += '<div class="special-amount">' + removeTrailingZeroesAndSeperator(format(specialAmount)) + '</div>'
         specialString += '</div>'
-        specialListElement.innerHTML += specialString
+        unsortedArrayOfStrings.push({ str: specialString, class: specialClass })
+
     }
+
+    let desiredOrder = ["text-white", "text-black", "text-yellow", "text-red", "text-green", "text-blue"]
+    let sortedFinalString = ""
+    for (let key in desiredOrder) {
+        for (let i = 0; i < unsortedArrayOfStrings.length; i++) {
+            let s = unsortedArrayOfStrings[i]
+            if (s.class === desiredOrder[key]) {
+                sortedFinalString += s.str
+            }
+        }
+    }
+    specialListElement.innerHTML += sortedFinalString
 }
 
 // forces the appropriate display

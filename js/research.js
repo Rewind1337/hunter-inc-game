@@ -1,6 +1,6 @@
 let RESEARCHES = [
     {
-        id: 0, name: "Gathering+", description: "wood scrap gathering speed x2",
+        id: 0, name: "Gathering+", description: "wood & scrap gathering mult x2",
         costs: [{ resource: "wood", amount: 150 }, { resource: "scrap", amount: 150 }],
         gains: [
             { gainMultiplier: 2, buttonType: "recoveryButtons", buttonID: "gather-wood" },
@@ -8,7 +8,15 @@ let RESEARCHES = [
             { gainMultiplier: 2, buttonType: "jobs", buttonID: "woodcutter" },
             { gainMultiplier: 2, buttonType: "jobs", buttonID: "scrap-collector" },
         ],
-    }
+    },
+    {
+        id: 1, name: "Salvage+", description: "scrap salvaging mult x2",
+        costs: [{ resource: "scrap", amount: 350 }, { resource: "squares", amount: 10 }],
+        gains: [
+            { gainMultiplier: 2, buttonType: "recoveryButtons", buttonID: "salvage-scrap" },
+            { costMultiplier: 2, buttonType: "recoveryButtons", buttonID: "salvage-scrap" },
+        ],
+    },
 ]
 
 function unlockResearch(id) {

@@ -93,31 +93,24 @@
           <div class="resource-amount">0 / 250</div>
           <div class="resource-persec">0</div>
         </div>
-        <div id="resource-squares" class="resource has-tooltip grid-element flex-row justify-start align-center"
-          data-tooltip-type="resource" data-tooltip-id="squares">
-          <div class="resource-icon"><img src="./svg/box.svg" /></div>
-          <div class="resource-name">Squares</div>
+        <div id="resource-plates" class="resource has-tooltip grid-element flex-row justify-start align-center"
+          data-tooltip-type="resource" data-tooltip-id="plates">
+          <div class="resource-icon"><img src="./svg/plates.svg" /></div>
+          <div class="resource-name">Plates</div>
           <div class="resource-amount">0 / 50</div>
           <div class="resource-persec">0</div>
         </div>
-        <div id="resource-circles" class="resource has-tooltip grid-element flex-row justify-start align-center"
-          data-tooltip-type="resource" data-tooltip-id="circles">
-          <div class="resource-icon"><img src="./svg/circle.svg" /></div>
-          <div class="resource-name">Circles</div>
+        <div id="resource-links" class="resource has-tooltip grid-element flex-row justify-start align-center"
+          data-tooltip-type="resource" data-tooltip-id="links">
+          <div class="resource-icon"><img src="./svg/links.svg" /></div>
+          <div class="resource-name">Links</div>
           <div class="resource-amount">0 / 50</div>
           <div class="resource-persec">0</div>
         </div>
-        <div id="resource-triangles" class="resource has-tooltip grid-element flex-row justify-start align-center"
-          data-tooltip-type="resource" data-tooltip-id="triangles">
-          <div class="resource-icon"><img src="./svg/triangle.svg" /></div>
-          <div class="resource-name">Triangles</div>
-          <div class="resource-amount">0 / 50</div>
-          <div class="resource-persec">0</div>
-        </div>
-        <div id="resource-cubes" class="resource has-tooltip grid-element flex-row justify-start align-center"
-          data-tooltip-type="resource" data-tooltip-id="cubes">
-          <div class="resource-icon"><img src="./svg/cube.svg" /></div>
-          <div class="resource-name">Cubes</div>
+        <div id="resource-memory" class="resource has-tooltip grid-element flex-row justify-start align-center"
+          data-tooltip-type="resource" data-tooltip-id="memory">
+          <div class="resource-icon"><img src="./svg/memory.svg" /></div>
+          <div class="resource-name">Memory</div>
           <div class="resource-amount">0 / 50</div>
           <div class="resource-persec">0</div>
         </div>
@@ -472,6 +465,28 @@
             </button>
           </div>
         </div>
+
+        <div id="mech-workshop-section-modules" class="main-section grid-element flex-col no-gaps">
+          <div class="header">Mech Modules</div>
+          <div class="main-button-section flex-row flex-wrap">
+            <button id="mech-module-chainsaw-button" class="button button-mech button-red has-tooltip"
+              data-tooltip-type="mech-button" data-tooltip-id="mech-module-chainsaw">
+              <div class="button-content">
+                <div class="button-start"><img src="./svg/shapes.svg"></div>
+                <div class="button-text flex-grow">Chainsaw </div>
+                <div class="button-end"></div>
+              </div>
+            </button>
+            <button id="mech-module-energy-barrier-button" class="button button-mech button-red has-tooltip"
+              data-tooltip-type="mech-button" data-tooltip-id="mech-module-energy-barrier">
+              <div class="button-content">
+                <div class="button-start"><img src="./svg/shapes.svg"></div>
+                <div class="button-text flex-grow">Energy Barrier</div>
+                <div class="button-end"></div>
+              </div>
+            </button>
+          </div>
+        </div>
         <div class="spacer flex-grow"></div>
       </div>
       <div class="spacer flex-grow"></div>
@@ -484,6 +499,18 @@
           <div class="flex-row justify-between align-center">
             <div class="research-icon"><img src="./svg/wrench.svg" /></div>
             <div class="research-name flex-grow">Gathering+</div>
+            <button class="button button-research button-white">
+              <div class="button-content">
+                <div class="button-text flex-grow">Unlock</div>
+              </div>
+            </button>
+          </div>
+        </div>
+        <div id="research-1" class="research has-tooltip grid-element flex-col" data-tooltip-type="research"
+          data-tooltip-id="1">
+          <div class="flex-row justify-between align-center">
+            <div class="research-icon"><img src="./svg/wrench.svg" /></div>
+            <div class="research-name flex-grow">Salvage+</div>
             <button class="button button-research button-white">
               <div class="button-content">
                 <div class="button-text flex-grow">Unlock</div>

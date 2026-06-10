@@ -19,10 +19,9 @@ function setupInitialState() {
         "drones": 1.0,
         "wood": 1.2,
         "scrap": 1.2,
-        "squares": 1.1,
-        "circles": 1.075,
-        "triangles": 1.025,
-        "cubes": 1.025
+        "plates": 1.1,
+        "links": 1.075,
+        "memory": 1.025
     }
 
     // ayy
@@ -70,6 +69,7 @@ function tick(dt) {
 function processAllIdleGains(dt) {
     processRecoveryIdleGains(dt)
     processJobIdleGains(dt)
+    updateResourceAmounts() // update HTML
 }
 
 // calculates the recovery button idle gains
@@ -89,7 +89,6 @@ function processRecoveryIdleGains(dt) {
             }
         }
     }
-    updateResourceAmounts() // update HTML
 }
 
 // calculates the jobs idle gains
@@ -105,7 +104,6 @@ function processJobIdleGains(dt) {
             }
         }
     }
-    updateResourceAmounts() // update HTML
 }
 
 // call this when we add a new robot (or later, drones??) to calculate the new idle robot count
@@ -141,18 +139,18 @@ function jobAssignmentButtonPressed(jobID, value) {
 // handles the buttons in the recovery tab
 function buttonPressed(buttonID, type) {
     let button = game[type][buttonID]
+    let costMultipliers = resolveMultStack(button.costMultipliers)
+    let gainMultipliers = resolveMultStack(button.gainMultipliers)
     // check for costs
-    let canAfford = checkCosts(button.costs)
-    let hasSpace = checkResourceCapacities(button.gains)
+    let canAfford = checkCosts(button.costs, costMultipliers)
+    let hasSpace = checkResourceCapacities(button.gains, gainMultipliers)
     let canBuy = (button.max !== -1 ? (button.current < button.max) : true)
     // duh
     if (canAfford && hasSpace && canBuy) {
         // remove the resources
-        subtractAllCostsFromResources(button.costs)
+        subtractAllCostsFromResources(button.costs, costMultipliers)
         // add the gains
-        let multStackResolved = 1
-        for (let i = 0; i < button.gainMultipliers.length; i++) multStackResolved = multStackResolved * button.gainMultipliers[i]
-        addAllGainsToResources(button.gains, multStackResolved)
+        addAllGainsToResources(button.gains, gainMultipliers)
         button.current++ // increment the button.current for logic and conditions and stuff
         incrementCostsForButton(buttonID, type)
         let tooltipTypeStringReplace = type.replace("B", "-b").substring(0, type.length)
@@ -176,7 +174,7 @@ function incrementCostsForButton(buttonID, type) {
 
 function updateIndicatorsForButton(buttonID, type) {
     let button = game[type][buttonID]
-    let indicators = button.indicators
+    let indicators = button.indicators || []
     for (let i = 0; i < indicators.length; i++) {
         let indicator = indicators[i]
         switch (indicator.location) {
@@ -240,14 +238,13 @@ function updateIndicatorsForButton(buttonID, type) {
                 }
                 break;
             default:
-                console.error("Invalid type in switch case")
+                console.trace("Invalid type in switch case")
                 break;
         }
     }
 }
 
 function openButtonConfigModal(buttonType, buttonID, modalID, modalType) {
-    console.log(buttonType, buttonID, modalType)
     updateModalTextContent(buttonType, buttonID, modalID, modalType)
     showModal(modalID)
 }
@@ -272,7 +269,8 @@ function calculateGainsForResource(resourceID) {
             if (button.costsPerSecond.length > 0) {
                 for (let key2 in button.costsPerSecond) {
                     let cost = button.costsPerSecond[key2]
-                    if (cost.resource === resourceID) { netGainForResource -= (cost.amount * count) }
+                    let costMultipliers = resolveMultStack(button.costMultipliers)
+                    if (cost.resource === resourceID) { netGainForResource -= (cost.amount * count * costMultipliers) }
                 }
             }
         }
@@ -293,7 +291,8 @@ function calculateGainsForResource(resourceID) {
             if (job.costsPerSecond.length > 0) {
                 for (let key2 in job.costsPerSecond) {
                     let cost = job.costsPerSecond[key2]
-                    if (cost.resource === resourceID) { netGainForResource -= (cost.amount * count) }
+                    let costMultipliers = resolveMultStack(job.costMultipliers)
+                    if (cost.resource === resourceID) { netGainForResource -= (cost.amount * count * costMultipliers) }
                 }
             }
         }
@@ -387,12 +386,15 @@ function addGainToResource(gain, dt = 1) {
     }
 
     if (gain.gainMultiplier) { // adding a mult to the multiplier stack for specific button
-        console.log(gain)
         let targetButton = game[gain.buttonType][gain.buttonID]
         let value = gain.gainMultiplier
         targetButton.gainMultipliers.push(value)
-        console.log(targetButton)
-        console.log(value)
+    }
+
+    if (gain.costMultiplier) { // adding a mult to the multiplier stack for specific button
+        let targetButton = game[gain.buttonType][gain.buttonID]
+        let value = gain.costMultiplier
+        targetButton.costMultipliers.push(value)
     }
 }
 
@@ -489,6 +491,9 @@ function linkFunctionsToHTML() {
     document.getElementById("mech-vision-button").onclick = () => { buttonPressed("mech-vision", "mechButtons") }
     document.getElementById("mech-weapons-button").onclick = () => { buttonPressed("mech-weapons", "mechButtons") }
 
+    document.getElementById("mech-module-chainsaw-button").onclick = () => { buttonPressed("mech-module-chainsaw", "mechButtons") }
+    document.getElementById("mech-module-energy-barrier-button").onclick = () => { buttonPressed("mech-module-energy-barrier", "mechButtons") }
+
     // link job assignment buttons
     document.getElementById("job-woodcutter-minus").onclick = () => { jobAssignmentButtonPressed("woodcutter", -1) }
     document.getElementById("job-woodcutter-plus").onclick = () => { jobAssignmentButtonPressed("woodcutter", 1) }
@@ -505,24 +510,22 @@ function linkFunctionsToHTML() {
 
 function runAlotOfCheatyCommandsToGiveUsABetterTimeDeveloping() {
     addAllGainsToResources([
-        { resourceCapacity: "energy", amount: 1e30 },
-        { resourceCapacity: "robots", amount: 1e3 },
-        { resourceCapacity: "drones", amount: 1e3 },
-        { resourceCapacity: "wood", amount: 1e12 },
-        { resourceCapacity: "scrap", amount: 1e14 },
-        { resourceCapacity: "squares", amount: 1e15 },
-        { resourceCapacity: "circles", amount: 1e30 },
-        { resourceCapacity: "triangles", amount: 1e30 },
-        { resourceCapacity: "cubes", amount: 1e309 },
+        { resourceCapacity: "energy", amount: 1000 },
+        { resourceCapacity: "robots", amount: 10 },
+        { resourceCapacity: "drones", amount: 10 },
+        { resourceCapacity: "wood", amount: 100000 },
+        { resourceCapacity: "scrap", amount: 100000 },
+        { resourceCapacity: "plates", amount: 100 },
+        { resourceCapacity: "links", amount: 100 },
+        { resourceCapacity: "memory", amount: 100 },
         { resource: "energy", amount: 1e308 },
         { resource: "robots", amount: 1e308 },
         { resource: "drones", amount: 1e308 },
         { resource: "wood", amount: 1e308 },
         { resource: "scrap", amount: 1e308 },
-        { resource: "squares", amount: 1e308 },
-        { resource: "circles", amount: 1e308 },
-        { resource: "triangles", amount: 1e308 },
-        { resource: "cubes", amount: 1e309 },
+        { resource: "plates", amount: 1e308 },
+        { resource: "links", amount: 1e308 },
+        { resource: "memory", amount: 1e308 },
     ])
 }
 

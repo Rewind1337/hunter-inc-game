@@ -136,11 +136,13 @@ function updateTooltipTextContent(tooltipData) {
                     finalContentString += '<div class="tooltip-costs flex-row flex-wrap align-center justify-center">'
                     for (let i = 0; i < tooltipReference.costs.length; i++) {
                         let cost = tooltipReference.costs[i]
+                        let costMultipliers = resolveMultStack(tooltipReference.costMultipliers)
+                        let formattedCosts = format(cost.amount * costMultipliers, ".", 1)
                         if (cost.resource) {
-                            finalContentString += '<div class="tooltip-pill"><div>' + replaceNameWithSVG(cost.resource) + '</div><div>' + removeTrailingZeroesAndSeperator(format(cost.amount, ".", 1)) + '</div></div>'
+                            finalContentString += '<div class="tooltip-pill"><div>' + replaceNameWithSVG(cost.resource) + '</div><div>' + removeTrailingZeroesAndSeperator(formattedCosts) + '</div></div>'
                         }
                         if (cost.special) {
-                            finalContentString += '<div class="tooltip-pill"><div>' + replaceNameWithSVG(cost.special) + '</div><div>' + removeTrailingZeroesAndSeperator(format(cost.amount, ".", 1)) + '</div></div>'
+                            finalContentString += '<div class="tooltip-pill"><div>' + replaceNameWithSVG(cost.special) + '</div><div>' + removeTrailingZeroesAndSeperator(formattedCosts) + '</div></div>'
                         }
                     }
                     finalContentString += '</div>'
@@ -154,11 +156,13 @@ function updateTooltipTextContent(tooltipData) {
                     finalContentString += '<div class="tooltip-upkeep flex-row flex-wrap align-center justify-center">'
                     for (let i = 0; i < tooltipReference.costsPerSecond.length; i++) {
                         let cost = tooltipReference.costsPerSecond[i]
+                        let costMultipliers = resolveMultStack(tooltipReference.costMultipliers)
+                        let formattedCosts = format(cost.amount * costMultipliers, ".", 1)
                         if (cost.resource) {
-                            finalContentString += '<div class="tooltip-pill"><div>' + replaceNameWithSVG(cost.resource) + '</div><div>' + removeTrailingZeroesAndSeperator(format(cost.amount, ".", 1)) + ' / s</div></div>'
+                            finalContentString += '<div class="tooltip-pill"><div>' + replaceNameWithSVG(cost.resource) + '</div><div>' + removeTrailingZeroesAndSeperator(formattedCosts) + ' / s</div></div>'
                         }
                         if (cost.special) {
-                            finalContentString += '<div class="tooltip-pill"><div>' + replaceNameWithSVG(cost.special) + '</div><div>' + removeTrailingZeroesAndSeperator(format(cost.amount, ".", 1)) + ' / s</div></div>'
+                            finalContentString += '<div class="tooltip-pill"><div>' + replaceNameWithSVG(cost.special) + '</div><div>' + removeTrailingZeroesAndSeperator(formattedCosts) + ' / s</div></div>'
                         }
                     }
                     finalContentString += '</div>'
@@ -195,14 +199,16 @@ function updateTooltipTextContent(tooltipData) {
                     finalContentString += '<div class="tooltip-effect flex-row flex-wrap align-center justify-center">'
                     for (let i = 0; i < tooltipReference.gainsPerSecond.length; i++) {
                         let gain = tooltipReference.gainsPerSecond[i]
+                        let gainMultipliers = resolveMultStack(tooltipReference.gainMultipliers)
+                        let formattedGains = format(gain.amount * gainMultipliers, ".", 1)
                         if (gain.resource) {
-                            finalContentString += '<div class="tooltip-pill"><div>' + replaceNameWithSVG(gain.resource) + '</div><div>' + removeTrailingZeroesAndSeperator(format(gain.amount, ".", 1)) + ' / s</div></div>'
+                            finalContentString += '<div class="tooltip-pill"><div>' + replaceNameWithSVG(gain.resource) + '</div><div>' + removeTrailingZeroesAndSeperator(formattedGains) + ' / s</div></div>'
                         }
                         if (gain.resourceCapacity) {
-                            finalContentString += '<div class="tooltip-pill"><div>' + replaceNameWithSVG(gain.resourceCapacity) + ' Cap.</div><div>' + removeTrailingZeroesAndSeperator(format(gain.amount, ".", 1)) + '</div></div>'
+                            finalContentString += '<div class="tooltip-pill"><div>' + replaceNameWithSVG(gain.resourceCapacity) + ' Cap.</div><div>' + removeTrailingZeroesAndSeperator(formattedGains) + '</div></div>'
                         }
                         if (gain.special) {
-                            finalContentString += '<div class="tooltip-pill"><div>' + replaceNameWithSVG(gain.special) + '</div><div>' + removeTrailingZeroesAndSeperator(format(gain.amount, ".", 1)) + ' / s</div></div>'
+                            finalContentString += '<div class="tooltip-pill"><div>' + replaceNameWithSVG(gain.special) + '</div><div>' + removeTrailingZeroesAndSeperator(formattedGains) + ' / s</div></div>'
                         }
                     }
                     finalContentString += '</div>'
@@ -229,10 +235,9 @@ const resourceNameToImg = {
     "energy": "battery_7",
     "robots": "robot",
     "drones": "drone",
-    "squares": "box",
-    "circles": "circle",
-    "triangles": "triangle",
-    "cubes": "cube",
+    "plates": "plates",
+    "links": "links",
+    "memory": "memory",
     "salvage-old-mech-left": "mech"
 }
 

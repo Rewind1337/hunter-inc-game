@@ -11,10 +11,9 @@ const UNLOCKS = [
     { conditions: [{ resource: "scrap", amount: 1 }], targets: [{ recoveryButton: "salvage-scrap" }] },
 
     // unlocks resource after amount
-    { conditions: [{ resource: "squares", amount: 0.1 }], targets: [{ resource: "squares" }] },
-    { conditions: [{ resource: "circles", amount: 0.1 }], targets: [{ resource: "circles" }] },
-    { conditions: [{ resource: "triangles", amount: 0.1 }], targets: [{ resource: "triangles" }] },
-    { conditions: [{ resource: "cubes", amount: 1 }], targets: [{ resource: "cubes" }] },
+    { conditions: [{ resource: "plates", amount: 0.1 }], targets: [{ resource: "plates" }] },
+    { conditions: [{ resource: "links", amount: 0.1 }], targets: [{ resource: "links" }] },
+    { conditions: [{ resource: "memory", amount: 0.1 }], targets: [{ resource: "memory" }] },
 
     // unlocks wood-burner as button
     { conditions: COSTS_GAINS.recoveryButtons["wood-burner"].costs, targets: [{ recoveryButton: "wood-burner" }] },
@@ -63,6 +62,9 @@ const UNLOCKS = [
     { conditions: COSTS_GAINS.recoveryButtons["parts-factory"].costs, targets: [{ recoveryButton: "parts-factory" }] },
     // unlocks the parts-factory tab as well as first 2 factory-buttons
     { conditions: [{ recoveryButton: "parts-factory", amount: 1 }], targets: [{ tabButton: "parts-factory" }, { factoryButton: "part-small-battery" }, { factoryButton: "part-compressed-cube" }] },
+
+    // unlocks the mech modules once you have 10 levels in mech-frame (subject to change)
+    { conditions: [{ mechButton: "mech-frame", amount: 10 }], targets: [{ mechButton: "mech-module-chainsaw" }, { mechButton: "mech-module-energy-barrier" }] },
 ]
 
 // gets run once on page load at the moment
