@@ -64,6 +64,15 @@
 
     --dropshadow-black: drop-shadow(0 0 4px rgba(0, 0, 0, 0.66)) drop-shadow(0 0 2px rgba(0, 0, 0, 0.66));
     --dropshadow-white: drop-shadow(0 0 4px rgba(255, 255, 255, 0.66)) drop-shadow(0 0 2px rgba(255, 255, 255, 0.66));
+    --dropshadow-red: drop-shadow(0 0 4px rgba(255, 0, 0, 0.66)) drop-shadow(0 0 2px rgba(255, 0, 0, 0.66));
+    --dropshadow-green: drop-shadow(0 0 4px rgba(0, 255, 0, 0.66)) drop-shadow(0 0 2px rgba(0, 255, 0, 0.66));
+    --dropshadow-blue: drop-shadow(0 0 4px rgba(0, 0, 255, 0.66)) drop-shadow(0 0 2px rgba(0, 0, 255, 0.66));
+
+    --dropshadow-black-weak: drop-shadow(0 0 4px rgba(0, 0, 0, 0.2)) drop-shadow(0 0 2px rgba(0, 0, 0, 0.2));
+    --dropshadow-white-weak: drop-shadow(0 0 4px rgba(255, 255, 255, 0.2)) drop-shadow(0 0 2px rgba(255, 255, 255, 0.2));
+    --dropshadow-red-weak: drop-shadow(0 0 4px rgba(255, 0, 0, 0.2)) drop-shadow(0 0 2px rgba(255, 0, 0, 0.2));
+    --dropshadow-green-weak: drop-shadow(0 0 4px rgba(0, 255, 0, 0.2)) drop-shadow(0 0 2px rgba(0, 255, 0, 0.2));
+    --dropshadow-blue-weak: drop-shadow(0 0 4px rgba(0, 0, 255, 0.2)) drop-shadow(0 0 2px rgba(0, 0, 255, 0.2));
 
     /* LAYOUT */
     --top-bar-height: 32px;

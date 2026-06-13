@@ -65,6 +65,42 @@
     color: var(--gather-norm);
 }
 
+/* Special Button Styles / Shapes */
+
+.button-prestige {
+    aspect-ratio: 1;
+    padding: 8px;
+    border-radius: 33%;
+    background-color: rgba(255, 255, 255, 0.1) !important;
+    border: 2px solid rgba(255, 255, 255, 0.5) !important;
+}
+
+.button-prestige img {
+    filter: brightness(0) invert(1) var(--dropshadow-white-weak);
+}
+
+.button-prestige.button-red img {
+    filter: brightness(6666%) var(--dropshadow-red-weak);
+}
+
+.button-prestige.button-green img {
+    filter: hue-rotate(120deg) brightness(6666%) var(--dropshadow-green-weak);
+}
+
+.button-prestige.button-blue img {
+    filter: hue-rotate(240deg) brightness(6666%) var(--dropshadow-blue-weak);
+}
+
+.button-prestige:hover {
+    background-color: rgba(255, 255, 255, 0.35) !important;
+    border: 2px solid rgba(255, 255, 255, 0.7) !important;
+}
+
+.button-prestige:hover:active {
+    background-color: rgba(255, 255, 255, 0.65) !important;
+    border: 2px solid rgba(255, 255, 255, 1) !important;
+}
+
 /* White Button Styles */
 
 .button-white {
@@ -134,6 +170,24 @@
 
 .button-red:hover:active {
     background-color: var(--red-light);
+    border-color: white;
+}
+
+/* Green Button Styles */
+
+.button-green {
+    background-color: var(--gather-norm);
+    border: 2px solid transparent;
+    border-color: var(--gather-light-alpha) var(--gather-dark-alpha) var(--gather-dark-alpha) var(--gather-light-alpha);
+}
+
+.button-green:hover {
+    background-color: var(--gather-hover);
+    border-color: var(--gather-light) var(--gather-dark) var(--gather-dark) var(--gather-light);
+}
+
+.button-green:hover:active {
+    background-color: var(--gather-light);
     border-color: white;
 }
 

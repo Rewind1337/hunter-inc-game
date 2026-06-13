@@ -1,37 +1,53 @@
-#main-grid {
+.main-grid {
     width: 100%;
     height: 100%;
     display: grid;
-    grid-template-columns: var(--left-sidebar-width) 1fr var(--right-sidebar-width);
-    grid-template-rows: var(--top-bar-height) 1fr var(--bottom-bar-height);
     grid-column-gap: 0px;
     grid-row-gap: 0px;
 }
 
-#main-top {
+#civilization-grid,
+#hunter-grid {
+    grid-template-columns: var(--left-sidebar-width) 1fr var(--right-sidebar-width);
+    grid-template-rows: var(--top-bar-height) 1fr var(--bottom-bar-height);
+}
+
+#civilization-grid>.main-left,
+#hunter-grid>.main-left {
+    grid-area: 2 / 1 / 3 / 2;
+}
+
+#civilization-grid>.main-center,
+#hunter-grid>.main-center {
+    min-width: 512px;
+    grid-area: 2 / 2 / 3 / 3;
+}
+
+#civilization-grid>.main-right,
+#hunter-grid>.main-right {
+    grid-area: 2 / 3 / 3 / 4;
+}
+
+#prestige-grid {
+    grid-template-columns: 1fr;
+    grid-template-rows: var(--top-bar-height) 1fr var(--bottom-bar-height);
+}
+
+#prestige-grid>.main-center {
+    grid-area: 2 / 1 / 2 / 1;
+}
+
+.main-grid>.main-top {
     grid-area: 1 / 1 / 2 / 4;
 }
 
-#main-top>div:first-child {
+.main-grid>.main-top>div:first-child {
     height: 32px;
     margin: 0;
     padding: 0;
 }
 
-#main-left {
-    grid-area: 2 / 1 / 3 / 2;
-}
-
-#main-center {
-    min-width: 512px;
-    grid-area: 2 / 2 / 3 / 3;
-}
-
-#main-right {
-    grid-area: 2 / 3 / 3 / 4;
-}
-
-#main-bottom {
+.main-grid>.main-bottom {
     grid-area: 3 / 1 / 4 / 4;
 }
 
@@ -48,14 +64,14 @@ canvas {
     height: 700px;
 }
 
-#main-left,
-#main-right,
-#main-center {
+.main-left,
+.main-right,
+.main-center {
     overflow: auto;
 }
 
-#main-left>.header,
-#main-right>.header {
+.main-left>.header,
+.main-right>.header {
     z-index: 100;
     position: sticky;
     top: 0;
@@ -71,7 +87,7 @@ canvas {
     margin-top: 1px;
 }
 
-#main-center>.main-center-tab>.main-section>.header {
+.main-center>.main-center-tab>.main-section>.header {
     z-index: 99;
     position: sticky;
     top: 45px;
@@ -81,8 +97,17 @@ canvas {
     background-color: var(--background-color);
 }
 
-#main-center-navigation {
+.main-center-navigation {
     z-index: 100;
     position: sticky;
     top: 0;
+}
+
+
+
+
+
+#civilization-grid,
+#hunter-grid {
+    display: none !important;
 }

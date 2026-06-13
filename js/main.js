@@ -436,16 +436,38 @@ function subtractAllCostsFromResources(costs, dt = 1) {
 }
 
 function linkFunctionsToHTML() {
-    // binds the left sidebar button to the left sidebar function
-    document.getElementById("top-menu-left-button").onclick = () => {
-        document.getElementById("top-menu-left-button").classList.toggle("open")
-        document.getElementById("main-left").classList.toggle("visible")
+    // binds the left sidebar buttons to the left sidebar function
+    let left_menu_buttons = document.getElementsByClassName("top-menu-left-button")
+    for (let i = 0; i < left_menu_buttons.length; i++) {
+        let button = left_menu_buttons[i]
+        button.onclick = () => {
+            console.log(button);
+
+            button.classList.toggle("open")
+            let gridID = button.dataset.originGrid
+            let gridElement = document.getElementById(gridID)
+            let gridLeftSidebar = gridElement.querySelector(".main-left")
+            console.log(button, gridElement, gridLeftSidebar);
+
+            gridLeftSidebar.classList.toggle("visible")
+        }
     }
 
-    // binds the right sidebar button to the right sidebar function
-    document.getElementById("top-menu-right-button").onclick = () => {
-        document.getElementById("top-menu-right-button").classList.toggle("open")
-        document.getElementById("main-right").classList.toggle("visible")
+    let right_menu_buttons = document.getElementsByClassName("top-menu-right-button")
+    for (let i = 0; i < right_menu_buttons.length; i++) {
+        let button = right_menu_buttons[i]
+        button.onclick = () => {
+            console.log(button);
+
+            button.classList.toggle("open")
+            let originGrid = button.dataset.originGrid
+            console.log(originGrid, document.getElementById(originGrid));
+
+            let originID = document.getElementById(originGrid)
+            console.log(originMainRight);
+
+            originMainRight.classList.toggle("visible")
+        }
     }
 
     // binds the center tab buttons to the switchCenterTab function
