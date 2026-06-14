@@ -79,6 +79,10 @@
     --left-sidebar-width: 256px;
     --right-sidebar-width: 256px;
     --bottom-bar-height: 32px;
+
+    /* dont actually change this one, i think */
+    --prestige-button-size: 72px;
+
 }
 
 @property --resourceFill {

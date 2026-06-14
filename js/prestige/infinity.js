@@ -11,14 +11,14 @@ let MOUSE_POSITION = { x: 0, y: 0 }
 let DRAGGING = false
 
 CONTAINER.onmousedown = (e) => {
-    startDragging()
-    DRAG_START.x = e.clientX
-    DRAG_START.y = e.clientY
+    startDragging(e)
 }
 
 CONTAINER.onmouseup = (e) => {
-    CONTAINER_OFFSET.x += DRAG_START.x - MOUSE_POSITION.x
-    CONTAINER_OFFSET.y += DRAG_START.y - MOUSE_POSITION.y
+    stopDragging()
+}
+
+CONTAINER.onmouseleave = (e) => {
     stopDragging()
 }
 
@@ -35,11 +35,19 @@ CONTAINER.onmousemove = (e) => {
     }
 }
 
-function startDragging() {
+function startDragging(e) {
+    MOUSE_POSITION.x = e.clientX
+    MOUSE_POSITION.y = e.clientY
+    DRAG_START.x = e.clientX
+    DRAG_START.y = e.clientY
     DRAGGING = true
 }
 
 function stopDragging() {
+    if (DRAGGING) {
+        CONTAINER_OFFSET.x += DRAG_START.x - MOUSE_POSITION.x
+        CONTAINER_OFFSET.y += DRAG_START.y - MOUSE_POSITION.y
+    }
     DRAGGING = false
 }
 

@@ -54,6 +54,34 @@ hr {
     display: none !important;
 }
 
+.place-right {
+    margin-left: auto;
+}
+
+.place-left {
+    margin-right: auto;
+}
+
+.place-bottom {
+    margin-top: auto;
+}
+
+.place-top {
+    margin-bottom: auto;
+}
+
+.place-center-horizontal {
+    margin-inline: auto;
+}
+
+.place-center-vertical {
+    margin-block: auto;
+}
+
+.place-center {
+    margin: auto;
+}
+
 .align-center {
     text-align: center;
     align-items: center;
@@ -561,10 +589,8 @@ hr {
 }
 
 #infinity-content {
-    width: fit-content;
-    min-width: 100vw;
-    height: fit-content;
-    min-height: calc(100vh - calc(var(--top-bar-height) + var(--bottom-bar-height)));
+    width: 3000px;
+    height: 3000px;
     display: grid;
     place-items: center;
     background:
@@ -599,6 +625,7 @@ hr {
     border: 4px double white;
     padding: 64px;
     margin: 16px;
+    gap: 16px;
     border-radius: 64px;
     height: fit-content;
     width: fit-content;
@@ -609,6 +636,13 @@ hr {
     padding: 16px;
     border: 2px solid white;
     border-radius: 32px;
+    margin: auto;
+    height: fit-content;
+    width: fit-content;
+}
+
+.prestige-section .button-prestige {
+    margin: auto;
 }
 
 .prestige-branch.white {
@@ -638,32 +672,32 @@ hr {
 .prestige-wrapper:hover,
 .prestige-wrapper .prestige-branch:hover,
 .prestige-wrapper .prestige-section:hover {
-    background-color: rgba(255, 255, 255, 0.125);
+    background-color: rgba(255, 255, 255, 0.11);
     transition: background-color 0.2s ease;
 }
 
 .prestige-section.prestige-wrap-1 {
-    max-width: calc(32px + calc(72px * 1));
+    max-width: calc(32px + calc(var(--prestige-button-size) * 1));
 }
 
 .prestige-section.prestige-wrap-2 {
-    max-width: calc(32px + calc(72px * 2));
+    max-width: calc(32px + calc(var(--prestige-button-size) * 2));
 }
 
 .prestige-section.prestige-wrap-3 {
-    max-width: calc(32px + calc(72px * 3));
+    max-width: calc(32px + calc(var(--prestige-button-size) * 3));
 }
 
 .prestige-section.prestige-wrap-4 {
-    max-width: calc(32px + calc(72px * 4));
+    max-width: calc(32px + calc(var(--prestige-button-size) * 4));
 }
 
 .prestige-section.prestige-wrap-5 {
-    max-width: calc(32px + calc(72px * 5));
+    max-width: calc(32px + calc(var(--prestige-button-size) * 5));
 }
 
 .prestige-section.prestige-wrap-6 {
-    max-width: calc(32px + calc(72px * 6));
+    max-width: calc(32px + calc(var(--prestige-button-size) * 6));
 }
 
 

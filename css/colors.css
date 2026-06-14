@@ -75,20 +75,38 @@
     border: 2px solid rgba(255, 255, 255, 0.5) !important;
 }
 
+.button-prestige.prestige-size-2 {
+    width: calc(var(--prestige-button-size) * 1.5);
+    height: calc(var(--prestige-button-size) * 1.5);
+}
+
+.button-prestige.prestige-size-2 img {
+    width: 64px;
+}
+
+.button-prestige.prestige-size-3 {
+    width: calc(var(--prestige-button-size) * 2);
+    height: calc(var(--prestige-button-size) * 2);
+}
+
+.button-prestige.prestige-size-3 img {
+    width: 96px;
+}
+
 .button-prestige img {
     filter: brightness(0) invert(1) var(--dropshadow-white-weak);
 }
 
 .button-prestige.button-red img {
-    filter: brightness(6666%) var(--dropshadow-red-weak);
+    filter: hue-rotate(10deg) brightness(166%) var(--dropshadow-red-weak);
 }
 
 .button-prestige.button-green img {
-    filter: hue-rotate(120deg) brightness(6666%) var(--dropshadow-green-weak);
+    filter: hue-rotate(100deg) brightness(666%) var(--dropshadow-green-weak);
 }
 
 .button-prestige.button-blue img {
-    filter: hue-rotate(240deg) brightness(6666%) var(--dropshadow-blue-weak);
+    filter: hue-rotate(245deg) brightness(666%) var(--dropshadow-blue-weak);
 }
 
 .button-prestige:hover {

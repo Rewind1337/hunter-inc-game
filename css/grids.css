@@ -103,11 +103,20 @@ canvas {
     top: 0;
 }
 
-
-
-
-
-#civilization-grid,
-#hunter-grid {
-    display: none !important;
+.main-grid {
+    display: none;
 }
+
+#civilization-grid {
+    display: grid;
+}
+
+/*
+#hunter-grid {
+    display: grid;
+}
+
+#prestige-grid {
+    display: grid;
+}
+*/
